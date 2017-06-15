@@ -1,81 +1,78 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import styles from './Mapstyle'
+// Wrap all `react-google-maps` components with `withGoogleMap` HOC
+// and name it GettingStartedGoogleMap
 
-
-
-const MapPointsReact = ({ text }) => (
-  <div style={{
-    position: 'relative', color: 'white', background: 'red',
-    height: 40, width: 60, top: -20, left: -30,
-  }}>
-    {text}
-  </div>
-);
-
-
-
+function createMapOptions(maps) {
+  return {
+    disableDefaultUI: true,
+    styles: styles
+  };
+}
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      center: {lat: 59.95, lng: 30.33},
-      zoom: 11
-    };
+      center: {},
+      markers: [
+
+      ]
   }
-  componentDidMount(){
-    var options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    };
-
-    function success(pos) {
-      var crd = pos.coords;
-
-      console.log('Your current position is:');
-      console.log(`Latitude : ${crd.latitude}`);
-      console.log(`Longitude: ${crd.longitude}`);
-      console.log(`More or less ${crd.accuracy} meters.`);
-      this.state.center.lat = crd.latitude;
-      this.state.center.lng = crd.longitude;
-
-    };
-
-    function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
-    };
+}
 
 
-    console.log("componentdidran")
-    function getLocation() {
-      console.log("getLocation is called")
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(success, error, options);
-        } else {
-           console.log("Geolocation is not supported by this browser.");
-        }
-    }
-    getLocation()
+  static defaultProps = {
+    center: {lat: 43.64, lng: -79.39},
+    zoom: 15
+  };
 
+  componentDidMount() {
+    //golocation
   }
 
   render() {
+    const Markers = this.state.markers.map((marker) => (
+      <div
+        lat={marker.center.lat}
+        lng={marker.center.lng}>"MARKER"</div>
+    ));
     return (
       <div style ={{width:'100%', height: '98vh'}}>
       <GoogleMapReact
-        defaultCenter={this.state.center}
-        defaultZoom={this.state.zoom}
-      >
-      <MapPointsReact
-        lat={59.955413}
-        lng={30.337844}
-        text={'Kreyser Avrora'}
-      />
+        defaultCenter={this.props.center}
+        defaultZoom={this.props.zoom}
+        options={createMapOptions}
+        onChange={this.onChange}>
+        {Markers}
+        <button type="button" onClick={this.addMarker}>+</button>
       </GoogleMapReact>
       </div>
     );
   }
+
+
+
+  addMarker = () =>{
+    const marker = {
+      center: this.state.center
+    }
+    const markers = this.state.markers.concat(marker)
+    this.setState({markers:markers})
+  }
+
+  onChange = (obj) =>{
+    const lat = obj.center.lat;
+    const lng = obj.center.lng;
+    this.setState({center: {lat, lng}})
+  }
+
+
 }
 
 export default App;
+
+
+
+

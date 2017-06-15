@@ -51,6 +51,7 @@ class App extends Component {
         </div>
         {Markers}
         <button className="btn-floating btn-large waves-effect waves-light red" type="button" onClick={this.addMarker}>+</button>
+        <a className="btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></a>
       </GoogleMapReact>
       </div>
     );

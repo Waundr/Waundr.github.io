@@ -45,6 +45,10 @@ class App extends Component {
         defaultZoom={this.props.zoom}
         options={createMapOptions}
         onChange={this.onChange}>
+        <div className="marker" lat={this.props.center.lat} lng={this.props.center.lng}>
+          <div className="dot"></div>
+          <div className="pulse"></div>
+        </div>
         {Markers}
         <button type="button" onClick={this.addMarker}>+</button>
       </GoogleMapReact>

@@ -50,7 +50,7 @@ class App extends Component {
           <div className="pulse"></div>
         </div>
         {Markers}
-        <button type="button" style={{postition: "absolute", left: 0, top: 0}} onClick={this.addMarker}>+</button>
+        <button className="btn-floating btn-large waves-effect waves-light red" type="button" onClick={this.addMarker}>+</button>
       </GoogleMapReact>
       </div>
     );
@@ -76,7 +76,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-
-

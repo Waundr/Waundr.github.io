@@ -39,7 +39,7 @@ class App extends Component {
         lng={marker.center.lng}>"MARKER"</div>
     ));
     return (
-      <div style={{width: '100%', height: '600px'}}>
+      <div style ={{width:'100%', height: '98vh'}}>
       <GoogleMapReact
         defaultCenter={this.props.center}
         defaultZoom={this.props.zoom}

@@ -39,7 +39,7 @@ class App extends Component {
         lng={marker.center.lng}>"MARKER"</div>
     ));
     return (
-      <div style ={{width:'100%', height: '98vh'}}>
+      <div style ={{width:'100%', height: '100vh'}}>
       <GoogleMapReact
         defaultCenter={this.props.center}
         defaultZoom={this.props.zoom}
@@ -50,7 +50,7 @@ class App extends Component {
           <div className="pulse"></div>
         </div>
         {Markers}
-        <button type="button" onClick={this.addMarker}>+</button>
+        <button type="button" style={{postition: "absolute", left: 0, top: 0}} onClick={this.addMarker}>+</button>
       </GoogleMapReact>
       </div>
     );

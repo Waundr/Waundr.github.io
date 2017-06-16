@@ -11,8 +11,9 @@ function createMapOptions(maps) {
     styles: styles
   };
 }
-
+let mapInstance = 0
 class App extends Component {
+
   constructor(props) {
     super(props);
      //keeps track of where user is looking
@@ -21,7 +22,8 @@ class App extends Component {
     this.state = {
       center: {},
       currentLocation: {lat: 43.644625, lng: -79.395197},
-      markers: []
+      markers: [],
+
   }
 }
   //default center and zoom properties
@@ -35,11 +37,18 @@ class App extends Component {
   }
 
   render() {
+
     //const maps all markers in state array to div with lat/lng locations
-    const Markers = this.state.markers.map((marker) => (
-      <div
+    const Markers = this.state.markers.map((marker, index) => (
+      <div onClick={this.onClick(marker, index)}
         lat={marker.loc.lat}
-        lng={marker.loc.lng}>"MARKER"</div>
+        lng={marker.loc.lng} className="material-icons"
+        key={index}>
+        room
+        <div>
+          {(marker.popvisible ? <div value={marker.description} /> : null)}
+        </div>
+      </div>
     ));
       //google map react component takes in center/zoom/options/onchange settings
       //child googlemap react componesnts are markers
@@ -49,24 +58,30 @@ class App extends Component {
         defaultCenter={this.props.center}
         defaultZoom={this.props.zoom}
         options={createMapOptions}
-        onChange={this.onChange}>
+        onChange={this.onChange}
+        onGoogleApiLoaded={this.setMapInstance}>
         <div className="marker" lat={this.props.center.lat} lng={this.props.center.lng}>
           <div className="dot"></div>
           <div className="pulse"></div>
         </div>
         {Markers}
-        <a className="btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></a>
+        <a className="btn-floating btn-large waves-effect waves-light red" onClick={this.addMarker}><i className="material-icons">add</i></a>
       </GoogleMapReact>
-        <a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!fasdfasdfasdfasdf asfasdfasdfasdf</a>
-      <button className="btn-floating btn-large waves-effect waves-light red" type="button" onClick={this.addMarker}>+</button>
       </div>
     );
   }
 
+  setMapInstance = (map) => {
+    console.log(map)
+    mapInstance = map.map
+  }
   //callback for when +button pressed
   addMarker = () =>{
     const marker = {
-      loc: this.state.currentLocation
+      loc: this.state.currentLocation,
+      popvisible: false,
+      title: "POO",
+      description: "This is a piece of POO"
     }
     const markers = this.state.markers.concat(marker)
     this.setState({markers:markers})
@@ -77,6 +92,30 @@ class App extends Component {
     const lat = obj.center.lat;
     const lng = obj.center.lng;
     this.setState({center: {lat, lng}})
+  }
+
+  onClick = (marker, index) => {
+    // console.log(marker.loc.lat, marker.loc.lng)
+    // const latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng)
+    // console.log(latlng)
+    const infowindow = new google.maps.InfoWindow({
+      content: marker.title,
+    });
+    const mark = new google.maps.Marker({
+      position: marker.loc,
+      map: mapInstance
+      })
+    mark.addListener('click', function() {
+      infowindow.open(mapInstance,mark);
+    });
+    // infowindow.open(mapInstance, mark)
+    // let showMarker = marker
+    // showMarker.popvisible = true
+    // let markers = this.state.markers
+    // markers[index] = showMarker
+    // this.setState({markers: markers})
+    // console.log(marker,index)
+
   }
 
 

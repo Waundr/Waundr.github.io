@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import styles from './Mapstyle'
-// Wrap all `react-google-maps` components with `withGoogleMap` HOC
-// and name it GettingStartedGoogleMap
 
+//options for google maps api
 function createMapOptions(maps) {
+  //takes away + - zoom, and other defaults
+  //applies mapstyles.js
   return {
     disableDefaultUI: true,
     styles: styles
@@ -14,30 +15,34 @@ function createMapOptions(maps) {
 class App extends Component {
   constructor(props) {
     super(props);
+     //keeps track of where user is looking
+     //keeps track users current geolocation
+     //array of all markers user can see
     this.state = {
       center: {},
-      markers: [
-
-      ]
+      currentLocation: {lat: 43.644625, lng: -79.395197},
+      markers: []
   }
 }
-
-
+  //default center and zoom properties
   static defaultProps = {
-    center: {lat: 43.64, lng: -79.39},
+    center: {lat: 43.644625, lng: -79.395197},
     zoom: 15
   };
 
   componentDidMount() {
-    //golocation
+    //get current location & setstate
   }
 
   render() {
+    //const maps all markers in state array to div with lat/lng locations
     const Markers = this.state.markers.map((marker) => (
       <div
-        lat={marker.center.lat}
-        lng={marker.center.lng}>"MARKER"</div>
+        lat={marker.loc.lat}
+        lng={marker.loc.lng}>"MARKER"</div>
     ));
+      //google map react component takes in center/zoom/options/onchange settings
+      //child googlemap react componesnts are markers
     return (
       <div style ={{width:'100%', height: '100vh'}}>
       <GoogleMapReact
@@ -56,16 +61,16 @@ class App extends Component {
     );
   }
 
-
-
+  //callback for when +button pressed
   addMarker = () =>{
     const marker = {
-      center: this.state.center
+      loc: this.state.currentLocation
     }
     const markers = this.state.markers.concat(marker)
     this.setState({markers:markers})
   }
 
+  //callback when any map change occurs, obj param gives lat/lng/zoom/etc..
   onChange = (obj) =>{
     const lat = obj.center.lat;
     const lng = obj.center.lng;

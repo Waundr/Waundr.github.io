@@ -33,7 +33,19 @@ class App extends Component {
   };
 
   componentDidMount() {
-    //get current location & setstate
+    //initiate connection to WS server
+    const ws = new WebSocket("ws://localhost:3001");
+    ws.onopen = (e) => {
+      console.log("Connected to server");
+    }
+      const send = (message) => {
+        ws.send(JSON.stringify(message));
+      }
+
+      ws.onmessage = (event) => {
+
+      }
+    this.socket = ws; //make globally accessible
   }
 
   render() {
@@ -85,6 +97,7 @@ class App extends Component {
     }
     const markers = this.state.markers.concat(marker)
     this.setState({markers:markers})
+    this.socket.send(JSON.stringify(marker))
   }
 
   //callback when any map change occurs, obj param gives lat/lng/zoom/etc..

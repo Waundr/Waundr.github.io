@@ -50,9 +50,10 @@ class App extends Component {
           <div className="pulse"></div>
         </div>
         {Markers}
-        <button className="btn-floating btn-large waves-effect waves-light red" type="button" onClick={this.addMarker}>+</button>
         <a className="btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></a>
       </GoogleMapReact>
+        <a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!fasdfasdfasdfasdf asfasdfasdfasdf</a>
+      <button className="btn-floating btn-large waves-effect waves-light red" type="button" onClick={this.addMarker}>+</button>
       </div>
     );
   }

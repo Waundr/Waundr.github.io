@@ -112,7 +112,7 @@ class App extends Component {
     // const latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng)
     // console.log(latlng)
     const infowindow = new google.maps.InfoWindow({
-      content: marker.title,
+      content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description,
     });
     const mark = new google.maps.Marker({
       position: marker.loc,

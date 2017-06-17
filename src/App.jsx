@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-import styles from './Mapstyle'
-import MarkerForm from './MarkerForm'
+import styles from './Mapstyle';
+import ModalForm from './Modal.jsx';
 
 //options for google maps api
 function createMapOptions(maps) {
@@ -61,7 +61,7 @@ class App extends Component {
 
     //const maps all markers in state array to div with lat/lng locations
     const Markers = this.state.markers.map((marker, index) => (
-      <div onClick={this.onClick(Markers[index])}
+      <div onClick={this.onClick(marker)}
         lat={marker.loc.lat}
         lng={marker.loc.lng} className="material-icons"
         key={index}>
@@ -85,7 +85,7 @@ class App extends Component {
         </div>
 
         {Markers}
-        <MarkerForm/>
+        <ModalForm add={this.addMarker}/>
         <a className="btn-floating btn-large waves-effect waves-light red" onClick={this.addMarker}><i className="material-icons">add</i></a>
       </GoogleMapReact>
       </div>
@@ -97,12 +97,13 @@ class App extends Component {
     mapInstance = map.map
   }
   //callback for when +button pressed
-  addMarker = () =>{
+  addMarker = (title, desc) =>{
+    console.log("ITS CALLED")
     const marker = {
       loc: this.state.currentLocation,
       popvisible: false,
-      title: "POO",
-      description: "This is a piece of POO"
+      title: title,
+      description: desc
     }
     const markers = this.state.markers.concat(marker)
     this.setState({markers:markers})
@@ -117,12 +118,8 @@ class App extends Component {
   }
 
   onClick = (marker) => {
-    console.log(marker)
-    // console.log(marker.loc.lat, marker.loc.lng)
-    // const latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng)
-    // console.log(latlng)
-    console.log('event target', event.target)
-    let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
+
+    // let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
     const infowindow = new google.maps.InfoWindow({
       content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description,
     });
@@ -132,7 +129,7 @@ class App extends Component {
       map:mapInstance
     })
     mark.addListener('click', function() {
-      infowindow.open(mapInstance,event.target);
+      infowindow.open(mapInstance,mark);
     });
     // infowindow.open(mapInstance, mark)
     // let showMarker = marker

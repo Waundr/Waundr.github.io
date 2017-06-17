@@ -43,6 +43,13 @@ class App extends Component {
       }
 
       ws.onmessage = (event) => {
+        const newMarker = JSON.parse(event.data)
+        console.log("newMarker: ", newMarker)
+        let markers = this.state.markers.concat(newMarker)
+        console.log("onmessage markers list:= ", markers)
+        // Make a pop up that new map has appeared
+        Materialize.toast('New Marker is here', 4000) 
+        this.setState({markers:markers})
 
       }
     this.socket = ws; //make globally accessible

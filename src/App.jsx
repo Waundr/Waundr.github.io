@@ -11,6 +11,7 @@ function createMapOptions(maps) {
     styles: styles
   };
 }
+
 let mapInstance = 0
 class App extends Component {
 
@@ -22,7 +23,7 @@ class App extends Component {
     this.state = {
       center: {},
       currentLocation: {lat: 43.644625, lng: -79.395197},
-      markers: [],
+      markers: []
 
   }
 }
@@ -52,14 +53,11 @@ class App extends Component {
 
     //const maps all markers in state array to div with lat/lng locations
     const Markers = this.state.markers.map((marker, index) => (
-      <div onClick={this.onClick(marker, index)}
+      <div onClick={this.onClick(marker)}
         lat={marker.loc.lat}
         lng={marker.loc.lng} className="material-icons"
         key={index}>
         room
-        <div>
-          {(marker.popvisible ? <div value={marker.description} /> : null)}
-        </div>
       </div>
     ));
       //google map react component takes in center/zoom/options/onchange settings
@@ -72,11 +70,14 @@ class App extends Component {
         options={createMapOptions}
         onChange={this.onChange}
         onGoogleApiLoaded={this.setMapInstance}>
+
         <div className="marker" lat={this.props.center.lat} lng={this.props.center.lng}>
           <div className="dot"></div>
           <div className="pulse"></div>
         </div>
+
         {Markers}
+
         <a className="btn-floating btn-large waves-effect waves-light red" onClick={this.addMarker}><i className="material-icons">add</i></a>
       </GoogleMapReact>
       </div>
@@ -107,20 +108,19 @@ class App extends Component {
     this.setState({center: {lat, lng}})
   }
 
-  onClick = (marker, index) => {
+  onClick = (marker,index) => {
     // console.log(marker.loc.lat, marker.loc.lng)
     // const latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng)
     // console.log(latlng)
+    console.log(marker)
+    let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
     const infowindow = new google.maps.InfoWindow({
       content: marker.title,
+      position: latlng
     });
-    const mark = new google.maps.Marker({
-      position: marker.loc,
-      map: mapInstance
-      })
-    mark.addListener('click', function() {
-      infowindow.open(mapInstance,mark);
-    });
+    // this.addListener('click', function() {
+      infowindow.open(mapInstance);
+    // });
     // infowindow.open(mapInstance, mark)
     // let showMarker = marker
     // showMarker.popvisible = true

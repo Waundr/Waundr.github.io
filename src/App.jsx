@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import styles from './Mapstyle'
+import MarkerForm from './MarkerForm'
 
 //options for google maps api
 function createMapOptions(maps) {
@@ -44,6 +45,13 @@ class App extends Component {
       }
 
       ws.onmessage = (event) => {
+        const newMarker = JSON.parse(event.data)
+        console.log("newMarker: ", newMarker)
+        let markers = this.state.markers.concat(newMarker)
+        console.log("onmessage markers list:= ", markers)
+        // Make a pop up that new map has appeared
+        Materialize.toast('New Marker is here', 4000)
+        this.setState({markers:markers})
 
       }
     this.socket = ws; //make globally accessible
@@ -53,7 +61,7 @@ class App extends Component {
 
     //const maps all markers in state array to div with lat/lng locations
     const Markers = this.state.markers.map((marker, index) => (
-      <div onClick={this.onClick(marker)}
+      <div onClick={this.onClick(Markers[index])}
         lat={marker.loc.lat}
         lng={marker.loc.lng} className="material-icons"
         key={index}>
@@ -77,7 +85,7 @@ class App extends Component {
         </div>
 
         {Markers}
-
+        <MarkerForm/>
         <a className="btn-floating btn-large waves-effect waves-light red" onClick={this.addMarker}><i className="material-icons">add</i></a>
       </GoogleMapReact>
       </div>
@@ -108,19 +116,24 @@ class App extends Component {
     this.setState({center: {lat, lng}})
   }
 
-  onClick = (marker,index) => {
+  onClick = (marker) => {
+    console.log(marker)
     // console.log(marker.loc.lat, marker.loc.lng)
     // const latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng)
     // console.log(latlng)
-    console.log(marker)
+    console.log('event target', event.target)
     let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
     const infowindow = new google.maps.InfoWindow({
-      content: marker.title,
-      position: latlng
+      content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description,
     });
-    // this.addListener('click', function() {
-      infowindow.open(mapInstance);
-    // });
+
+    const mark = new google.maps.Marker({
+      position: marker.loc,
+      map:mapInstance
+    })
+    mark.addListener('click', function() {
+      infowindow.open(mapInstance,event.target);
+    });
     // infowindow.open(mapInstance, mark)
     // let showMarker = marker
     // showMarker.popvisible = true

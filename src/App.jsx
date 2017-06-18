@@ -71,7 +71,7 @@ class App extends Component {
       //google map react component takes in center/zoom/options/onchange settings
       //child googlemap react componesnts are markers
     return (
-      <div style ={{width:'100%', height: '100vh'}}>
+      <div style ={{width:'100%', height: '100vh', position: 'relative'}}>
       <GoogleMapReact
         defaultCenter={this.props.center}
         defaultZoom={this.props.zoom}
@@ -87,6 +87,8 @@ class App extends Component {
       </GoogleMapReact>
         <ModalForm add={this.addMarker}/>
       </div>
+
+
     );
   }
 

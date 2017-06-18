@@ -17,7 +17,7 @@ class ModalForm extends Component{
             header='Modal Header'
             bottomSheet
             trigger={
-              <Button className="btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></Button>
+              <Button style={{position: 'absolute', bottom: '2em', right: '2em'}} className="btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></Button>
             }>
             <Row>
               <Input placeholder="Title" s={6} label="Title" value={this.state.title} onChange={this._onTitleChange}/>

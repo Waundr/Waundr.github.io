@@ -61,7 +61,7 @@ class App extends Component {
 
     //const maps all markers in state array to div with lat/lng locations
     const Markers = this.state.markers.map((marker, index) => (
-      <div onClick={this.onClick(marker)}
+      <div onClick={() => this.onClick(marker)}
         lat={marker.loc.lat}
         lng={marker.loc.lng} className="material-icons"
         key={index}>
@@ -118,7 +118,6 @@ class App extends Component {
   }
 
   onClick = (marker) => {
-
     // let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
     const infowindow = new google.maps.InfoWindow({
       content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description,

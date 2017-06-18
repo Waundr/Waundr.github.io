@@ -28,7 +28,8 @@ class ModalForm extends Component{
               <Button className="modal-action modal-close btn waves-effect waves-light" type="submit" onClick={this._onSubmit.bind(this)}>SUBMIT
                 <Icon className="material-icons right">send</Icon>
               </Button>
-            <p>Lorem ipsum dolor sit amet</p>
+
+           
           </Modal>
       );
   }

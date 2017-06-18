@@ -16,7 +16,7 @@ class ModalForm extends Component{
             <Row>
               <Input ref='title' placeholder="Title" s={6} label="Title"  onChange={this._onTitleChange}/>
               <Input ref='desc' placeholder="Descrition" label="Descritption" onChange={this._onDescChange}/>
-                <Input ref='type' type='select' label="Materialize Select" defaultValue='Food Stand'>
+                <Input ref='type' type='select' label="Select Category" defaultValue='Food Stand'>
                   <option value='Food Stand'>Food Stand</option>
                   <option value='Street Market'>Street Market</option>
                   <option value='Entertainment'>Entertainment</option>
@@ -28,8 +28,6 @@ class ModalForm extends Component{
               <Button className="modal-action modal-close btn waves-effect waves-light" type="submit" onClick={this._onSubmit.bind(this)}>SUBMIT
                 <Icon className="material-icons right">send</Icon>
               </Button>
-
-           
           </Modal>
       );
   }

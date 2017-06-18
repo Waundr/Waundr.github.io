@@ -7,7 +7,7 @@ class ModalForm extends Component{
   render(){
       return(
           <Modal
-            header='Modal Header'
+            header='Create a new Map Point'
             bottomSheet
             trigger={
               <Button style={{position: 'absolute', bottom: '2em', right: '2em'}} className="btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></Button>
@@ -15,7 +15,7 @@ class ModalForm extends Component{
 
             <Row>
               <Input ref='title' placeholder="Title" s={6} label="Title"  onChange={this._onTitleChange}/>
-              <Input ref='desc' placeholder="Descrition" label="Descritption" onChange={this._onDescChange}/>
+              <Input ref='desc' placeholder="Description" label="Description" onChange={this._onDescChange}/>
                 <Input ref='type' type='select' label="Select Category" defaultValue='Food Stand'>
                   <option value='Food Stand'>Food Stand</option>
                   <option value='Street Market'>Street Market</option>
@@ -39,7 +39,7 @@ class ModalForm extends Component{
 
 
   _onSubmit = (e) => {
-    console.log(this.refs.type)
+    console.log("New map point informaiton", this.refs.type)
     let title = this.refs.title.state.value
     let desc = this.refs.desc.state.value
     let type = this.refs.type.state.value

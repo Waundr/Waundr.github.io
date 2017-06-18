@@ -30,7 +30,7 @@ class App extends Component {
 }
   //default center and zoom properties
   static defaultProps = {
-    center: {lat: 43.644625, lng: -79.395197},
+    center: {lat: (Math.random() * (43.641541 - 43.670727) + 43.670727).toFixed(6) * 1, lng: (Math.random() * (-79.367466 - -79.404287) + -79.404287).toFixed(6) * 1},
     zoom: 15
   };
 

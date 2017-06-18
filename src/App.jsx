@@ -100,7 +100,8 @@ class App extends Component {
   addMarker = (title, desc) =>{
     console.log("ITS CALLED")
     const marker = {
-      loc: this.state.currentLocation,
+      lat: this.state.currentLocation.lat,
+      lng: this.state.currentLocation.lng,
       popvisible: false,
       title: title,
       description: desc

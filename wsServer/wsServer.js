@@ -3,6 +3,15 @@
 const express = require('express');
 const SocketServer = require('ws').Server;
 
+var redis = require('redis');
+var client = redis.createClient();
+
+client.on('connect', function() {
+    console.log('connected');
+});
+
+let events = [];
+
 // Set the port to 3001
 const PORT = 3001;
 
@@ -22,22 +31,29 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
 
   const broadcast = (message) => {
+
     console.log("broadcast is called")
+    wss.clients.forEach((c) => {
+      if(c != ws) {
+        c.send(JSON.stringify(message));
+      }
+    });
+  }
 
-
-  wss.clients.forEach((c) => {
-    if(c != ws) {
-      c.send(JSON.stringify(message));
-    }
-  });
-}
+  events.forEach((event) => {
+    ws.send(JSON.stringify(message));
+  })
 
 
   ws.on('message', function incoming(message) {
-    console.log(JSON.parse(message))
-    let newMarker = JSON.parse(message)
-    console.log(newMarker)
+    let newMarker = JSON.parse(message);
+    console.log(newMarker);
+    events.push(newMarker);
+    client.hmset(`event${events.length - 1}`, newMarker)
     broadcast(message)
+    client.hgetall(`event${events.length - 1}`, (err, obj) => {
+      console.log(obj)
+    })
 
   })
 

@@ -83,11 +83,9 @@ class App extends Component {
           <div className="dot"></div>
           <div className="pulse"></div>
         </div>
-
         {Markers}
-        <ModalForm add={this.addMarker}/>
-        <a className="btn-floating btn-large waves-effect waves-light red" onClick={this.addMarker}><i className="material-icons">add</i></a>
       </GoogleMapReact>
+        <ModalForm add={this.addMarker}/>
       </div>
     );
   }

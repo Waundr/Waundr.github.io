@@ -40,9 +40,7 @@ class App extends Component {
     ws.onopen = (e) => {
       console.log("Connected to server");
     }
-      const send = (message) => {
-        ws.send(JSON.stringify(message));
-      }
+
 
       ws.onmessage = (event) => {
         const newMarker = JSON.parse(event.data)
@@ -97,15 +95,19 @@ class App extends Component {
     mapInstance = map.map
   }
   //callback for when +button pressed
-  addMarker = (title, desc) =>{
-    console.log("ITS CALLED")
+  addMarker = (title, desc, type, priv) =>{
+    console.log(priv)
     const marker = {
-      lat: this.state.currentLocation.lat,
-      lng: this.state.currentLocation.lng,
-      popvisible: false,
+      loc: {
+        lat: this.state.currentLocation.lat,
+        lng: this.state.currentLocation.lng
+      },
       title: title,
-      description: desc
+      description: desc,
+      type: type,
+      priv: priv ? true: false
     }
+    console.log('MARKER', marker)
     const markers = this.state.markers.concat(marker)
     this.setState({markers:markers})
     this.socket.send(JSON.stringify(marker))

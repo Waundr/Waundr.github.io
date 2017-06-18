@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import { Modal, Button, Row, Input } from 'react-materialize';
+import { Modal, Button, Row, Input, Icon} from 'react-materialize';
 
 class ModalForm extends Component{
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "",
-      description: ""
-    }
-  };
 
   render(){
       return(
@@ -19,11 +12,22 @@ class ModalForm extends Component{
             trigger={
               <Button style={{position: 'absolute', bottom: '2em', right: '2em'}} className="btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></Button>
             }>
+
             <Row>
-              <Input placeholder="Title" s={6} label="Title" value={this.state.title} onChange={this._onTitleChange}/>
-              <Input placeholder="Descrition" label="Descritption" value={this.state.description} onChange={this._onDescChange}/>
-              <Input type="submit" value="submit" onClick={this._onSubmit}/>
+              <Input ref='title' placeholder="Title" s={6} label="Title"  onChange={this._onTitleChange}/>
+              <Input ref='desc' placeholder="Descrition" label="Descritption" onChange={this._onDescChange}/>
+                <Input ref='type' type='select' label="Materialize Select" defaultValue='Food Stand'>
+                  <option value='Food Stand'>Food Stand</option>
+                  <option value='Street Market'>Street Market</option>
+                  <option value='Entertainment'>Entertainment</option>
+                  <option value='Meet up'>Meet up</option>
+                  <option value='Obstacle'>Obstacle</option>
+                </Input>
+                <Input ref="switch" type="switch" onLabel="Private" offLabel="Public"/>
             </Row>
+              <Button className="modal-action modal-close btn waves-effect waves-light" type="submit" onClick={this._onSubmit.bind(this)}>SUBMIT
+                <Icon className="material-icons right">send</Icon>
+              </Button>
             <p>Lorem ipsum dolor sit amet</p>
           </Modal>
       );
@@ -34,16 +38,14 @@ class ModalForm extends Component{
       show: React.PropTypes.bool.isRequired,
   }
 
-  _onTitleChange = (e) => {
-    this.setState({title: e.target.value})
-  }
-  _onDescChange = (e) => {
-    this.setState({description: e.target.value})
-  }
 
   _onSubmit = (e) => {
-    console.log("ONSUBMIT")
-    this.props.add(this.state.title, this.state.description)
+    console.log(this.refs.type)
+    let title = this.refs.title.state.value
+    let desc = this.refs.desc.state.value
+    let type = this.refs.type.state.value
+    let priv = this.refs.switch.state.value
+    this.props.add(title, desc, type, priv)
   }
 };
 

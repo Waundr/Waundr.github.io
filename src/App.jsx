@@ -139,8 +139,6 @@ class App extends Component {
     // console.log(marker,index)
 
   }
-
-
 }
 
 export default App;

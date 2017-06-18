@@ -17,7 +17,7 @@ class ModalForm extends Component{
             header='Modal Header'
             bottomSheet
             trigger={
-              <Button waves='light'>MODAL</Button>
+              <Button waves='light'><i className="material-icons">add</i></Button>
             }>
             <Row>
               <Input placeholder="Title" s={6} label="Title" value={this.state.title} onChange={this._onTitleChange}/>

@@ -162,7 +162,7 @@ class App extends Component {
     // let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
     const infowindow = new google.maps.InfoWindow({
 
-      content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description + "<a class='btn-floating blue'><i class='material-icons'>check_cirlce</i></a>" + "<a class='btn-floating red'><i class='material-icons'>event_busy</i></a>",
+      content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description + "<a class='btn-floating blue'><i class='material-icons'>check_circle</i></a>" + "<a class='btn-floating red'><i class='material-icons'>clear</i></a>",
       position: marker.loc
 
     });

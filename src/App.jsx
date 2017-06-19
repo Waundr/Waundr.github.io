@@ -37,10 +37,15 @@ class App extends Component {
   };
 
   componentDidMount() {
+    console.log('component did mount')
     //initiate connection to WS server
     const ws = new WebSocket("ws://localhost:3000");
     ws.onopen = (e) => {
       console.log("Connected to server");
+    }
+
+    ws.onerror = (e) => {
+      console.log("ws error", e)
     }
 
 

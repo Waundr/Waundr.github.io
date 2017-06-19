@@ -5,13 +5,14 @@ var config = require('./webpack.config');
 var redis = require('redis');
 var client = redis.createClient();
 
-const express = require('express');
+const http = require('http');
+
 const SocketServer = require('ws').Server;
 
 let events = [];
 
 client.on('connect', function() {
-    console.log('connected');
+    console.log('redis connected');
 });
 
 server = new WebpackDevServer(webpack(config), {
@@ -29,8 +30,6 @@ server = new WebpackDevServer(webpack(config), {
 
     console.log('Running at http://0.0.0.0:3000');
   });
-
-
 
 const wss = new SocketServer({ server });
 
@@ -70,4 +69,5 @@ wss.on('connection', (ws) => {
  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => console.log('Client disconnected'));
 });
+
 

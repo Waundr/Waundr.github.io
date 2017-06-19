@@ -38,7 +38,7 @@ class App extends Component {
 
   componentDidMount() {
     //initiate connection to WS server
-    const ws = new WebSocket("ws://localhost:3001");
+    const ws = new WebSocket("ws://localhost:3000");
     ws.onopen = (e) => {
       console.log("Connected to server");
     }

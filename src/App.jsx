@@ -85,19 +85,40 @@ class App extends Component {
           <div className="pulse"></div>
         </div>
 
-        <div className="fixed-action-btn horizontal click-to-toggle"  >
-          <a className="btn-floating btn-large red" style={{position: 'absolute', top: '2em', right: '2em'}}>
-            <i className="material-icons">menu</i>
-          </a>
-          <ul>
-            <li><a className="btn-floating red"><i className="material-icons">account_box</i></a></li>
-            <li><a className="btn-floating blue"><i className="material-icons">filter_list</i></a></li>
-            <li><a className="btn-floating green"><i className="material-icons">pregnant_woman</i></a></li>
-          </ul>
-        </div>
 
         {Markers}
       </GoogleMapReact>
+      <div className="fixed-action-btn horizontal click-to-toggle" style={{position: 'absolute', bottom: '8em', right: '2em'}}  >
+        <a className="btn-floating btn-large red" >
+          <i className="material-icons">filter_list</i>
+        </a>
+        <ul>
+          <li><a className="btn-floating red"><i className="material-icons">restaurant</i></a></li>
+          <li><a className="btn-floating blue"><i className="material-icons">casino</i></a></li>
+          <li><a className="btn-floating green"><i className="material-icons">nature_people</i></a></li>
+          <li><a className="btn-floating yellow"><i className="material-icons">store</i></a></li>
+          <li><a className="btn-floating purple"><i className="material-icons">group_add</i></a></li>
+          <li><a className="btn-floating orange"><i className="material-icons">people</i></a></li>
+        </ul>
+      </div>
+      <SideNav
+	     trigger={<Button style={{position: 'absolute', top: '2em', left: '2em'}}><i className="material-icons">menu</i></Button>}
+      	options={{ closeOnClick: true }}
+      	>
+      	<SideNavItem userView
+      		user={{
+      			background: 'img/office.jpg',
+      			image: 'img/yuna.jpg',
+      			name: 'John Doe',
+      			email: 'jdandturk@gmail.com'
+      		}}
+      	/>
+      	<SideNavItem href='#!icon' icon='cloud'>Login</SideNavItem>
+      	<SideNavItem href='#!second'>Logout</SideNavItem>
+      	<SideNavItem divider />
+      	<SideNavItem subheader>Subheader</SideNavItem>
+      	<SideNavItem waves href='#!third'>register</SideNavItem>
+      </SideNav>
 
         <ModalForm add={this.addMarker}/>
       </div>

@@ -17,13 +17,13 @@ class ModalForm extends Component{
             <Row>
               <Input ref='title' s={6} label="Title"  onChange={this._onTitleChange}/>
               <Input ref='desc' label="Description" onChange={this._onDescChange}/>
-                <Input ref='type' type='select' label="Select Category" defaultValue='Food Stand' data-beloworigin="true" max-height='10' style={{zIndex: "50"}}>
-                  <option value='Food Stand' style={{zIndex: "50"}}>Food Stand</option>
-                  <option value='Street Market' style={{zIndex: "50"}}>Street Market</option>
-                  <option value='Entertainment' style={{zIndex: "50"}}>Entertainment</option>
-                  <option value='Meet up' style={{zIndex: "50"}}>Meet up</option>
-                  <option value='Obstacle' style={{zIndex: "50"}}>Obstacle</option>
-                  <option value='Your friends' style={{zIndex: "50"}}>Your friends</option>
+                <Input ref='type' type='select' label="Select Category" placeholder="Food Stand" data-beloworigin="true" max-height='10' style={{zIndex: "50"}}>
+                  <option value='Food Stand'><a>Food Stand<i className="material-icons right">restaurant</i></a></option>
+                  <option value='Street Market'><a>Street Market<i className="material-icons right">store</i></a></option>
+                  <option value='Entertainment'><a>Entertainment<i className="material-icons right">casino</i></a></option>
+                  <option value='Meet up'><a>Meet up<i className="material-icons right">group_add</i></a></option>
+                  <option value='Obstacle'><a>Obstacle<i className="material-icons right">nature_people</i></a></option>
+                  <option value='Your friends'><a>Your friends<i className="material-icons right">people</i></a></option>
                 </Input>
 
                 <Input ref="switch" type="switch" onLabel="Private" offLabel="Public"/>

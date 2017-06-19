@@ -92,6 +92,7 @@ class App extends Component {
           <ul>
             <li><a className="btn-floating red"><i className="material-icons">account_box</i></a></li>
             <li><a className="btn-floating blue"><i className="material-icons">filter_list</i></a></li>
+            <li><a className="btn-floating green"><i className="material-icons">pregnant_woman</i></a></li>
           </ul>
         </div>
 

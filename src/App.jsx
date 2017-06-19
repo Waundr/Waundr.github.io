@@ -61,7 +61,7 @@ class App extends Component {
 
     //const maps all markers in state array to div with lat/lng locations
     const Markers = this.state.markers.map((marker, index) => (
-      <div onClick={() => this.onClick(marker)}
+      <div className="marker" onClick={() => this.onClick(marker)}
         lat={marker.loc.lat}
         lng={marker.loc.lng} className="material-icons"
         key={index}>
@@ -158,18 +158,22 @@ class App extends Component {
   }
 
   onClick = (marker) => {
+    mapInstance.panTo(marker.loc);
     // let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
     const infowindow = new google.maps.InfoWindow({
-      content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description + "<a class='btn-floating blue'><i class='material-icons'>event_available</i></a>" + "<a class='btn-floating red'><i class='material-icons'>event_busy</i></a>"
+
+      content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description + "<a class='btn-floating blue'><i class='material-icons'>check_cirlce</i></a>" + "<a class='btn-floating red'><i class='material-icons'>event_busy</i></a>",
+      position: marker.loc
+
     });
 
-    const mark = new google.maps.Marker({
-      position: marker.loc,
-      map:mapInstance
-    })
-    mark.addListener('click', function() {
-      infowindow.open(mapInstance,mark);
-    });
+    // const mark = new google.maps.Marker({
+    //   position: marker.loc,
+    //   map:mapInstance
+    // })
+    // mark.addListener('click', function() {
+      infowindow.open(mapInstance);
+    // });
     // infowindow.open(mapInstance, mark)
     // let showMarker = marker
     // showMarker.popvisible = true

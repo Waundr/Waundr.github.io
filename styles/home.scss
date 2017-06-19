@@ -4,7 +4,6 @@ body {
   font-family: sans-serif;
 }
 
-
 h1 {
   color: tomato;
 }
@@ -20,4 +19,8 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 
 .select{
     overflow-y: auto !important;
+}
+
+.marker {
+  cursor: pointer;
 }

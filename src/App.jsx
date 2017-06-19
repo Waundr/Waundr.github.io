@@ -125,7 +125,7 @@ class App extends Component {
       	<SideNavItem waves href='#!third'>register</SideNavItem>
       </SideNav>
 
-        <ModalForm add={this.addMarker}/>
+        <ModalForm loc={this.state.currentLocation} add={this.addMarker}/>
       </div>
 
 
@@ -137,13 +137,10 @@ class App extends Component {
     mapInstance = map.map
   }
   //callback for when +button pressed
-  addMarker = (title, desc, type, priv) =>{
+  addMarker = (title, desc, type, priv, loc) =>{
     console.log(priv)
     const marker = {
-      loc: {
-        lat: this.state.currentLocation.lat,
-        lng: this.state.currentLocation.lng
-      },
+      loc: loc,
       title: title,
       description: desc,
       type: type,

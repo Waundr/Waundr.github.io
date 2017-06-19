@@ -15,7 +15,7 @@ class ModalForm extends Component{
             <Row>
               <Input ref='title' s={6} label="Title"  onChange={this._onTitleChange}/>
               <Input ref='desc' label="Description" onChange={this._onDescChange}/>
-                <Input ref='type' type='select' label="Select Category" placeholder="Select" data-beloworigin="true" style={{fontfamily: 'FontAwesome'}}>
+                <Input ref='type' defaultValue='Food Stand' type='select' label="Select Category" placeholder="Select" data-beloworigin="true" style={{fontfamily: 'FontAwesome'}}>
                   <option value='Food Stand' > &#xf015; Food Stand </option>
                   <option value='Street Market'>Street Market</option>
                   <option value='Entertainment'>Entertainment </option>
@@ -46,7 +46,7 @@ class ModalForm extends Component{
     let desc = this.refs.desc.state.value
     let type = this.refs.type.state.value
     let priv = this.refs.switch.state.value
-    this.props.add(title, desc, type, priv)
+    this.props.add(title, desc, type, priv, this.props.loc)
   }
 };
 

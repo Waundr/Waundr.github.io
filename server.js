@@ -5,14 +5,16 @@ var config = require('./webpack.config');
 var redis = require('redis');
 var client = redis.createClient();
 
-const http = require('http');
-
 const SocketServer = require('ws').Server;
 
 let events = [];
 
 client.on('connect', function() {
     console.log('redis connected');
+});
+
+client.flushdb( function (err, succeeded) {
+    console.log("flushing redis.."+ succeeded); // will be true if successfull
 });
 
 server = new WebpackDevServer(webpack(config), {
@@ -27,8 +29,9 @@ server = new WebpackDevServer(webpack(config), {
     if (err) {
       console.log(err);
     }
-
     console.log('Running at http://0.0.0.0:3000');
+  });
+
 
 const wss = new SocketServer({ server });
 
@@ -48,13 +51,16 @@ wss.on('connection', (ws) => {
     });
   }
 
-  events.forEach((event) => {
-    ws.send(JSON.stringify(message));
-  })
+  // events.forEach((event) => {
+  //   ws.send(JSON.stringify(message));
+  // })
 
 
   ws.on('message', function incoming(message) {
     let newMarker = JSON.parse(message);
+    newMarker.lat = newMarker.loc.lat;
+    newMarker.lng = newMarker.loc.lng;
+    delete newMarker.loc;
     console.log(newMarker);
     events.push(newMarker);
     client.hmset(`event${events.length - 1}`, newMarker)
@@ -69,5 +75,5 @@ wss.on('connection', (ws) => {
   ws.on('close', () => console.log('Client disconnected'));
 });
 
-  });
+
 

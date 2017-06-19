@@ -29,7 +29,6 @@ server = new WebpackDevServer(webpack(config), {
     }
 
     console.log('Running at http://0.0.0.0:3000');
-  });
 
 const wss = new SocketServer({ server });
 
@@ -70,4 +69,5 @@ wss.on('connection', (ws) => {
   ws.on('close', () => console.log('Client disconnected'));
 });
 
+  });
 

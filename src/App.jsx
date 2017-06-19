@@ -70,7 +70,7 @@ class App extends Component {
         lat={marker.loc.lat}
         lng={marker.loc.lng} className="material-icons"
         key={index}>
-        room
+        {this.typeToIcon(marker.type)}
       </div>
     ));
       //google map react component takes in center/zoom/options/onchange settings
@@ -166,8 +166,10 @@ class App extends Component {
     mapInstance.panTo(marker.loc);
     // let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
     const infowindow = new google.maps.InfoWindow({
-      content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description + "<a class='btn-floating blue'><i class='material-icons'>thumb_up</i></a>" + "<a class='btn-floating red'><i class='material-icons'>thumb_down</i></a>",
+
+      content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description + "<a class='btn-floating blue'><i class='material-icons'>check_cirlce</i></a>" + "<a class='btn-floating red'><i class='material-icons'>event_busy</i></a>",
       position: marker.loc
+
     });
 
     // const mark = new google.maps.Marker({
@@ -185,6 +187,26 @@ class App extends Component {
     // this.setState({markers: markers})
     // console.log(marker,index)
 
+  }
+
+  typeToIcon = (type) => {
+
+    switch (type) {
+      case "Food Stand":
+        return "restaurant"
+      case "Street Market":
+        return "store"
+      case "Entertainment":
+        return "casino"
+      case "Meet up":
+        return "group_add"
+      case "Obstacle":
+        return "nature_people"
+      case "Your friends":
+        return "people"
+      default:
+        return "room"
+    }
   }
 }
 

@@ -3,8 +3,6 @@ import { Modal, Button, Row, Input, Icon} from 'react-materialize';
 
 class ModalForm extends Component{
 
-
-
   render(){
       return(
           <Modal
@@ -17,13 +15,13 @@ class ModalForm extends Component{
             <Row>
               <Input ref='title' s={6} label="Title"  onChange={this._onTitleChange}/>
               <Input ref='desc' label="Description" onChange={this._onDescChange}/>
-                <Input ref='type' type='select' label="Select Category" placeholder="Food Stand" data-beloworigin="true" max-height='10' style={{zIndex: "50"}}>
-                  <option value='Food Stand'><a>Food Stand<i className="material-icons right">restaurant</i></a></option>
-                  <option value='Street Market'><a>Street Market<i className="material-icons right">store</i></a></option>
-                  <option value='Entertainment'><a>Entertainment<i className="material-icons right">casino</i></a></option>
-                  <option value='Meet up'><a>Meet up<i className="material-icons right">group_add</i></a></option>
-                  <option value='Obstacle'><a>Obstacle<i className="material-icons right">nature_people</i></a></option>
-                  <option value='Your friends'><a>Your friends<i className="material-icons right">people</i></a></option>
+                <Input ref='type' type='select' label="Select Category" placeholder="Select" data-beloworigin="true" style={{fontfamily: 'FontAwesome'}}>
+                  <option value='Food Stand' > &#xf015; Food Stand </option>
+                  <option value='Street Market'>Street Market</option>
+                  <option value='Entertainment'>Entertainment </option>
+                  <option value='Meet up'>Meet up</option>
+                  <option value='Obstacle'>Obstacle</option>
+                  <option value='Your friends'>Your friends</option>
                 </Input>
 
                 <Input ref="switch" type="switch" onLabel="Private" offLabel="Public"/>

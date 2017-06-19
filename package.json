@@ -45,12 +45,14 @@
     "webpack-dev-server": "2.3.0"
   },
   "dependencies": {
+    "express": "^4.15.3",
     "google-map-react": "^0.24.0",
     "materialize-css": "^0.98.2",
     "prop-types": "^15.5.10",
     "react": "15.4.2",
     "react-dom": "15.4.2",
     "react-materialize": "^1.0.1",
-    "redis": "^2.7.1"
+    "redis": "^2.7.1",
+    "ws": "3.0.0"
   }
 }

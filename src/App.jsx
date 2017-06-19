@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import styles from './Mapstyle';
 import ModalForm from './Modal.jsx';
+import ReactDOM from 'react-dom';
+import {SideNav, SideNavItem, Button} from 'react-materialize';
 
 //options for google maps api
 function createMapOptions(maps) {
@@ -69,6 +71,7 @@ class App extends Component {
       //google map react component takes in center/zoom/options/onchange settings
       //child googlemap react componesnts are markers
     return (
+
       <div style ={{width:'100%', height: '100vh', position: 'relative'}}>
       <GoogleMapReact
         defaultCenter={this.props.center}
@@ -81,8 +84,20 @@ class App extends Component {
           <div className="dot"></div>
           <div className="pulse"></div>
         </div>
+
+        <div className="fixed-action-btn horizontal click-to-toggle"  >
+          <a className="btn-floating btn-large red" style={{position: 'absolute', top: '2em', right: '2em'}}>
+            <i className="material-icons">menu</i>
+          </a>
+          <ul>
+            <li><a className="btn-floating red"><i className="material-icons">account_box</i></a></li>
+            <li><a className="btn-floating blue"><i className="material-icons">filter_list</i></a></li>
+          </ul>
+        </div>
+
         {Markers}
       </GoogleMapReact>
+
         <ModalForm add={this.addMarker}/>
       </div>
 
@@ -123,7 +138,7 @@ class App extends Component {
   onClick = (marker) => {
     // let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
     const infowindow = new google.maps.InfoWindow({
-      content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description,
+      content: "Title: " + marker.title + "<br />" + "Descripton: " + marker.description + "<a class='btn-floating blue'><i class='material-icons'>thumb_up</i></a>" + "<a class='btn-floating red'><i class='material-icons'>thumb_down</i></a>"
     });
 
     const mark = new google.maps.Marker({

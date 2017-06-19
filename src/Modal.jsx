@@ -16,7 +16,7 @@ class ModalForm extends Component{
             <Row>
               <Input ref='title' placeholder="Title" s={6} label="Title"  onChange={this._onTitleChange}/>
               <Input ref='desc' placeholder="Description" label="Description" onChange={this._onDescChange}/>
-                <Input ref='type' type='select' label="Select Category" defaultValue='Food Stand' data-beloworigin="False">
+                <Input ref='type' type='select' label="Select Category" defaultValue='Food Stand' data-beloworigin="true">
                   <option value='Food Stand'>Food Stand</option>
                   <option value='Street Market'>Street Market</option>
                   <option value='Entertainment'>Entertainment</option>

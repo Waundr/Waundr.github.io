@@ -25,7 +25,7 @@ class App extends Component {
      //array of all markers user can see
     this.state = {
       center: {},
-      currentLocation: {lat: 43.644625, lng: -79.395197},
+      currentLocation: {lat: this.props.center.lat, lng: this.props.center.lng},
       markers: []
 
   }

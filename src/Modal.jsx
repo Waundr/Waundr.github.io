@@ -14,15 +14,15 @@ class ModalForm extends Component{
             }>
 
             <Row>
-              <Input ref='title' placeholder="Title" s={6} label="Title"  onChange={this._onTitleChange}/>
-              <Input ref='desc' placeholder="Description" label="Description" onChange={this._onDescChange}/>
-                <Input ref='type' type='select' label="Select Category" defaultValue='Food Stand' data-beloworigin="true">
+              <Input ref='title' s={6} label="Title"  onChange={this._onTitleChange}/>
+              <Input ref='desc' label="Description" onChange={this._onDescChange}/>
+                <Input ref='type' type='select' label="Select Category" defaultValue='Food Stand' data-beloworigin="true" max-height='10'>
                   <option value='Food Stand'>Food Stand</option>
                   <option value='Street Market'>Street Market</option>
                   <option value='Entertainment'>Entertainment</option>
                   <option value='Meet up'>Meet up</option>
                   <option value='Obstacle'>Obstacle</option>
-                    <option value='Your friends'>Your friends</option>
+                  <option value='Your friends'>Your friends</option>
                 </Input>
                 <Input ref="switch" type="switch" onLabel="Private" offLabel="Public"/>
             </Row>

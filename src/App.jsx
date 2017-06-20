@@ -37,7 +37,6 @@ class App extends Component {
   };
 
   componentDidMount() {
-    console.log('component did mount')
     //initiate connection to WS server
     const ws = new WebSocket("ws://localhost:3000");
     ws.onopen = (e) => {
@@ -50,13 +49,13 @@ class App extends Component {
 
 
       ws.onmessage = (event) => {
-        const newMarker = JSON.parse(event.data)
-        console.log("newMarker: ", newMarker)
-        let markers = this.state.markers.concat(newMarker)
-        console.log("onmessage markers list:= ", markers)
+        const newMarker = JSON.parse(JSON.parse(event.data))
+        // let markers = this.state.markers
+        // markers.push(newMarker)
+        // console.log("onmessage markers list:= ", markers)
         // Make a pop up that new map has appeared
         Materialize.toast('New Marker is here', 4000)
-        this.setState({markers:markers})
+        this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc)
 
       }
     this.socket = ws; //make globally accessible
@@ -65,6 +64,7 @@ class App extends Component {
   render() {
 
     //const maps all markers in state array to div with lat/lng locations
+    console.log('debugging markers here: ' + JSON.stringify(this.state.markers));
     const Markers = this.state.markers.map((marker, index) => (
       <div className="marker" onClick={() => this.onClick(marker)}
         lat={marker.loc.lat}
@@ -137,7 +137,7 @@ class App extends Component {
     mapInstance = map.map
   }
   //callback for when +button pressed
-  addMarker = (title, desc, type, priv, loc) =>{
+  addMarker = (title, desc, type, priv, loc, selfAdd) =>{
     console.log(priv)
     const marker = {
       loc: loc,
@@ -147,9 +147,13 @@ class App extends Component {
       priv: priv ? true: false
     }
     console.log('MARKER', marker)
-    const markers = this.state.markers.concat(marker)
+    const markers = this.state.markers;
+    markers.push(marker);
     this.setState({markers:markers})
-    this.socket.send(JSON.stringify(marker))
+
+    if (selfAdd) {
+      this.socket.send(JSON.stringify(marker))
+    }
   }
 
   //callback when any map change occurs, obj param gives lat/lng/zoom/etc..

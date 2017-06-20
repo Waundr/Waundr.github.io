@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 
-var redis = require('redis');
-var client = redis.createClient();
+const redis = require('redis');
+const client = redis.createClient();
 const usersRoutes = require("./routes/users")
 const markerRoutes = require("./routes/markers")
 
@@ -24,10 +24,11 @@ client.flushdb( function (err, succeeded) {
 app.get('/', function(req, res) {
     console.log('home')
     res.send('hellow')
-    // res.sendFile(__dirname + '../index.html');
 })
 
-
+app.get('/events', (req, res) => {
+  res.json(events)
+})
 
 
 app.use(express.static('public'))
@@ -47,7 +48,7 @@ wss.on('connection', (ws) => {
     console.log("broadcasting to all users")
     wss.clients.forEach((c) => {
       if(c != ws) {
-        c.send(JSON.stringify(message));
+        c.send(message);
       }
     });
   }

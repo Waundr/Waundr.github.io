@@ -48,13 +48,16 @@ class App extends Component {
     }
 
     ws.onmessage = (e) => {
-      if (e.data.type === 'update') {
-        fetch('/events.json');
+      console.log(e.data)
+      if (e.data === 'update markers') {
+        fetch('localhost:3001/events')
+          .then((res) => {
+            console.log(res)
+            Materialize.toast(`New ${res.type} nearby`, 4000)
+            this.addMarker(res.title, res.description, res.type, res.priv, res.loc)
+          })
       }
       const newMarker = JSON.parse(JSON.parse(event.data))
-
-      Materialize.toast(`New ${newMarker.type} nearby`, 4000)
-      this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc)
 
     }
     this.socket = ws; //make globally accessible

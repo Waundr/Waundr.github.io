@@ -155,10 +155,17 @@ class App extends Component {
     }
 
     //post request to redis
-    fetch("", {
-      method: "post",
-      body: JSON.stringify(marker)
-    })
+    // fetch("http://localhost:3001/markers/info/3", {
+    //   method: "get"
+    //   // headers: {
+    //   //   "Content-Type": "application/json"
+    //   // },
+    //   // body: {
+    //   //   test: "POOPOO"
+    //   // }
+    // }).then ((response) =>  {
+    //   console.log("response")
+    // })
   }
 
   //callback when any map change occurs, obj param gives lat/lng/zoom/etc..

@@ -28,10 +28,9 @@
   "engines": {
     "node": ">=6.0.0"
   },
-  "devDependencies": {
-
-  },
+  "devDependencies": {},
   "dependencies": {
+    "cors": "^2.8.3",
     "express": "^4.15.3",
     "redis": "^2.7.1",
     "ws": "3.0.0"

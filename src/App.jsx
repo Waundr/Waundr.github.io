@@ -44,6 +44,17 @@ class App extends Component {
     const ws = new WebSocket("ws://localhost:3001");
     ws.onopen = (e) => {
       console.log("Connected to server");
+      fetch('http://localhost:3001/events.json')
+          .then((res) => {
+            return res.json()
+          }).then((data) => {
+            data.forEach((marker) => {
+              marker.loc = {lat: marker.lat, lng: marker.lng};
+              this.addMarker(marker.title, marker.description, marker.type, marker.priv, marker.loc)
+            })
+          }).catch((err) => {
+            console.log(err);
+          })
     }
 
     ws.onerror = (e) => {
@@ -53,14 +64,19 @@ class App extends Component {
     ws.onmessage = (e) => {
       console.log(e.data)
       if (e.data === 'update markers') {
-        fetch('localhost:3001/events')
+        fetch('http://localhost:3001/events.json')
           .then((res) => {
-            console.log(res)
-            Materialize.toast(`New ${res.type} nearby`, 4000)
-            this.addMarker(res.title, res.description, res.type, res.priv, res.loc)
+            return res.json()
+          }).then((data) => {
+            let newMarker = data[data.length - 1];
+            newMarker.loc = {lat: newMarker.lat, lng: newMarker.lng};
+            Materialize.toast(`New ${newMarker.type} nearby`, 4000)
+            this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc)
+          }).catch((err) => {
+            console.log(err);
           })
       }
-      const newMarker = JSON.parse(JSON.parse(event.data))
+      // const newMarker = JSON.parse(JSON.parse(event.data))
 
     }
     this.socket = ws; //make globally accessible
@@ -158,6 +174,7 @@ class App extends Component {
     this.setState({markers:markers})
 
     if (selfAdd) {
+      console.log('sending socket')
       this.socket.send(JSON.stringify(marker))
     }
 

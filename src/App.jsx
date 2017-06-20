@@ -4,6 +4,9 @@ import styles from './Mapstyle';
 import ModalForm from './Modal.jsx';
 import ReactDOM from 'react-dom';
 import {SideNav, SideNavItem, Button, Row, Input} from 'react-materialize';
+import RegisterModal from './RegisterModal.jsx'
+import UserModal from './UserModal.jsx'
+import AddFriendsModal from './AddFriendsModal.jsx'
 
 //options for google maps api
 function createMapOptions(maps) {
@@ -117,11 +120,11 @@ class App extends Component {
       			email: 'jdandturk@gmail.com'
       		}}
       	/>
-      	<SideNavItem href='#!icon' icon='person'>Login</SideNavItem>
-      	<SideNavItem href='#!second' icon ='person_outline'>Logout</SideNavItem>
-      	<SideNavItem waves href='#!third' icon='person_add'>Register</SideNavItem>
+      	<SideNavItem href='#!icon' icon='person'><UserModal /></SideNavItem>
+      	<SideNavItem href='#!second' icon ='person_outline'><Button> Logout </Button></SideNavItem>
+      	<SideNavItem waves href='#!third' icon='person_add'><RegisterModal /></SideNavItem>
         <SideNavItem divider />
-      	<SideNavItem icon ='plus_one'>Add friends</SideNavItem>
+      	<SideNavItem icon ='plus_one'><AddFriendsModal /></SideNavItem>
 
       </SideNav>
 

@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import styles from './Mapstyle';
 import ModalForm from './Modal.jsx';
 import ReactDOM from 'react-dom';
-import {SideNav, SideNavItem, Button} from 'react-materialize';
+import {SideNav, SideNavItem, Button, Row, Input} from 'react-materialize';
 
 //options for google maps api
 function createMapOptions(maps) {
@@ -117,11 +117,12 @@ class App extends Component {
       			email: 'jdandturk@gmail.com'
       		}}
       	/>
-      	<SideNavItem href='#!icon' icon='cloud'>Login</SideNavItem>
-      	<SideNavItem href='#!second'>Logout</SideNavItem>
-      	<SideNavItem divider />
-      	<SideNavItem subheader>Subheader</SideNavItem>
-      	<SideNavItem waves href='#!third'>register</SideNavItem>
+      	<SideNavItem href='#!icon' icon='person'>Login</SideNavItem>
+      	<SideNavItem href='#!second' icon ='person_outline'>Logout</SideNavItem>
+      	<SideNavItem waves href='#!third' icon='person_add'>Register</SideNavItem>
+        <SideNavItem divider />
+      	<SideNavItem icon ='plus_one'>Add friends</SideNavItem>
+
       </SideNav>
 
         <ModalForm loc={this.state.currentLocation} add={this.addMarker}/>

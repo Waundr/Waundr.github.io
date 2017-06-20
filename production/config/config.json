@@ -1,0 +1,18 @@
+{
+  "development": {
+    "username": "labber",
+    "password": "labber",
+    "database": "final",
+    "host": "localhost",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "labber",
+    "password": "labber",
+    "database": "final",
+    "host": "localhost",
+    "port": 5432,
+    "dialect": "postgres"
+  }
+}

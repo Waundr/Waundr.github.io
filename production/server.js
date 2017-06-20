@@ -1,6 +1,7 @@
 const express = require('express');
-var redis = require('redis');
-var client = redis.createClient();
+const app = express();
+const redis = require('redis');
+const client = redis.createClient();
 
 const SocketServer = require('ws').Server;
 
@@ -16,6 +17,15 @@ client.flushdb( function (err, succeeded) {
     console.log("flushing redis.."+ succeeded); // will be true if successfull
 });
 
+
+app.get('/', function(req, res) {
+    console.log('home')
+    res.sendFile(__dirname + '../index.html');
+})
+
+
+
+
 const server = express()
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
@@ -30,8 +40,7 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
 
   const broadcast = (message) => {
-
-    console.log("broadcast is called")
+    console.log("broadcasting to all users")
     wss.clients.forEach((c) => {
       if(c != ws) {
         c.send(JSON.stringify(message));
@@ -52,7 +61,7 @@ wss.on('connection', (ws) => {
     console.log(newMarker);
     events.push(newMarker);
     client.hmset(`event${events.length - 1}`, newMarker)
-    broadcast(message)
+    broadcast('update markers')
     client.hgetall(`event${events.length - 1}`, (err, obj) => {
       console.log(obj)
     })

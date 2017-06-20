@@ -47,13 +47,13 @@ class App extends Component {
       console.log("ws error", e)
     }
 
-    ws.onmessage = (event) => {
+    ws.onmessage = (e) => {
+      if (e.data.type === 'update') {
+        fetch('/events.json');
+      }
       const newMarker = JSON.parse(JSON.parse(event.data))
-      // let markers = this.state.markers
-      // markers.push(newMarker)
-      // console.log("onmessage markers list:= ", markers)
-      // Make a pop up that new map has appeared
-      Materialize.toast('New Marker is here', 4000)
+
+      Materialize.toast(`New ${newMarker.type} nearby`, 4000)
       this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc)
 
     }

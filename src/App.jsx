@@ -50,7 +50,7 @@ class App extends Component {
           }).then((data) => {
             data.forEach((marker) => {
               marker.loc = {lat: marker.lat, lng: marker.lng};
-              this.addMarker(marker.title, marker.description, marker.type, marker.priv, marker.loc)
+              this.addMarker(marker.title, marker.description, marker.type, marker.priv, marker.loc, false, marker.id)
             })
           }).catch((err) => {
             console.log(err);
@@ -62,21 +62,22 @@ class App extends Component {
     }
 
     ws.onmessage = (e) => {
-      console.log(e.data)
-      if (e.data === 'update markers') {
+      let stuff = JSON.parse(e.data);
+      if (stuff.type === 'update markers') {
         fetch('http://localhost:3001/events.json')
           .then((res) => {
             return res.json()
           }).then((data) => {
             let newMarker = data[data.length - 1];
             newMarker.loc = {lat: newMarker.lat, lng: newMarker.lng};
-            Materialize.toast(`New ${newMarker.type} nearby`, 4000)
-            this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc)
+            this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc, false, newMarker.id)
           }).catch((err) => {
             console.log(err);
           })
       }
-      // const newMarker = JSON.parse(JSON.parse(event.data))
+      if (stuff.type === 'notification') {
+        Materialize.toast(`New ${stuff.data} nearby`, 4000)
+      }
 
     }
     this.socket = ws; //make globally accessible
@@ -85,7 +86,6 @@ class App extends Component {
   render() {
 
     //const maps all markers in state array to div with lat/lng locations
-    console.log('debugging markers here: ' + JSON.stringify(this.state.markers));
     const Markers = this.state.markers.map((marker, index) => (
       <div className="marker" onClick={() => this.onClick(marker)}
         lat={marker.loc.lat}
@@ -159,23 +159,22 @@ class App extends Component {
     mapInstance = map.map
   }
   //callback for when +button pressed
-  addMarker = (title, desc, type, priv, loc, selfAdd) =>{
-    console.log(priv)
+  addMarker = (title, desc, type, priv, loc, selfAdd, id) =>{
     const marker = {
+      id: id,
       loc: loc,
       title: title,
       description: desc,
       type: type,
       priv: priv ? true: false
     }
-    console.log('MARKER', marker)
-    const markers = this.state.markers;
-    markers.push(marker);
-    this.setState({markers:markers})
 
-    if (selfAdd) {
-      console.log('sending socket')
+    if (selfAdd === true) {
       this.socket.send(JSON.stringify(marker))
+    } else {
+      const markers = this.state.markers;
+      markers.push(marker);
+      this.setState({markers:markers})
     }
 
     //post request to redis

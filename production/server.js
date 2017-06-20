@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors')
 const app = express();
+const uuidv4 = require('uuid/v4');
 
 const redis = require('redis');
 const client = redis.createClient();
@@ -29,8 +30,6 @@ app.get('/', function(req, res) {
 })
 
 app.get('/events.json', (req, res) => {
-  console.log('3', events)
-
   res.json(events)
 })
 
@@ -42,8 +41,6 @@ server = app.use(express.static('public'))
 
 const wss = new SocketServer({ server });
 
-console.log('1', events)
-
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
@@ -53,8 +50,15 @@ wss.on('connection', (ws) => {
   const broadcast = (message) => {
     console.log("broadcasting to all users")
     wss.clients.forEach((c) => {
-      if(c != ws) {
-        c.send(message);
+      c.send(JSON.stringify(message));
+    });
+  }
+
+  const broadcastElse = (message) => {
+    console.log("broadcasting to all users")
+    wss.clients.forEach((c) => {
+      if (c != ws) {
+        c.send(JSON.stringify(message));
       }
     });
   }
@@ -69,12 +73,17 @@ wss.on('connection', (ws) => {
     newMarker.lat = newMarker.loc.lat;
     newMarker.lng = newMarker.loc.lng;
     delete newMarker.loc;
-    console.log(newMarker);
+    newMarker.id = uuidv4();
     events.push(newMarker);
-    console.log('2', events)
 
     client.hmset(`event${events.length - 1}`, newMarker)
-    broadcast('update markers')
+
+    let info = {};
+    info.type = 'update markers';
+    broadcast(info)
+    info.type = 'notification';
+    info.data = newMarker.type;
+    broadcastElse(info);
     client.hgetall(`event${events.length - 1}`, (err, obj) => {
       console.log(obj)
     })

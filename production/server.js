@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
-const redis = require('redis');
-const client = redis.createClient();
+
+var redis = require('redis');
+var client = redis.createClient();
+const usersRoutes = require("./routes/users")
+const markerRoutes = require("./routes/markers")
 
 const SocketServer = require('ws').Server;
 
@@ -28,8 +31,9 @@ app.get('/', function(req, res) {
 
 const server = express()
   .use(express.static('public'))
+  .use("/users", usersRoutes) //routes for handling user logins
+  .use("/markers", markerRoutes(client)) //markers needs redis client
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
-
 
 const wss = new SocketServer({ server });
 

@@ -1,6 +1,7 @@
 const express = require("express");
 const router  = express.Router();
-
+// const usersController = require('../controllers').users;
+  // app.post('//users', usersController.create);
 //sequealize will be passed in
 module.exports = () => {
 

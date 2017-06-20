@@ -23,19 +23,19 @@ client.flushdb( function (err, succeeded) {
 
 app.get('/', function(req, res) {
     console.log('home')
-    res.sendFile(__dirname + '../index.html');
+    res.send('hellow')
+    // res.sendFile(__dirname + '../index.html');
 })
 
 
 
 
-const server = express()
-  .use(express.static('public'))
-  .use("/users", usersRoutes) //routes for handling user logins
-  .use("/markers", markerRoutes(client)) //markers needs redis client
-  .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
+app.use(express.static('public'))
+   .use("/users", usersRoutes()) //routes for handling user logins
+   .use("/markers", markerRoutes(client)) //markers needs redis client
+   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
 
-const wss = new SocketServer({ server });
+const wss = new SocketServer({ server: app });
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by

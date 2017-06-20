@@ -3,7 +3,10 @@ import GoogleMapReact from 'google-map-react';
 import styles from './Mapstyle';
 import ModalForm from './Modal.jsx';
 import ReactDOM from 'react-dom';
-import {SideNav, SideNavItem, Button} from 'react-materialize';
+import {SideNav, SideNavItem, Button, Row, Input} from 'react-materialize';
+import RegisterModal from './RegisterModal.jsx'
+import UserModal from './UserModal.jsx'
+import AddFriendsModal from './AddFriendsModal.jsx'
 
 //options for google maps api
 function createMapOptions(maps) {
@@ -48,13 +51,16 @@ class App extends Component {
     }
 
     ws.onmessage = (e) => {
-      if (e.data.type === 'update') {
-        fetch('/events.json');
+      console.log(e.data)
+      if (e.data === 'update markers') {
+        fetch('localhost:3001/events')
+          .then((res) => {
+            console.log(res)
+            Materialize.toast(`New ${res.type} nearby`, 4000)
+            this.addMarker(res.title, res.description, res.type, res.priv, res.loc)
+          })
       }
       const newMarker = JSON.parse(JSON.parse(event.data))
-
-      Materialize.toast(`New ${newMarker.type} nearby`, 4000)
-      this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc)
 
     }
     this.socket = ws; //make globally accessible
@@ -117,11 +123,12 @@ class App extends Component {
       			email: 'jdandturk@gmail.com'
       		}}
       	/>
-      	<SideNavItem href='#!icon' icon='cloud'>Login</SideNavItem>
-      	<SideNavItem href='#!second'>Logout</SideNavItem>
-      	<SideNavItem divider />
-      	<SideNavItem subheader>Subheader</SideNavItem>
-      	<SideNavItem waves href='#!third'>register</SideNavItem>
+      	<SideNavItem href='#!icon' icon='person'><UserModal /></SideNavItem>
+      	<SideNavItem href='#!second' icon ='person_outline'><Button> Logout </Button></SideNavItem>
+      	<SideNavItem waves href='#!third' icon='person_add'><RegisterModal /></SideNavItem>
+        <SideNavItem divider />
+      	<SideNavItem icon ='plus_one'><AddFriendsModal /></SideNavItem>
+
       </SideNav>
 
         <ModalForm loc={this.state.currentLocation} add={this.addMarker}/>

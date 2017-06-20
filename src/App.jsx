@@ -153,6 +153,12 @@ class App extends Component {
     if (selfAdd) {
       this.socket.send(JSON.stringify(marker))
     }
+
+    //post request to redis
+    fetch("", {
+      method: "post",
+      body: JSON.stringify(marker)
+    })
   }
 
   //callback when any map change occurs, obj param gives lat/lng/zoom/etc..

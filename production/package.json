@@ -1,0 +1,39 @@
+{
+  "name": "waundr-production",
+  "version": "1.0.0",
+  "description": "Simple and lightweight Boilerplate for ReactJS projects",
+  "scripts": {
+    "lint": "eslint --ext .jsx,.js src",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noahlotzer/react-simple-boilerplate.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "boilerplate",
+    "reload",
+    "live",
+    "edit",
+    "webpack"
+  ],
+  "author": "Noah-Jerome Lotzer <n.lotzer@neusta.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noahlotzer/react-simple-boilerplate/issues"
+  },
+  "homepage": "https://github.com/noahlotzer/react-simple-boilerplate",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "devDependencies": {
+
+  },
+  "dependencies": {
+    "express": "^4.15.3",
+    "redis": "^2.7.1",
+    "ws": "3.0.0"
+  }
+}

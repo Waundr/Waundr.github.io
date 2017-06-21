@@ -1,6 +1,7 @@
 const express = require("express");
 const router  = express.Router();
 const usersController = require('../controllers').users;
+require("dotenv").config()
 
 //passport JS configuation
 var passport = require('passport');
@@ -11,8 +12,8 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 //   credentials (in this case, an accessToken, refreshToken, and Google
 //   profile), and invoke a callback with a user object.
 passport.use(new GoogleStrategy({
-    clientID: "986660399006-rmh8qg8p4r6cs39kjvl0dq6umkb8imsl.apps.googleusercontent.com",
-    clientSecret: "OqZsEUI1soAQbA4ZNxL9aS9E",
+    clientID: process.env.CLIENTID,
+    clientSecret: process.env.CLIENTSECRET,
     callbackURL: "http://localhost:3001/users/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
@@ -54,6 +55,3 @@ module.exports = () => {
 
   return router;
 }
-
-
-

@@ -29,6 +29,6 @@ class UserModal extends Component{
       console.log("Login", email, pass)
   }
 
-
+}
 
         export default UserModal

@@ -16,6 +16,9 @@ class UserModal extends Component{
       <Row>
         <a href='http://localhost:3001/users/auth/google'><Button waves ='light'> Login with google </Button></a>
       </Row>
+      <Row>
+        <a href='http://localhost:3001/users/auth/facebook'><Button waves ='light'> Login with facebook </Button></a>
+      </Row>
         <Button className="modal-action modal-close btn waves-effect waves-light" type="submit" onClick={this._onLogin.bind(this)}>Login
           <Icon className="material-icons right">send</Icon>
         </Button>

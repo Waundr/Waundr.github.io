@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors')
 const app = express();
 
+const morgan = require('morgan')
+
 const redis = require('redis');
 const client = redis.createClient();
 const usersRoutes = require("./routes/users")
@@ -13,6 +15,8 @@ const SocketServer = require('ws').Server;
 const PORT = 3001;
 
 let events = [];
+
+app.use(morgan('dev'));
 
 client.on('connect', function() {
     console.log('redis connected');
@@ -87,6 +91,3 @@ wss.on('connection', (ws) => {
  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => console.log('Client disconnected'));
 });
-
-
-

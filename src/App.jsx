@@ -74,10 +74,12 @@ class App extends Component {
           }).catch((err) => {
             console.log(err);
           })
-      }
-      if (stuff.type === 'notification') {
+      } else if (stuff.type === 'notification') {
         Materialize.toast(`New ${stuff.data} nearby`, 4000)
+      } else if (stuff.type === 'expire') {
+        this.removeMarker(stuff.data)
       }
+
 
     }
     this.socket = ws; //make globally accessible
@@ -189,6 +191,16 @@ class App extends Component {
     // }).then ((response) =>  {
     //   console.log("response")
     // })
+  }
+
+  removeMarker = (id) => {
+    const markers = this.state.markers;
+    for (let i = 0; i < markers.length; i++) {
+      if (markers[i].id === id) {
+        markers.splice(i, 1)
+      }
+    }
+    this.setState({markers:markers})
   }
 
   //callback when any map change occurs, obj param gives lat/lng/zoom/etc..

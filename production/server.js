@@ -11,6 +11,7 @@ const markerRoutes = require("./routes/markers")
 const SocketServer = require('ws').Server;
 
 const PORT = 3001;
+const ExpTime = 7200000;
 
 let events = [];
 
@@ -59,7 +60,7 @@ wss.broadcast = (message) => {
 
 setInterval( () => {
   for (let i = 0; i < events.length; i++) {
-    if (parseInt(events[i].time) + 20000 < Date.now()) {
+    if (parseInt(events[i].time) + ExpTime < Date.now()) {
 
       wss.broadcast({type: 'expire', data: events[i].id})
       client.del(events[i].id)
@@ -67,7 +68,7 @@ setInterval( () => {
 
     }
   }
-  wss.broadcast({type: 'notification', data: 'timer test'})
+  // wss.broadcast({type: 'notification', data: 'timer test'})
 }, 30000)
 
 // Set up a callback that will run when a client connects to the server

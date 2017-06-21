@@ -6,6 +6,7 @@ const redis = require('redis');
 const client = redis.createClient();
 const usersRoutes = require("./routes/users")
 const markerRoutes = require("./routes/markers")
+const bodyParser = require('body-parser')
 
 const SocketServer = require('ws').Server;
 
@@ -22,6 +23,8 @@ client.flushdb( function (err, succeeded) {
 });
 
 app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', function(req, res) {
     console.log('home')

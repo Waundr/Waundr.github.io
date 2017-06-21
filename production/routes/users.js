@@ -1,7 +1,7 @@
 const express = require("express");
 const router  = express.Router();
-// const usersController = require('../controllers').users;
-  // app.post('//users', usersController.create);
+const usersController = require('../controllers').users;
+
 //sequealize will be passed in
 module.exports = () => {
 
@@ -9,7 +9,9 @@ module.exports = () => {
     // get info from redis client
     console.log('going')
     res.send('ok')
-  })
+  }),
+
+  router.post('/', usersController.create)
 
   return router;
 }

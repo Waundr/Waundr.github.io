@@ -32,10 +32,15 @@ passport.use(new GoogleStrategy({
 passport.use(new FacebookStrategy({
     clientID: process.env.APPID,
     clientSecret: process.env.APPSECRET,
-    callbackURL: "http://localhost:3001/users/auth/facebook/callback"
+    callbackURL: "http://localhost:3001/users/auth/facebook/callback",
+    profileFields: ['id', 'displayName', 'picture.type(large)' ]
   },
   function(accessToken, refreshToken, profile, done) {
     console.log(profile);
+    console.log("Facebook Name: ", profile.displayName)
+    console.log("Facebook ID: ", profile.id)
+    console.log("image url: ", profile.photos[0].value)
+    console.log("Done: ", done)
   }
 ));
 
@@ -65,7 +70,8 @@ module.exports = () => {
   // Redirect the user to Facebook for authentication.  When complete,
   // Facebook will redirect the user back to the application at
   //     /auth/facebook/callback
-  router.get('/auth/facebook', passport.authenticate('facebook'));
+  router.get('/auth/facebook',
+  passport.authenticate('facebook', { scope : ['public_profile', 'user_photos']}));
 
   // Facebook will redirect the user to this URL after approval.  Finish the
   // authentication process by attempting to obtain an access token.  If

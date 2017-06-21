@@ -29,6 +29,10 @@ client.keys('*', (err, keys) => {
 
   for (let i = 0; i < keys.length; i++) {
     client.hgetall(keys[i], (err, obj) => {
+      obj.lat = parseFloat(obj.lat)
+      obj.lng = parseFloat(obj.lng)
+      obj.time = parseInt(obj.time, 10)
+      obj.priv = (obj.priv == 'true')
       events.push(obj)
     })
   }

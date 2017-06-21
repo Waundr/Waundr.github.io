@@ -14,7 +14,7 @@ class UserModal extends Component{
         <Input ref='password' label="Password"/>
       </Row>
       <Row>
-        <Button waves ='light'> Login with google </Button>
+        <a href='http://localhost:3001/users/auth/google'><Button waves ='light'> Login with google </Button></a>
       </Row>
         <Button className="modal-action modal-close btn waves-effect waves-light" type="submit" onClick={this._onLogin.bind(this)}>Login
           <Icon className="material-icons right">send</Icon>

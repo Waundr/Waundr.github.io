@@ -16,6 +16,9 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3001/users/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
+      console.log(profile._json.name.familyName)
+      console.log(profile._json.name.givenName)
+      console.log(profile._json)
        usersController.create({ googleId: profile.id }, function (err, user) {
          return done(err, user);
        });

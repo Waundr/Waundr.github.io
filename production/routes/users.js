@@ -21,6 +21,7 @@ passport.use(new GoogleStrategy({
       console.log(profile._json.name.familyName)
       console.log(profile._json.name.givenName)
       console.log(profile._json)
+      console.log('image url => ', profile._json.image.url)
        usersController.create({ googleId: profile.id }, function (err, user) {
          return done(err, user);
        });

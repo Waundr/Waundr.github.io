@@ -14,13 +14,19 @@ class UserModal extends Component{
         <Input ref='password' label="Password"/>
       </Row>
       <Row>
-        <a href='http://localhost:3001/users/auth/google'><Button waves ='light'> Login with google </Button></a>
+        <Button waves ='light'> Login with google </Button>
       </Row>
-        <Button className="modal-action modal-close btn waves-effect waves-light" type="submit" >Login
+        <Button className="modal-action modal-close btn waves-effect waves-light" type="submit" onClick={this._onLogin.bind(this)}>Login
           <Icon className="material-icons right">send</Icon>
         </Button>
-      </Modal>)
+      </Modal>
+      )
     }
+    _onLogin = (e) => {
+      console.log(this.refs)
+      let email = this.refs.email_id.state.value
+      let pass = this.refs.password.state.value
+      console.log("Login", email, pass)
   }
 
 

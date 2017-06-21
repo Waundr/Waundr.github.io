@@ -89,7 +89,7 @@ class App extends Component {
     const Markers = this.state.markers.map((marker, index) => (
       <div className="marker" onClick={() => this.onClick(marker)}
         lat={marker.loc.lat}
-        lng={marker.loc.lng} className="material-icons md-48" style={{fontSize: "50px"}}
+        lng={marker.loc.lng} className="material-icons md-48" style={{fontSize: "30px"}}
         key={index}>
         {this.typeToIcon(marker.type)}
       </div>

@@ -8,8 +8,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      firstName: {
         type: Sequelize.STRING
+      },
+      lastName: {
+        type: Sequelize.STRING
+      },
+      points: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      image: {
+        type: Sequelize.STRING
+      },
+      passportId: {
+        type: Sequelize.FLOAT
       },
       createdAt: {
         allowNull: false,

@@ -18,8 +18,8 @@ passport.use(new GoogleStrategy({
   function(accessToken, refreshToken, profile, done) {
       console.log(profile._json.name.familyName)
       console.log(profile._json.name.givenName)
-      console.log(profile._json)
-       usersController.create({ googleId: profile.id }, function (err, user) {
+      console.log(profile._json.image.url)
+       usersController.findOrCreate({firstName:profile._json.name.givenName, lastName:profile._json.name.familyName, image:profile._json.image.url, passportId:profile.id}, function (err, user) {
          return done(err, user);
        });
   }
@@ -51,9 +51,8 @@ module.exports = () => {
     // get info from redis client
     console.log('going')
     res.send('ok')
-  }),
+  });
 
-  router.post('/', usersController.create)
 
   return router;
 }

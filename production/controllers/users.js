@@ -1,13 +1,16 @@
 const Users = require('../models').Users;
 
 module.exports = {
-  create(req, res) {
-    console.log(req.body)
+  findOrCreate(req, res) {
+    console.log("REQ", req)
     return Users
-      .create({
-        name: req.body.name,
-      })
-      .then(users => res.status(201).send(users))
-      .catch(error => res.status(400).send(error));
+      .findOrCreate({
+        where: {passportId: req.passportId},
+        defaults: {
+        firstName: req.firstName,
+        lastName: req.lastName,
+        passportId: req.passportId,
+        image: req.image}
+      });
   },
 };

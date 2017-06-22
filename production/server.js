@@ -71,7 +71,7 @@ wss.broadcast = (message) => {
 
 setInterval( () => {
   for (let i = 0; i < events.length; i++) {
-    if (parseInt(events[i].time) + ExpTime < Date.now()) {
+    if (events[i].time + ExpTime < Date.now()) {
 
       wss.broadcast({type: 'expire', data: events[i].id})
       client.del(events[i].id)

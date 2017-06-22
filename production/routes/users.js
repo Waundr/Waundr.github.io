@@ -1,18 +1,20 @@
 const express = require("express");
 const router  = express.Router();
 const usersController = require('../controllers').users;
+require("dotenv").config()
 
 //passport JS configuation
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 // Use the GoogleStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
 //   credentials (in this case, an accessToken, refreshToken, and Google
 //   profile), and invoke a callback with a user object.
 passport.use(new GoogleStrategy({
-    clientID: "986660399006-rmh8qg8p4r6cs39kjvl0dq6umkb8imsl.apps.googleusercontent.com",
-    clientSecret: "OqZsEUI1soAQbA4ZNxL9aS9E",
+    clientID: process.env.CLIENTID,
+    clientSecret: process.env.CLIENTSECRET,
     callbackURL: "http://localhost:3001/users/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
@@ -22,6 +24,23 @@ passport.use(new GoogleStrategy({
        usersController.findOrCreate({firstName:profile._json.name.givenName, lastName:profile._json.name.familyName, image:profile._json.image.url, passportId:profile.id}, function (err, user) {
          return done(err, user);
        });
+  }
+));
+
+// For FACEBOOK
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.APPID,
+    clientSecret: process.env.APPSECRET,
+    callbackURL: "http://localhost:3001/users/auth/facebook/callback",
+    profileFields: ['id', 'displayName', 'picture.type(large)' ]
+  },
+  function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    console.log("Facebook Name: ", profile.displayName)
+    console.log("Facebook ID: ", profile.id)
+    console.log("image url: ", profile.photos[0].value)
+    console.log("Done: ", done)
   }
 ));
 
@@ -47,6 +66,23 @@ module.exports = () => {
       res.redirect('/');
     });
 
+  // facebook
+  // Redirect the user to Facebook for authentication.  When complete,
+  // Facebook will redirect the user back to the application at
+  //     /auth/facebook/callback
+  router.get('/auth/facebook',
+  passport.authenticate('facebook', { scope : ['public_profile', 'user_photos']}));
+
+  // Facebook will redirect the user to this URL after approval.  Finish the
+  // authentication process by attempting to obtain an access token.  If
+  // access was granted, the user will be logged in.  Otherwise,
+  // authentication has failed.
+  router.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { successRedirect: '/',
+                                        failureRedirect: '/login' }));
+
+
+
   router.get("/", (req, res) => {
     // get info from redis client
     console.log('going')
@@ -56,6 +92,3 @@ module.exports = () => {
 
   return router;
 }
-
-
-

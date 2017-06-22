@@ -32,6 +32,8 @@ client.keys('*', (err, keys) => {
       obj.lat = parseFloat(obj.lat)
       obj.lng = parseFloat(obj.lng)
       obj.time = parseInt(obj.time, 10)
+      obj.confirms = obj.confirms ? obj.confirms.split(',') : []
+      obj.rejects = obj.rejects ? obj.rejects.split(',') : []
       obj.priv = (obj.priv == 'true')
       events.push(obj)
     })
@@ -53,6 +55,10 @@ app.get('/', function(req, res) {
 
 app.get('/events.json', (req, res) => {
   res.json(events)
+})
+
+app.post('/events', (req, res) => {
+  console.log('post came in' + req.body.id)
 })
 
 server = app.use(express.static('public'))

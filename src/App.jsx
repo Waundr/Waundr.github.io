@@ -9,6 +9,8 @@ import UserModal from './UserModal.jsx'
 import AddFriendsModal from './AddFriendsModal.jsx'
 
 //options for google maps api
+// const infowindow = new google.maps.InfoWindow();
+
 function createMapOptions(maps) {
   //takes away + - zoom, and other defaults
   //applies mapstyles.js
@@ -17,6 +19,8 @@ function createMapOptions(maps) {
     styles: styles
   };
 }
+
+
 
 let mapInstance = 0
 class App extends Component {
@@ -31,8 +35,9 @@ class App extends Component {
       currentLocation: {lat: this.props.center.lat, lng: this.props.center.lng},
       markers: []
 
+    }
+
   }
-}
   //default center and zoom properties
   static defaultProps = {
     center: {lat: (Math.random() * (43.641541 - 43.670727) + 43.670727).toFixed(6) * 1, lng: (Math.random() * (-79.367466 - -79.404287) + -79.404287).toFixed(6) * 1},
@@ -50,7 +55,7 @@ class App extends Component {
           }).then((data) => {
             data.forEach((marker) => {
               marker.loc = {lat: marker.lat, lng: marker.lng};
-              this.addMarker(marker.title, marker.description, marker.type, marker.priv, marker.loc, false, marker.id)
+              this.addMarker(marker.title, marker.description, marker.type, marker.priv, marker.loc, false, marker.creator, marker.id)
             })
           }).catch((err) => {
             console.log(err);
@@ -70,7 +75,7 @@ class App extends Component {
           }).then((data) => {
             let newMarker = data[data.length - 1];
             newMarker.loc = {lat: newMarker.lat, lng: newMarker.lng};
-            this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc, false, newMarker.id)
+            this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc, false, newMarker.creator, newMarker.id)
           }).catch((err) => {
             console.log(err);
           })
@@ -96,78 +101,88 @@ class App extends Component {
         {this.typeToIcon(marker.type)}
       </div>
     ));
+
+    function sendSocket() {
+  console.log('workds')
+}
+
       //google map react component takes in center/zoom/options/onchange settings
       //child googlemap react componesnts are markers
     return (
 
       <div style ={{width:'100%', height: '100vh', position: 'relative'}}>
-      <GoogleMapReact
-        defaultCenter={this.props.center}
-        defaultZoom={this.props.zoom}
-        options={createMapOptions}
-        onChange={this.onChange}
-        onGoogleApiLoaded={this.setMapInstance}>
+        <GoogleMapReact
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}
+          options={createMapOptions}
+          onChange={this.onChange}
+          onGoogleApiLoaded={this.setMapInstance}>
 
-        <div className="marker" lat={this.props.center.lat} lng={this.props.center.lng}>
-          <div className="dot"></div>
-          <div className="pulse"></div>
+          <div className="marker" lat={this.props.center.lat} lng={this.props.center.lng}>
+            <div className="dot"></div>
+            <div className="pulse"></div>
+          </div>
+
+
+          {Markers}
+        </GoogleMapReact>
+        <div className="fixed-action-btn horizontal click-to-toggle" style={{position: 'absolute', bottom: '8em', right: '2em'}}  >
+          <a className="btn-floating btn-large waves-effect waves-light red" >
+            <i className="material-icons">filter_list</i>
+          </a>
+          <ul>
+            <li><a className="btn-floating waves-effect waves-light red"><i className="material-icons">restaurant</i></a></li>
+            <li><a className="btn-floating waves-effect waves-light blue"><i className="material-icons">casino</i></a></li>
+            <li><a className="btn-floating waves-effect waves-light green"><i className="material-icons">nature_people</i></a></li>
+            <li><a className="btn-floating waves-effect waves-light yellow"><i className="material-icons">store</i></a></li>
+            <li><a className="btn-floating waves-effect waves-light purple"><i className="material-icons">group_add</i></a></li>
+            <li><a className="btn-floating waves-effect waves-light orange"><i className="material-icons">people</i></a></li>
+          </ul>
         </div>
+        <SideNav
+  	     trigger={<Button style={{position: 'absolute', top: '2em', left: '2em'}}><i className="material-icons">menu</i></Button>}
+        	options={{ closeOnClick: true }}>
+        	<SideNavItem userView
+        		user={{
+        			background: 'img/office.jpg',
+        			image: 'img/yuna.jpg',
+        			name: 'John Doe',
+        			email: 'jdandturk@gmail.com'
+        		}}
+        	/>
+        	<SideNavItem href='#!icon' icon='person'><UserModal /></SideNavItem>
+        	<SideNavItem href='#!second' icon ='person_outline'><Button> Logout </Button></SideNavItem>
+        	<SideNavItem waves href='#!third' icon='person_add'><RegisterModal /></SideNavItem>
+          <SideNavItem divider />
+        	<SideNavItem icon ='plus_one'><AddFriendsModal /></SideNavItem>
 
-
-        {Markers}
-      </GoogleMapReact>
-      <div className="fixed-action-btn horizontal click-to-toggle" style={{position: 'absolute', bottom: '8em', right: '2em'}}  >
-        <a className="btn-floating btn-large waves-effect waves-light red" >
-          <i className="material-icons">filter_list</i>
-        </a>
-        <ul>
-          <li><a className="btn-floating waves-effect waves-light red"><i className="material-icons">restaurant</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light blue"><i className="material-icons">casino</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light green"><i className="material-icons">nature_people</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light yellow"><i className="material-icons">store</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light purple"><i className="material-icons">group_add</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light orange"><i className="material-icons">people</i></a></li>
-        </ul>
-      </div>
-      <SideNav
-	     trigger={<Button style={{position: 'absolute', top: '2em', left: '2em'}}><i className="material-icons">menu</i></Button>}
-      	options={{ closeOnClick: true }}
-      	>
-      	<SideNavItem userView
-      		user={{
-      			background: 'img/office.jpg',
-      			image: 'img/yuna.jpg',
-      			name: 'John Doe',
-      			email: 'jdandturk@gmail.com'
-      		}}
-      	/>
-      	<SideNavItem href='#!icon' icon='person'><UserModal /></SideNavItem>
-      	<SideNavItem href='#!second' icon ='person_outline'><Button> Logout </Button></SideNavItem>
-      	<SideNavItem waves href='#!third' icon='person_add'><RegisterModal /></SideNavItem>
-        <SideNavItem divider />
-      	<SideNavItem icon ='plus_one'><AddFriendsModal /></SideNavItem>
-
-      </SideNav>
+        </SideNav>
 
         <ModalForm loc={this.state.currentLocation} add={this.addMarker}/>
       </div>
 
 
     );
+
   }
 
   setMapInstance = (map) => {
     console.log(map)
     mapInstance = map.map
   }
+
+
   //callback for when +button pressed
-  addMarker = (title, desc, type, priv, loc, selfAdd, id) =>{
+  addMarker = (title, desc, type, priv, loc, selfAdd, creator, id) =>{
     const marker = {
       id: id,
       loc: loc,
       title: title,
       description: desc,
       type: type,
+      creator: creator,
+      confirms: [],
+      rejects: ['Raymond', 'Milind'],
       priv: priv ? true: false
     }
 
@@ -210,12 +225,33 @@ class App extends Component {
     this.setState({center: {lat, lng}})
   }
 
+
+
   onClick = (marker) => {
     mapInstance.panTo(marker.loc);
     // let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
+
+
+    function sendSocket() {
+      // let obj = {title: `xbbxb`,
+      //   description: `xb`,
+      //   type: `Food Stand`,
+      //   priv: false,
+      //   lat: 43.6563,
+      //   lng: -79.399926,
+      //   id: `ed7ff68e-550a-4aca-8d8a-4d9db0f96083`,
+      //   time: 1498149997258,
+      //   confirms: null,
+      //   rejects: null}
+      // this.socket.send(obj)
+      console.log('works')
+    }
+
     const infowindow = new google.maps.InfoWindow({
 
-      content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/>" + "<a class='btn-floating blue'><i class='material-icons'>check</i></a>" + "<a class='btn-floating red'><i class='material-icons'>clear</i></a>" + "<br/>" + "</center>",
+      content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ JSON.stringify(marker.id) + "`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
+      "<a class='btn-floating red'><i class='material-icons'>clear</i></a>" + "<br/>" + "</center>",
       position: marker.loc
 
     });

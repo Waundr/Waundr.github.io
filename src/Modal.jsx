@@ -46,7 +46,7 @@ class ModalForm extends Component{
     let desc = this.refs.desc.state.value
     let type = this.refs.type.state.value
     let priv = this.refs.switch.state.value
-    this.props.add(title, desc, type, priv, this.props.loc, true)
+    this.props.add(title, desc, type, priv, this.props.loc, true, 'Raymond')
   }
 };
 

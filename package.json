@@ -45,7 +45,6 @@
     "webpack-dev-server": "2.3.0"
   },
   "dependencies": {
-    "axios": "^0.16.2",
     "express": "^4.15.3",
     "google-map-react": "^0.24.0",
     "material-ui": "^0.18.3",
@@ -56,10 +55,7 @@
     "react": "15.4.2",
     "react-dom": "15.4.2",
     "react-materialize": "^1.0.1",
-    "react-redux": "^5.0.5",
     "redis": "^2.7.1",
-    "redux": "^3.7.0",
-    "redux-thunk": "^2.2.0",
     "ws": "3.0.0"
   }
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Modal, Button, Row, Input, Icon} from 'react-materialize';
-import axios from 'axios';
 
 class RegisterModal extends Component{
 
@@ -25,13 +24,11 @@ class RegisterModal extends Component{
 
       }
       _onRegister = (e) => {
-        e.preventDefault();
         console.log(this.refs)
         let email = this.refs.email_id.state.value
         let pass = this.refs.password.state.value
         let conf = this.refs.confirm_password.state.value
         console.log("New Register", email, pass, conf)
-        axios.post('http://localhost:3001/users/', {"email": email, "pass": pass, "conf": conf});
     }
   };
 export default RegisterModal

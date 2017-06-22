@@ -15,14 +15,19 @@ module.exports = {
         type: Sequelize.STRING
       },
       points: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
+        type: Sequelize.INTEGER
       },
       image: {
         type: Sequelize.STRING
       },
       passportId: {
         type: Sequelize.FLOAT
+      },
+      currentLat: {
+        type: Sequelize.INTEGER
+      },
+      currentLng: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

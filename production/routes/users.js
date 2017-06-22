@@ -18,6 +18,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3001/users/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
+      console.log(profile)
       console.log(profile._json.name.familyName)
       console.log(profile._json.name.givenName)
       console.log(profile._json.image.url)
@@ -33,7 +34,7 @@ passport.use(new FacebookStrategy({
     clientID: process.env.APPID,
     clientSecret: process.env.APPSECRET,
     callbackURL: "http://localhost:3001/users/auth/facebook/callback",
-    profileFields: ['id', 'displayName', 'picture.type(large)', "name"]
+    profileFields: ['id', 'displayName', 'picture.type(large)', "name", "email"]
   },
   function(accessToken, refreshToken, profile, done) {
     console.log(profile);

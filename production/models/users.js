@@ -5,7 +5,9 @@ module.exports = function(sequelize, DataTypes) {
     lastName: DataTypes.STRING,
     points: DataTypes.INTEGER,
     image: DataTypes.STRING,
-    passportId: DataTypes.INTEGER
+    passportId: DataTypes.FLOAT,
+    currentLat: DataTypes.INTEGER,
+    currentLng: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {

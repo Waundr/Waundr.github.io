@@ -93,6 +93,11 @@ module.exports = () => {
     res.send('ok')
   });
 
+  //find users in nearby
+  router.get('/nearby', (req, res) => {
+    console.log(req.body)
+    usersController.findUsersNearby({lat:req.body.lat, lng:req.body.lng ,id:req.body.id})
+  })
 
   return router;
 }

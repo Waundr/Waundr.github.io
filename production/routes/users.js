@@ -93,10 +93,15 @@ module.exports = () => {
     res.send('ok')
   });
 
-  //find users in nearby
+    //Use quick/dirty estimate that 1m in y is ~0.00001 degre (of latitude) and 1m in x is 0.00001 in x
+    //find friends within 100m
   router.get('/nearby', (req, res) => {
     console.log(req.body)
-    usersController.findUsersNearby({lat:req.body.lat, lng:req.body.lng ,id:req.body.id})
+    let latMin = Number(req.body.lat) -0.0001;
+    let latMax = Number(req.body.lat) +0.0001;
+    let lngMin = Number(req.body.lng) -0.0001;
+    let lngMax = Number(req.body.lng) +0.0001;
+    res.send(usersController.findUsersNearby({latMin, latMax, lngMin, lngMax, id:req.body.id}))
   })
 
   return router;

@@ -33,7 +33,7 @@ passport.use(new FacebookStrategy({
     clientID: process.env.APPID,
     clientSecret: process.env.APPSECRET,
     callbackURL: "http://localhost:3001/users/auth/facebook/callback",
-    profileFields: ['id', 'displayName', 'picture.type(large)' ]
+    profileFields: ['id', 'displayName', 'picture.type(large)', "name"]
   },
   function(accessToken, refreshToken, profile, done) {
     console.log(profile);
@@ -41,6 +41,9 @@ passport.use(new FacebookStrategy({
     console.log("Facebook ID: ", profile.id)
     console.log("image url: ", profile.photos[0].value)
     console.log("Done: ", done)
+     usersController.findOrCreate({firstName:profile.name.givenName, lastName:profile.name.familyName, image:profile.photos[0].value, passportId:profile.id}, function (err, user) {
+       return done(err, user);
+     });
   }
 ));
 

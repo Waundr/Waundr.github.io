@@ -31,11 +31,35 @@ const styles =
         ]
     },
     {
+        "featureType": "poi",
+        "elementType": "labels",
+        "stylers": [
+            {
+              "visibility": "off"
+            },
+            {
+                "color": "#c4c9e8"
+            }
+        ]
+    },
+    {
         "featureType": "poi.medical",
         "elementType": "geometry.fill",
         "stylers": [
             {
                 "color": "#ffa5a8"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.medical",
+        "elementType": "labels",
+        "stylers": [
+            {
+              "visibility": "off"
+            },
+            {
+                "color": "#c4c9e8"
             }
         ]
     },
@@ -58,9 +82,33 @@ const styles =
         ]
     },
     {
+        "featureType": "poi.place_of_worship",
+        "elementType": "labels",
+        "stylers": [
+            {
+              "visibility": "off"
+            },
+            {
+                "color": "#c4c9e8"
+            }
+        ]
+    },
+    {
         "featureType": "poi.school",
         "elementType": "geometry.fill",
         "stylers": [
+            {
+                "color": "#c4c9e8"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.school",
+        "elementType": "labels",
+        "stylers": [
+            {
+              "visibility": "off"
+            },
             {
                 "color": "#c4c9e8"
             }
@@ -72,6 +120,18 @@ const styles =
         "stylers": [
             {
                 "color": "#b1eaf1"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.sports_complex",
+        "elementType": "labels",
+        "stylers": [
+            {
+              "visibility": "off"
+            },
+            {
+                "color": "#c4c9e8"
             }
         ]
     },
@@ -194,6 +254,19 @@ const styles =
                 "color": "#d2e7f7"
             }
         ]
-    }
+    },
+      {
+        featureType: 'poi.park',
+        elementType: 'labels',
+        stylers: [
+          {
+            "visibility": "off"
+          },
+          {
+            color: '#447530'
+          }
+        ]
+      },
+
 ]
 export default styles

@@ -20,7 +20,7 @@ function createMapOptions(maps) {
   };
 }
 
-
+let filter = ['Food Stand', 'Street Market', 'Entertainment', 'Meet up', 'Obstacle', 'Your friends']
 let currentUser = 'Raymond'
 let mapInstance = 0
 class App extends Component {
@@ -108,14 +108,17 @@ class App extends Component {
   render() {
 
     //const maps all markers in state array to div with lat/lng locations
-    const Markers = this.state.markers.map((marker, index) => (
+    const filteredMarkers = this.state.markers.filter((marker) => {
+      return filter.includes(marker.type)
+    })
+    const Markers = filteredMarkers.map((marker, index) => { return (
       <div className="marker" onClick={() => this.onClick(marker)}
         lat={marker.loc.lat}
         lng={marker.loc.lng} className="material-icons md-48" style={{fontSize: "30px"}}
         key={index}>
         {this.typeToIcon(marker.type)}
       </div>
-    ));
+    )});
 
       //google map react component takes in center/zoom/options/onchange settings
       //child googlemap react componesnts are markers
@@ -142,12 +145,13 @@ class App extends Component {
           <i className="material-icons" style = {{color: "#FFD074"}}>filter_list</i>
         </a>
         <ul>
-          <li><a className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>restaurant</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light blue blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>casino</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light green blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>nature_people</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light yellow blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>store</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light purple blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>group_add</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>people</i></a></li>
+          <li><a onClick={() => {filter = []; this.forceUpdate();}} className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>clear</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Food Stand')} className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>restaurant</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Entertainment')} className="btn-floating waves-effect waves-light blue blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>casino</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Obstacle')} className="btn-floating waves-effect waves-light green blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>nature_people</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Street Market')} className="btn-floating waves-effect waves-light yellow blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>store</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Meet up')} className="btn-floating waves-effect waves-light purple blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>group_add</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Your friends')} className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>people</i></a></li>
         </ul>
       </div>
       <SideNav
@@ -294,6 +298,15 @@ class App extends Component {
     // this.setState({markers: markers})
     // console.log(marker,index)
 
+  }
+
+  toggleFilter(filterType) {
+    if (filter.includes(filterType)) {
+      filter.splice(filter.indexOf(filterType), 1)
+    } else {
+      filter.push(filterType)
+    }
+    this.forceUpdate();
   }
 
   typeToIcon = (type) => {

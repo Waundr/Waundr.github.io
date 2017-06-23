@@ -19,7 +19,6 @@ class NearbyPeep extends Component{
           </Col>
         </Row>
           </div>
-        <div className="divider"></div>
         </div>
       )
     }

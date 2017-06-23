@@ -65,7 +65,8 @@ module.exports = () => {
   //   login page.  Otherwise, the primary route function function will be called,
   //   which, in this example, will redirect the user to the home page.
   router.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login' }),
+    passport.authenticate('google', { successRedirect: "http://localhost:3001/users/auth/facebook/callback",
+                                      failureRedirect: '/login' }),
     function(req, res) {
       console.log("THIS IS THE SUCCESS CODE")
       res.redirect('http://localhost:3000');

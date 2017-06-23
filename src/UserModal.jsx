@@ -7,7 +7,7 @@ class UserModal extends Component{
       return(  <Modal
       	header='LOGIN'
     	trigger={
-    		<Button waves='light'>Login</Button>
+    		<Button waves='light' className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074", width: '171px'}}>Login</Button>
     	}>
       <Row>
         <Input ref='email_id' s={6} label="Email ID"/>

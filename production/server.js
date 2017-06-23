@@ -32,6 +32,8 @@ client.keys('*', (err, keys) => {
       obj.lat = parseFloat(obj.lat)
       obj.lng = parseFloat(obj.lng)
       obj.time = parseInt(obj.time, 10)
+      obj.confirms = obj.confirms ? obj.confirms.split(',') : []
+      obj.rejects = obj.rejects ? obj.rejects.split(',') : []
       obj.priv = (obj.priv == 'true')
       events.push(obj)
     })
@@ -46,14 +48,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/', function(req, res) {
-    console.log('home')
-    res.send('hellow')
-})
-
-app.get('/events.json', (req, res) => {
-  res.json(events)
-})
 
 server = app.use(express.static('public'))
    .use("/users", usersRoutes()) //routes for handling user logins
@@ -81,6 +75,41 @@ setInterval( () => {
   }
   // wss.broadcast({type: 'notification', data: 'timer test'})
 }, 30000)
+
+
+app.get('/events.json', (req, res) => {
+  res.json(events)
+})
+
+app.post('/events', (req, res) => {
+  let id = req.body.id;
+  let user = req.body.user;
+  let confirm = req.body.confirm;
+
+  for (event of events) {
+    if (event.id === id) {
+      if (confirm === 'confirm') {
+        if (event.confirms.includes(user)) {
+          event.confirms.splice(event.confirms.indexOf(user), 1)
+        } else {
+          event.confirms.push(user)
+        }
+      } else {
+        if (event.rejects.includes(user)) {
+          event.rejects.splice(event.rejects.indexOf(user), 1)
+        } else {
+          event.rejects.push(user)
+        }
+      }
+      client.hmset(id, event)
+      wss.broadcast({type: 'update specific', data: id})
+    }
+  }
+
+
+  res.send()
+})
+
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by

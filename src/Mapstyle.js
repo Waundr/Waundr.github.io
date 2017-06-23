@@ -267,6 +267,18 @@ const styles =
           }
         ]
       },
+      {
+        featureType: 'transit',
+        elementType: 'labels',
+        stylers: [
+          {
+            "visibility": "off"
+          },
+          {
+            color: '#447530'
+          }
+        ]
+      },
 
 ]
 export default styles

@@ -8,7 +8,7 @@ class RegisterModal extends Component{
         <Modal
       	header='Register'
     	trigger={
-    		<Button waves='light'>Register</Button>
+    		<Button waves='light' className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074", width: '171px'}}>Register</Button>
       	}>
           <Row>
             <Input ref='email_id'  label="Email ID"/>

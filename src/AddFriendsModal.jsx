@@ -7,7 +7,7 @@ class AddFriendsModal extends Component{
       return(  <Modal
       	header='Modal Header'
     	trigger={
-    		<Button waves='light'>Add Friends</Button>
+    		<Button waves='light' className=" btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074"}}>Add Friends</Button>
     	}>
 
       <Row>

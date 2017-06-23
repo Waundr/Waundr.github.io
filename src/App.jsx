@@ -117,22 +117,22 @@ class App extends Component {
         {Markers}
       </GoogleMapReact>
       <div className="fixed-action-btn horizontal click-to-toggle" style={{position: 'absolute', bottom: '8em', right: '2em'}}  >
-        <a className="btn-floating btn-large waves-effect waves-light red" >
-          <i className="material-icons">filter_list</i>
+        <a className="btn-floating btn-large waves-effect waves-light blue-grey darken-3" >
+          <i className="material-icons" style = {{color: "#FFD074"}}>filter_list</i>
         </a>
         <ul>
-          <li><a className="btn-floating waves-effect waves-light red"><i className="material-icons">restaurant</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light blue"><i className="material-icons">casino</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light green"><i className="material-icons">nature_people</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light yellow"><i className="material-icons">store</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light purple"><i className="material-icons">group_add</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light orange"><i className="material-icons">people</i></a></li>
+          <li><a className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>restaurant</i></a></li>
+          <li><a className="btn-floating waves-effect waves-light blue blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>casino</i></a></li>
+          <li><a className="btn-floating waves-effect waves-light green blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>nature_people</i></a></li>
+          <li><a className="btn-floating waves-effect waves-light yellow blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>store</i></a></li>
+          <li><a className="btn-floating waves-effect waves-light purple blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>group_add</i></a></li>
+          <li><a className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>people</i></a></li>
         </ul>
       </div>
       <SideNav
-	     trigger={<Button style={{position: 'absolute', top: '2em', left: '2em'}}><i className="material-icons">menu</i></Button>}
+	     trigger={<Button style={{position: 'absolute', top: '2em', left: '2em'}} className="btn-floating btn-large waves-effect waves-light blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>menu</i></Button>}
       	options={{ closeOnClick: true }}
-      	>
+        style={{backgroundColor: "#546e7a"}}>
       	<SideNavItem userView
       		user={{
       			background: 'img/office.jpg',
@@ -141,11 +141,11 @@ class App extends Component {
       			email: 'jdandturk@gmail.com'
       		}}
       	/>
-      	<SideNavItem href='#!icon' icon='person'><UserModal /></SideNavItem>
-      	<SideNavItem href='#!second' icon ='person_outline'><Button> Logout </Button></SideNavItem>
-      	<SideNavItem waves href='#!third' icon='person_add'><RegisterModal /></SideNavItem>
+      	<SideNavItem href='#!icon' style = {{color: "#FFD074"}} icon='person'><UserModal /></SideNavItem>
+      	<SideNavItem href='#!second' style = {{color: "#FFD074"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074", width: '171px'}}> Logout </Button></SideNavItem>
+      	<SideNavItem waves href='#!third' style = {{color: "#FFD074"}} icon='person_add'><RegisterModal /></SideNavItem>
         <SideNavItem divider />
-      	<SideNavItem icon ='plus_one'><AddFriendsModal /></SideNavItem>
+      	<SideNavItem icon ='plus_one' style = {{color: "#FFD074"}}><AddFriendsModal /></SideNavItem>
 
       </SideNav>
 

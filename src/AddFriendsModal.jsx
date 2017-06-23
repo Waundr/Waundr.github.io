@@ -4,14 +4,14 @@ import NearbyPeep from './NearbyPeep.jsx'
 class AddFriendsModal extends Component{
 
   render(){
-    console.log(this.props.nearbyPeeps)
+    {this.props.closeNearbyPeeps}
     if(this.props.nearbyPeeps ) {
       return(  <Modal
       	header='Friends Nearby'
-    	trigger={
-    		<Button waves='light' className=" btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074"}}>Add Friends</Button>
-    	}>
-
+      actions={<Button onClick={this.props.closeNearbyPeeps} className="modal-close waves-effect btn-flat">CLOSE</Button>}
+      trigger={
+        <Button waves='light' className=" btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074"}}>Add Friends</Button>
+      }>
         {this.props.nearbyPeeps.map(this._eachNearby)}
       </Modal>)
     } else {
@@ -19,7 +19,8 @@ class AddFriendsModal extends Component{
         <Modal header='LOADING'
         trigger={
         <Button waves='light'>Add Friends</Button>
-       }>
+         }
+        >
           <Col s={4}>
             <Preloader size='big'/>
           </Col>

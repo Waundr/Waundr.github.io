@@ -3,10 +3,23 @@ const router  = express.Router();
 const usersController = require('../controllers').users;
 require("dotenv").config()
 
+const Users = require('../models').Users;
+
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const flash    = require('connect-flash');
+
+const cors = require('cors');
+router.use(cors());
+
+router.use(cookieParser());
+
+router.use(flash()); // use connect-flash for flash messages stored in session
+
 //passport JS configuation
-var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 // Use the GoogleStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
@@ -19,7 +32,7 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
        usersController.findOrCreate({firstName:profile._json.name.givenName, lastName:profile._json.name.familyName, image:profile._json.image.url, passportId:profile.id}).then((user) => {
-        console.log('THIS LINE USER', user)
+        console.log('THIS LINE USER: =====> ', user)
         return done(null, user);
        })
 
@@ -43,14 +56,48 @@ passport.use(new FacebookStrategy({
     console.log("Facebook ID: ", profile.id)
     console.log("image url: ", profile.photos[0].value)
     console.log("Done: ", done)
+
      usersController.findOrCreate({firstName:profile.name.givenName, lastName:profile.name.familyName, image:profile.photos[0].value, passportId:profile.id}, function (err, user) {
        return done(err, user);
      });
   }
 ));
 
-//sequealize will be passed in
+
+//sequealize will be passed in here.
+// Passport session setup.
+//
+//   For persistent logins with sessions, Passport needs to serialize users into
+//   and deserialize users out of the session. Typically, this is as simple as
+//   storing the user ID when serializing, and finding the user by ID when
+//   deserializing.
+passport.serializeUser(function(user, done) {
+  console.log("USER===>", user[0].id);
+  done(null, user[0].id);
+});
+
+passport.deserializeUser(function(obj, done) {
+  Users.findById(obj, done);
+});
+
 module.exports = () => {
+  // Attempting to show the user information in the localhost 3000
+  router.get('http://localhost:3000', (req, res) => {
+    console.log("Get Root Request is succeeded!!!!!")
+    console.log("Session Id ===> ", connect.sid)
+    // res.send(user[0])
+  })
+
+  router.use(session({
+    secret: 'keyboard'
+  }));
+  // INITIALIZE PASSPORT got the example from https://github.com/barberboy/passport-google-oauth2-example/blob/master/app.js
+  router.use(passport.initialize());
+  router.use(passport.session());
+
+
+
+
   // GET /auth/google
   //   Use passport.authenticate() as route middleware to authenticate the
   //   request.  The first step in Google authentication will involve
@@ -65,7 +112,7 @@ module.exports = () => {
   //   login page.  Otherwise, the primary route function function will be called,
   //   which, in this example, will redirect the user to the home page.
   router.get('/auth/google/callback',
-    passport.authenticate('google', { successRedirect: "http://localhost:3001/users/auth/facebook/callback",
+    passport.authenticate('google', { successRedirect: "http://localhost:3000",
                                       failureRedirect: '/login' }),
     function(req, res) {
       console.log("THIS IS THE SUCCESS CODE")
@@ -92,6 +139,7 @@ module.exports = () => {
   router.get("/", (req, res) => {
     // get info from redis client
     console.log('going')
+    console.log('req => ', req)
     res.send('ok')
   });
 

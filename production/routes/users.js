@@ -87,7 +87,7 @@ passport.deserializeUser(function(id, done) {
   console.log("deserialize user id ==>", id);
   Users.findById(id).then( function(user) {
     console.log("Users.findby ===> ", user);
-    done( user);
+    done(null, user);
   })
 });
 

@@ -9,6 +9,8 @@ import UserModal from './UserModal.jsx'
 import AddFriendsModal from './AddFriendsModal.jsx'
 
 //options for google maps api
+// const infowindow = new google.maps.InfoWindow();
+
 function createMapOptions(maps) {
   //takes away + - zoom, and other defaults
   //applies mapstyles.js
@@ -18,6 +20,8 @@ function createMapOptions(maps) {
   };
 }
 
+
+let currentUser = 'Raymond'
 let mapInstance = 0
 class App extends Component {
 
@@ -31,8 +35,9 @@ class App extends Component {
       currentLocation: {lat: this.props.center.lat, lng: this.props.center.lng},
       markers: []
 
+    }
+
   }
-}
   //default center and zoom properties
   static defaultProps = {
     center: {lat: (Math.random() * (43.641541 - 43.670727) + 43.670727).toFixed(6) * 1, lng: (Math.random() * (-79.367466 - -79.404287) + -79.404287).toFixed(6) * 1},
@@ -50,7 +55,7 @@ class App extends Component {
           }).then((data) => {
             data.forEach((marker) => {
               marker.loc = {lat: marker.lat, lng: marker.lng};
-              this.addMarker(marker.title, marker.description, marker.type, marker.priv, marker.loc, false, marker.id)
+              this.addMarker(marker.title, marker.description, marker.type, marker.priv, marker.loc, false, marker.creator, marker.confirms, marker.rejects, marker.id)
             })
           }).catch((err) => {
             console.log(err);
@@ -70,7 +75,7 @@ class App extends Component {
           }).then((data) => {
             let newMarker = data[data.length - 1];
             newMarker.loc = {lat: newMarker.lat, lng: newMarker.lng};
-            this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc, false, newMarker.id)
+            this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc, false, newMarker.creator, newMarker.confirms, newMarker.rejects, newMarker.id)
           }).catch((err) => {
             console.log(err);
           })
@@ -78,6 +83,21 @@ class App extends Component {
         Materialize.toast(`New ${stuff.data} nearby`, 4000)
       } else if (stuff.type === 'expire') {
         this.removeMarker(stuff.data)
+      } else if (stuff.type === 'update specific') {
+        fetch('http://localhost:3001/events.json')
+          .then((res) => {
+            return res.json()
+          }).then((data) => {
+            let newMarker = data.filter((filtered) => {
+              return filtered.id === stuff.data;
+            });
+            let updatedMarker = newMarker[0];
+            updatedMarker.loc = {lat: newMarker.lat, lng: newMarker.lng};
+            console.log(updatedMarker)
+            this.updateMarker(stuff.data, updatedMarker)
+          }).catch((err) => {
+            console.log(err);
+          })
       }
 
 
@@ -96,23 +116,40 @@ class App extends Component {
         {this.typeToIcon(marker.type)}
       </div>
     ));
+
       //google map react component takes in center/zoom/options/onchange settings
       //child googlemap react componesnts are markers
     return (
 
       <div style ={{width:'100%', height: '100vh', position: 'relative'}}>
-      <GoogleMapReact
-        defaultCenter={this.props.center}
-        defaultZoom={this.props.zoom}
-        options={createMapOptions}
-        onChange={this.onChange}
-        onGoogleApiLoaded={this.setMapInstance}>
+        <GoogleMapReact
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}
+          options={createMapOptions}
+          onChange={this.onChange}
+          onGoogleApiLoaded={this.setMapInstance}>
 
-        <div className="marker" lat={this.props.center.lat} lng={this.props.center.lng}>
-          <div className="dot"></div>
-          <div className="pulse"></div>
+          <div className="marker" lat={this.props.center.lat} lng={this.props.center.lng}>
+            <div className="dot"></div>
+            <div className="pulse"></div>
+          </div>
+
+
+          {Markers}
+        </GoogleMapReact>
+        <div className="fixed-action-btn horizontal click-to-toggle" style={{position: 'absolute', bottom: '8em', right: '2em'}}  >
+          <a className="btn-floating btn-large waves-effect waves-light red" >
+            <i className="material-icons">filter_list</i>
+          </a>
+          <ul>
+            <li><a className="btn-floating waves-effect waves-light red"><i className="material-icons">restaurant</i></a></li>
+            <li><a className="btn-floating waves-effect waves-light blue"><i className="material-icons">casino</i></a></li>
+            <li><a className="btn-floating waves-effect waves-light green"><i className="material-icons">nature_people</i></a></li>
+            <li><a className="btn-floating waves-effect waves-light yellow"><i className="material-icons">store</i></a></li>
+            <li><a className="btn-floating waves-effect waves-light purple"><i className="material-icons">group_add</i></a></li>
+            <li><a className="btn-floating waves-effect waves-light orange"><i className="material-icons">people</i></a></li>
+          </ul>
         </div>
-
 
         {Markers}
       </GoogleMapReact>
@@ -154,20 +191,26 @@ class App extends Component {
 
 
     );
+
   }
 
   setMapInstance = (map) => {
     console.log(map)
     mapInstance = map.map
   }
+
+
   //callback for when +button pressed
-  addMarker = (title, desc, type, priv, loc, selfAdd, id) =>{
+  addMarker = (title, desc, type, priv, loc, selfAdd, creator, confirms, rejects, id) =>{
     const marker = {
       id: id,
       loc: loc,
       title: title,
       description: desc,
       type: type,
+      creator: creator,
+      confirms: confirms,
+      rejects: rejects,
       priv: priv ? true: false
     }
 
@@ -203,6 +246,20 @@ class App extends Component {
     this.setState({markers:markers})
   }
 
+  updateMarker = (id, updatedMarker) => {
+    console.log('updating', updatedMarker)
+    const markers = this.state.markers;
+    console.log(markers)
+    for (let i = 0; i < markers.length; i++) {
+      if (markers[i].id === id) {
+        markers[i].rejects = updatedMarker.rejects;
+        markers[i].confirms = updatedMarker.confirms;
+      }
+    }
+    console.log(markers)
+    this.setState({markers:markers})
+  }
+
   //callback when any map change occurs, obj param gives lat/lng/zoom/etc..
   onChange = (obj) =>{
     const lat = obj.center.lat;
@@ -210,12 +267,33 @@ class App extends Component {
     this.setState({center: {lat, lng}})
   }
 
+
+
   onClick = (marker) => {
     mapInstance.panTo(marker.loc);
     // let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
+
+
+    function sendSocket() {
+      // let obj = {title: `xbbxb`,
+      //   description: `xb`,
+      //   type: `Food Stand`,
+      //   priv: false,
+      //   lat: 43.6563,
+      //   lng: -79.399926,
+      //   id: `ed7ff68e-550a-4aca-8d8a-4d9db0f96083`,
+      //   time: 1498149997258,
+      //   confirms: null,
+      //   rejects: null}
+      // this.socket.send(obj)
+      console.log('works')
+    }
+
     const infowindow = new google.maps.InfoWindow({
 
-      content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/>" + "<a class='btn-floating blue'><i class='material-icons'>check</i></a>" + "<a class='btn-floating red'><i class='material-icons'>clear</i></a>" + "<br/>" + "</center>",
+      content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/>" + marker.confirms.length + "<br/>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{infowindow.close()},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`reject failed`)}})' class='btn-floating red'><i class='material-icons'>clear</i></a>" + "<br/>" + "</center>",
       position: marker.loc
 
     });

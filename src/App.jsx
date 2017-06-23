@@ -21,7 +21,7 @@ function createMapOptions(maps) {
 }
 
 
-
+let currentUser = 'Raymond'
 let mapInstance = 0
 class App extends Component {
 
@@ -102,10 +102,6 @@ class App extends Component {
       </div>
     ));
 
-    function sendSocket() {
-  console.log('workds')
-}
-
       //google map react component takes in center/zoom/options/onchange settings
       //child googlemap react componesnts are markers
     return (
@@ -182,7 +178,7 @@ class App extends Component {
       type: type,
       creator: creator,
       confirms: [],
-      rejects: ['Raymond', 'Milind'],
+      rejects: [],
       priv: priv ? true: false
     }
 
@@ -249,9 +245,9 @@ class App extends Component {
 
     const infowindow = new google.maps.InfoWindow({
 
-      content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ JSON.stringify(marker.id) + "`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
-      "<a class='btn-floating red'><i class='material-icons'>clear</i></a>" + "<br/>" + "</center>",
+      content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/>" + marker.confirms.length + "<br/>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`reject failed`)}})' class='btn-floating red'><i class='material-icons'>clear</i></a>" + "<br/>" + "</center>",
       position: marker.loc
 
     });

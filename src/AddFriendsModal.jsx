@@ -1,27 +1,35 @@
 import React, { Component } from 'react';
-import { Modal, Button, Row, Input, Icon} from 'react-materialize';
-
+import { Modal, Button, Row, Input, Icon, Col, Preloader} from 'react-materialize';
+import NearbyPeep from './NearbyPeep.jsx'
 class AddFriendsModal extends Component{
 
   render(){
+    console.log(this.props.nearbyPeeps)
+    if(this.props.nearbyPeeps ) {
       return(  <Modal
-      	header='Modal Header'
+      	header='Friends Nearby'
     	trigger={
     		<Button waves='light'>Add Friends</Button>
     	}>
 
-      <Row>
-        <Input ref='password' label="Friend Email ID"/>
-      </Row>
-
-      <Button className="modal-action modal-close btn waves-effect waves-light" type="submit" >Add Friend
-        <Icon className="material-icons right">send</Icon>
-      </Button>
-
+        {this.props.nearbyPeeps.map(this._eachNearby)}
       </Modal>)
+    } else {
+      return (
+        <Modal header='LOADING'
+        trigger={
+        <Button waves='light'>Add Friends</Button>
+       }>
+          <Col s={4}>
+            <Preloader size='big'/>
+          </Col>
+        </Modal>
+      )
     }
   }
+  _eachNearby = (peep) => {
+      return (<NearbyPeep firstName={peep.firstName} lastName={peep.lastName} image={peep.image} points={peep.points}/>)
+  }
+}
 
-
-
-        export default AddFriendsModal
+export default AddFriendsModal

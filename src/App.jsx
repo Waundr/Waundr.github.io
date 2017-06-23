@@ -27,6 +27,7 @@ class App extends Component {
      //keeps track users current geolocation
      //array of all markers user can see
     this.state = {
+      nearbyPeeps: null,
       center: {},
       currentLocation: {lat: this.props.center.lat, lng: this.props.center.lng},
       markers: []
@@ -145,7 +146,7 @@ class App extends Component {
       	<SideNavItem href='#!second' icon ='person_outline'><Button> Logout </Button></SideNavItem>
       	<SideNavItem waves href='#!third' icon='person_add'><RegisterModal /></SideNavItem>
         <SideNavItem divider />
-      	<SideNavItem icon ='plus_one'><AddFriendsModal /></SideNavItem>
+      	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)}><AddFriendsModal nearbyPeeps={this.state.nearbyPeeps}/></SideNavItem>
 
       </SideNav>
 
@@ -256,6 +257,22 @@ class App extends Component {
         return "room"
     }
   }
+
+  nearbyPeeps = (loc) => {
+    console.log(loc)
+    //hard code nearby values for testing
+    let lat = 43.644625
+    let lng = -79.395197
+    let id = 3
+    fetch("http://localhost:3001/users/nearby/" + lat + "/" + lng + "/" + id)
+    .then((promise) => {
+      promise.json().then((users) => {
+        this.setState({nearbyPeeps:users})
+      })
+    })
+
+  }
+
 }
 
 export default App;

@@ -18,13 +18,14 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3001/users/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-      console.log(profile)
-      console.log(profile._json.name.familyName)
-      console.log(profile._json.name.givenName)
-      console.log(profile._json.image.url)
-       usersController.findOrCreate({firstName:profile._json.name.givenName, lastName:profile._json.name.familyName, image:profile._json.image.url, passportId:profile.id}, function (err, user) {
-         return done(err, user);
-       });
+       usersController.findOrCreate({firstName:profile._json.name.givenName, lastName:profile._json.name.familyName, image:profile._json.image.url, passportId:profile.id}).then((user) => {
+        console.log('THIS LINE USER', user)
+        return done(null, user);
+       })
+
+       //  , function (err, user) {
+       //   return done(err, user);
+       // });
   }
 ));
 
@@ -66,8 +67,8 @@ module.exports = () => {
   router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/login' }),
     function(req, res) {
-      console.log("req")
-      res.redirect('/');
+      console.log("THIS IS THE SUCCESS CODE")
+      res.redirect('http://localhost:3000');
     });
 
   // facebook
@@ -95,17 +96,18 @@ module.exports = () => {
 
     //Use quick/dirty estimate that 1m in y is ~0.00001 degre (of latitude) and 1m in x is 0.00001 in x
     //find friends within 100m
-  router.get('/nearby', (req, res) => {
-    console.log(req.body)
-    let latMin = Number(req.body.lat) -0.0001;
-    let latMax = Number(req.body.lat) +0.0001;
-    let lngMin = Number(req.body.lng) -0.0001;
-    let lngMax = Number(req.body.lng) +0.0001;
+  router.get('/nearby/:lat/:lng/:id', (req, res) => {
+    console.log(req.params)
+    let latMin = Number(req.params.lat) -0.0001;
+    let latMax = Number(req.params.lat) +0.0001;
+    let lngMin = Number(req.params.lng) -0.0001;
+    let lngMax = Number(req.params.lng) +0.0001;
     console.log('latmin', latMin)
     console.log('latmax', latMax)
     console.log('lngMin', lngMin)
     console.log('lngMax', lngMax)
-    usersController.findUsersNearby({latMin, latMax, lngMin, lngMax, id:req.body.id}).then ((users) => {
+    usersController.findUsersNearby({latMin, latMax, lngMin, lngMax, id:req.params.id}).then((users) => {
+      console.log(users);
       res.send(users)
     })
   })

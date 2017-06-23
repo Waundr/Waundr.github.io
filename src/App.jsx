@@ -34,7 +34,11 @@ class App extends Component {
       nearbyPeeps: null,
       center: {},
       currentLocation: {lat: this.props.center.lat, lng: this.props.center.lng},
-      markers: []
+      markers: [],
+      firstName: "",
+      lastName: "",
+      points: "",
+      image: ""
 
     }
 
@@ -46,6 +50,19 @@ class App extends Component {
   };
 
   componentDidMount() {
+    // FETCH CALL
+    fetch("http://localhost:3001/users", {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
+    .then((promise) => {
+      promise.json().then((user) => {
+        this.setState({firstName:user.firstName,
+                        lastName:user.lastName,
+                        points:user.points,
+                        image:user.image})
+      })
+    })
+
+
+
     //initiate connection to WS server
     const ws = new WebSocket("ws://localhost:3001");
     ws.onopen = (e) => {
@@ -157,9 +174,9 @@ class App extends Component {
       	<SideNavItem userView
       		user={{
       			background: 'img/office.jpg',
-      			image: 'img/yuna.jpg',
-      			name: 'John Doe',
-      			email: 'jdandturk@gmail.com'
+      			image: this.state.image,
+      			name: this.state.firstName + " " + this.state.lastName,
+      			email: "Points: " + this.state.points
       		}}
       	/>
       	<SideNavItem href='#!icon' style = {{color: "#FFD074"}} icon='person'><UserModal /></SideNavItem>

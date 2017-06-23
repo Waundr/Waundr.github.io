@@ -154,7 +154,7 @@ module.exports = () => {
     // get info from redis client
     // fetch("http://localhost:3001/users", {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true }).then((req) => console.log(req))
     console.log('req.user==>', req.user)
-    res.send('ok')
+    res.send(req.user);
   });
 
     //Use quick/dirty estimate that 1m in y is ~0.00001 degre (of latitude) and 1m in x is 0.00001 in x

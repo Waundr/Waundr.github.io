@@ -85,14 +85,17 @@ app.post('/events', (req, res) => {
   let id = req.body.id;
   let user = req.body.user;
   let confirm = req.body.confirm;
+  let response = '';
 
   for (event of events) {
     if (event.id === id) {
       if (confirm === 'confirm') {
         if (event.confirms.includes(user)) {
           event.confirms.splice(event.confirms.indexOf(user), 1)
+          response = 'minus';
         } else {
           event.confirms.push(user)
+          response = 'plus'
         }
       } else {
         if (event.rejects.includes(user)) {
@@ -106,8 +109,8 @@ app.post('/events', (req, res) => {
     }
   }
 
-
-  res.send()
+  console.log(response)
+  res.send(response);
 })
 
 

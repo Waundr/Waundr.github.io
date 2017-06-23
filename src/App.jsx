@@ -257,27 +257,13 @@ class App extends Component {
   onClick = (marker) => {
     mapInstance.panTo(marker.loc);
     // let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
-
-
-    function sendSocket() {
-      // let obj = {title: `xbbxb`,
-      //   description: `xb`,
-      //   type: `Food Stand`,
-      //   priv: false,
-      //   lat: 43.6563,
-      //   lng: -79.399926,
-      //   id: `ed7ff68e-550a-4aca-8d8a-4d9db0f96083`,
-      //   time: 1498149997258,
-      //   confirms: null,
-      //   rejects: null}
-      // this.socket.send(obj)
-      console.log('works')
+    if (this.infowindow) {
+      this.infowindow.close()
     }
+    this.infowindow = new google.maps.InfoWindow({
 
-    const infowindow = new google.maps.InfoWindow({
-
-      content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/>" + marker.confirms.length + "<br/>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
+      content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/><p class='markercount' style='color:red;'>" + marker.confirms.length + "</p><br/>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{if (data === `plus`){let num = parseInt($(`.markercount`).text(), 10);num++;$(`.markercount`).text(num)}else if(data === `minus`){let num = parseInt($(`.markercount`).text(), 10);num--;$(`.markercount`).text(num)}},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
       "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`reject failed`)}})' class='btn-floating red'><i class='material-icons'>clear</i></a>" + "<br/>" + "</center>",
       position: marker.loc
 
@@ -288,7 +274,7 @@ class App extends Component {
     //   map:mapInstance
     // })
     // mark.addListener('click', function() {
-      infowindow.open(mapInstance);
+      this.infowindow.open(mapInstance);
     // });
     // infowindow.open(mapInstance, mark)
     // let showMarker = marker

@@ -20,7 +20,7 @@ function createMapOptions(maps) {
   };
 }
 
-
+let filter = ['Food Stand', 'Street Market', 'Entertainment', 'Meet up', 'Obstacle', 'Your friends']
 let currentUser = 'Raymond'
 let mapInstance = 0
 class App extends Component {
@@ -125,14 +125,17 @@ class App extends Component {
   render() {
 
     //const maps all markers in state array to div with lat/lng locations
-    const Markers = this.state.markers.map((marker, index) => (
+    const filteredMarkers = this.state.markers.filter((marker) => {
+      return filter.includes(marker.type)
+    })
+    const Markers = filteredMarkers.map((marker, index) => { return (
       <div className="marker" onClick={() => this.onClick(marker)}
         lat={marker.loc.lat}
         lng={marker.loc.lng} className="material-icons md-48" style={{fontSize: "30px"}}
         key={index}>
         {this.typeToIcon(marker.type)}
       </div>
-    ));
+    )});
 
       //google map react component takes in center/zoom/options/onchange settings
       //child googlemap react componesnts are markers
@@ -159,12 +162,13 @@ class App extends Component {
           <i className="material-icons" style = {{color: "#FFD074"}}>filter_list</i>
         </a>
         <ul>
-          <li><a className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>restaurant</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light blue blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>casino</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light green blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>nature_people</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light yellow blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>store</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light purple blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>group_add</i></a></li>
-          <li><a className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>people</i></a></li>
+          <li><a onClick={() => {filter = []; this.forceUpdate();}} className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>clear</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Food Stand')} className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>restaurant</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Entertainment')} className="btn-floating waves-effect waves-light blue blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>casino</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Obstacle')} className="btn-floating waves-effect waves-light green blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>nature_people</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Street Market')} className="btn-floating waves-effect waves-light yellow blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>store</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Meet up')} className="btn-floating waves-effect waves-light purple blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>group_add</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Your friends')} className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>people</i></a></li>
         </ul>
       </div>
       <SideNav
@@ -183,7 +187,7 @@ class App extends Component {
       	<SideNavItem href='#!second' style = {{color: "#FFD074"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074", width: '171px'}}> Logout </Button></SideNavItem>
       	<SideNavItem waves href='#!third' style = {{color: "#FFD074"}} icon='person_add'><RegisterModal /></SideNavItem>
         <SideNavItem divider />
-      	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)} style = {{color: "#FFD074"}}><AddFriendsModal nearbyPeeps={this.state.nearbyPeeps}/></SideNavItem>
+      	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)} style = {{color: "#FFD074"}}><AddFriendsModal nearbyPeeps={this.state.nearbyPeeps} closeNearbyPeeps={this.closeNearbyPeeps}/></SideNavItem>
 
       </SideNav>
 
@@ -270,27 +274,13 @@ class App extends Component {
   onClick = (marker) => {
     mapInstance.panTo(marker.loc);
     // let latlng = new google.maps.LatLng(marker.loc.lat, marker.loc.lng);
-
-
-    function sendSocket() {
-      // let obj = {title: `xbbxb`,
-      //   description: `xb`,
-      //   type: `Food Stand`,
-      //   priv: false,
-      //   lat: 43.6563,
-      //   lng: -79.399926,
-      //   id: `ed7ff68e-550a-4aca-8d8a-4d9db0f96083`,
-      //   time: 1498149997258,
-      //   confirms: null,
-      //   rejects: null}
-      // this.socket.send(obj)
-      console.log('works')
+    if (this.infowindow) {
+      this.infowindow.close()
     }
+    this.infowindow = new google.maps.InfoWindow({
 
-    const infowindow = new google.maps.InfoWindow({
-
-      content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/>" + marker.confirms.length + "<br/>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
+      content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/><p class='markercount' style='color:red;'>" + marker.confirms.length + "</p><br/>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{if (data === `plus`){let num = parseInt($(`.markercount`).text(), 10);num++;$(`.markercount`).text(num)}else if(data === `minus`){let num = parseInt($(`.markercount`).text(), 10);num--;$(`.markercount`).text(num)}},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
       "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`reject failed`)}})' class='btn-floating red'><i class='material-icons'>clear</i></a>" + "<br/>" + "</center>",
       position: marker.loc
 
@@ -301,7 +291,7 @@ class App extends Component {
     //   map:mapInstance
     // })
     // mark.addListener('click', function() {
-      infowindow.open(mapInstance);
+      this.infowindow.open(mapInstance);
     // });
     // infowindow.open(mapInstance, mark)
     // let showMarker = marker
@@ -311,6 +301,15 @@ class App extends Component {
     // this.setState({markers: markers})
     // console.log(marker,index)
 
+  }
+
+  toggleFilter(filterType) {
+    if (filter.includes(filterType)) {
+      filter.splice(filter.indexOf(filterType), 1)
+    } else {
+      filter.push(filterType)
+    }
+    this.forceUpdate();
   }
 
   typeToIcon = (type) => {
@@ -346,6 +345,10 @@ class App extends Component {
       })
     })
 
+  }
+
+  closeNearbyPeeps = () => {
+    this.setState({nearbyPeeps:null})
   }
 
 }

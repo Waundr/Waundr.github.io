@@ -103,7 +103,7 @@ app.post('/events', (req, res) => {
           event.rejects.push(user)
         }
       }
-      wss.broadcast({type: 'update confirm/reject', data: id})
+      wss.broadcast({type: 'update specific', data: id})
     }
   }
   console.log(events)

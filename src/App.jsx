@@ -55,7 +55,7 @@ class App extends Component {
           }).then((data) => {
             data.forEach((marker) => {
               marker.loc = {lat: marker.lat, lng: marker.lng};
-              this.addMarker(marker.title, marker.description, marker.type, marker.priv, marker.loc, false, marker.creator, marker.id)
+              this.addMarker(marker.title, marker.description, marker.type, marker.priv, marker.loc, false, marker.creator, marker.confirms, marker.rejects, marker.id)
             })
           }).catch((err) => {
             console.log(err);
@@ -75,7 +75,7 @@ class App extends Component {
           }).then((data) => {
             let newMarker = data[data.length - 1];
             newMarker.loc = {lat: newMarker.lat, lng: newMarker.lng};
-            this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc, false, newMarker.creator, newMarker.id)
+            this.addMarker(newMarker.title, newMarker.description, newMarker.type, newMarker.priv, newMarker.loc, false, newMarker.creator, newMarker.confirms, newMarker.rejects, newMarker.id)
           }).catch((err) => {
             console.log(err);
           })
@@ -83,6 +83,21 @@ class App extends Component {
         Materialize.toast(`New ${stuff.data} nearby`, 4000)
       } else if (stuff.type === 'expire') {
         this.removeMarker(stuff.data)
+      } else if (stuff.type === 'update specific') {
+        fetch('http://localhost:3001/events.json')
+          .then((res) => {
+            return res.json()
+          }).then((data) => {
+            let newMarker = data.filter((filtered) => {
+              return filtered.id === stuff.data;
+            });
+            let updatedMarker = newMarker[0];
+            updatedMarker.loc = {lat: newMarker.lat, lng: newMarker.lng};
+            console.log(updatedMarker)
+            this.updateMarker(stuff.data, updatedMarker)
+          }).catch((err) => {
+            console.log(err);
+          })
       }
 
 
@@ -169,7 +184,7 @@ class App extends Component {
 
 
   //callback for when +button pressed
-  addMarker = (title, desc, type, priv, loc, selfAdd, creator, id) =>{
+  addMarker = (title, desc, type, priv, loc, selfAdd, creator, confirms, rejects, id) =>{
     const marker = {
       id: id,
       loc: loc,
@@ -177,8 +192,8 @@ class App extends Component {
       description: desc,
       type: type,
       creator: creator,
-      confirms: [],
-      rejects: [],
+      confirms: confirms,
+      rejects: rejects,
       priv: priv ? true: false
     }
 
@@ -214,6 +229,20 @@ class App extends Component {
     this.setState({markers:markers})
   }
 
+  updateMarker = (id, updatedMarker) => {
+    console.log('updating', updatedMarker)
+    const markers = this.state.markers;
+    console.log(markers)
+    for (let i = 0; i < markers.length; i++) {
+      if (markers[i].id === id) {
+        markers[i].rejects = updatedMarker.rejects;
+        markers[i].confirms = updatedMarker.confirms;
+      }
+    }
+    console.log(markers)
+    this.setState({markers:markers})
+  }
+
   //callback when any map change occurs, obj param gives lat/lng/zoom/etc..
   onChange = (obj) =>{
     const lat = obj.center.lat;
@@ -246,7 +275,7 @@ class App extends Component {
     const infowindow = new google.maps.InfoWindow({
 
       content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/>" + marker.confirms.length + "<br/>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{infowindow.close()},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
       "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`reject failed`)}})' class='btn-floating red'><i class='material-icons'>clear</i></a>" + "<br/>" + "</center>",
       position: marker.loc
 

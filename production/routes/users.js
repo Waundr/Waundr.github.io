@@ -101,7 +101,13 @@ module.exports = () => {
     let latMax = Number(req.body.lat) +0.0001;
     let lngMin = Number(req.body.lng) -0.0001;
     let lngMax = Number(req.body.lng) +0.0001;
-    res.send(usersController.findUsersNearby({latMin, latMax, lngMin, lngMax, id:req.body.id}))
+    console.log('latmin', latMin)
+    console.log('latmax', latMax)
+    console.log('lngMin', lngMin)
+    console.log('lngMax', lngMax)
+    usersController.findUsersNearby({latMin, latMax, lngMin, lngMax, id:req.body.id}).then ((users) => {
+      res.send(users)
+    })
   })
 
   return router;

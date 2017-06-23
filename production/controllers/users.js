@@ -14,9 +14,9 @@ module.exports = {
       });
   },
   findUsersNearby(req, res) {
-
     return Users
       .findAll({
+        attributes: ['firstName', 'lastName', 'points', 'image', 'currentLat', 'currentLng'],
         where: {
           currentLat: {
             $between: [req.latMin, req.latMax]

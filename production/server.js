@@ -82,11 +82,9 @@ app.get('/events.json', (req, res) => {
 })
 
 app.post('/events', (req, res) => {
-  console.log('post came in ' + req.body.id, req.body.user, req.body.confirm)
   let id = req.body.id;
   let user = req.body.user;
   let confirm = req.body.confirm;
-  console.log(events)
 
   for (event of events) {
     if (event.id === id) {
@@ -103,10 +101,12 @@ app.post('/events', (req, res) => {
           event.rejects.push(user)
         }
       }
+      client.hmset(id, event)
       wss.broadcast({type: 'update specific', data: id})
     }
   }
-  console.log(events)
+
+
   res.send()
 })
 

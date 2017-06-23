@@ -93,7 +93,6 @@ class App extends Component {
             });
             let updatedMarker = newMarker[0];
             updatedMarker.loc = {lat: newMarker.lat, lng: newMarker.lng};
-            console.log(updatedMarker)
             this.updateMarker(stuff.data, updatedMarker)
           }).catch((err) => {
             console.log(err);
@@ -231,16 +230,13 @@ class App extends Component {
   }
 
   updateMarker = (id, updatedMarker) => {
-    console.log('updating', updatedMarker)
     const markers = this.state.markers;
-    console.log(markers)
     for (let i = 0; i < markers.length; i++) {
       if (markers[i].id === id) {
         markers[i].rejects = updatedMarker.rejects;
         markers[i].confirms = updatedMarker.confirms;
       }
     }
-    console.log(markers)
     this.setState({markers:markers})
   }
 
@@ -276,7 +272,7 @@ class App extends Component {
     const infowindow = new google.maps.InfoWindow({
 
       content: "<center>" + "<b>"+ marker.title +"</b>" + "<br />" + marker.description +  "<br/>" + marker.confirms.length + "<br/>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{infowindow.close()},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
       "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`reject failed`)}})' class='btn-floating red'><i class='material-icons'>clear</i></a>" + "<br/>" + "</center>",
       position: marker.loc
 

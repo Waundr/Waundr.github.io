@@ -10,7 +10,14 @@ const session = require('express-session');
 const flash    = require('connect-flash');
 
 const cors = require('cors');
-router.use(cors());
+
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  optionSuccessStatus: 200,
+  credentials: true
+}
+router.use(cors(corsOptions));
 
 router.use(cookieParser());
 
@@ -33,7 +40,7 @@ passport.use(new GoogleStrategy({
   function(accessToken, refreshToken, profile, done) {
        usersController.findOrCreate({firstName:profile._json.name.givenName, lastName:profile._json.name.familyName, image:profile._json.image.url, passportId:profile.id}).then((user) => {
         console.log('THIS LINE USER: =====> ', user)
-        return done(null, user);
+        return done(null, user[0]);
        })
 
        //  , function (err, user) {
@@ -72,12 +79,16 @@ passport.use(new FacebookStrategy({
 //   storing the user ID when serializing, and finding the user by ID when
 //   deserializing.
 passport.serializeUser(function(user, done) {
-  console.log("USER===>", user[0].id);
-  done(null, user[0].id);
+  console.log("USER===>", user.id);
+  done(null, user.id);
 });
 
-passport.deserializeUser(function(obj, done) {
-  Users.findById(obj, done);
+passport.deserializeUser(function(id, done) {
+  console.log("deserialize user id ==>", id);
+  Users.findById(id).then( function(user) {
+    console.log("Users.findby ===> ", user);
+    done( user);
+  })
 });
 
 module.exports = () => {
@@ -116,7 +127,10 @@ module.exports = () => {
                                       failureRedirect: '/login' }),
     function(req, res) {
       console.log("THIS IS THE SUCCESS CODE")
-      res.redirect('http://localhost:3000');
+      req.session.save(function() {
+        res.redirect('http://localhost:3000');
+      })
+      // res.redirect('http://localhost:3000');
     });
 
   // facebook
@@ -138,8 +152,8 @@ module.exports = () => {
 
   router.get("/", (req, res) => {
     // get info from redis client
-    console.log('going')
-    console.log('req => ', req)
+    // fetch("http://localhost:3001/users", {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true }).then((req) => console.log(req))
+    console.log('req.user==>', req.user)
     res.send('ok')
   });
 

@@ -136,22 +136,6 @@ class App extends Component {
 
 
           {Markers}
-        </GoogleMapReact>
-        <div className="fixed-action-btn horizontal click-to-toggle" style={{position: 'absolute', bottom: '8em', right: '2em'}}  >
-          <a className="btn-floating btn-large waves-effect waves-light red" >
-            <i className="material-icons">filter_list</i>
-          </a>
-          <ul>
-            <li><a className="btn-floating waves-effect waves-light red"><i className="material-icons">restaurant</i></a></li>
-            <li><a className="btn-floating waves-effect waves-light blue"><i className="material-icons">casino</i></a></li>
-            <li><a className="btn-floating waves-effect waves-light green"><i className="material-icons">nature_people</i></a></li>
-            <li><a className="btn-floating waves-effect waves-light yellow"><i className="material-icons">store</i></a></li>
-            <li><a className="btn-floating waves-effect waves-light purple"><i className="material-icons">group_add</i></a></li>
-            <li><a className="btn-floating waves-effect waves-light orange"><i className="material-icons">people</i></a></li>
-          </ul>
-        </div>
-
-        {Markers}
       </GoogleMapReact>
       <div className="fixed-action-btn horizontal click-to-toggle" style={{position: 'absolute', bottom: '8em', right: '2em'}}  >
         <a className="btn-floating btn-large waves-effect waves-light blue-grey darken-3" >

@@ -4,7 +4,8 @@
   "description": "Simple and lightweight Boilerplate for ReactJS projects",
   "scripts": {
     "lint": "eslint --ext .jsx,.js src",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -29,8 +30,9 @@
     "node": ">=6.0.0"
   },
   "devDependencies": {
-    "sequelize-cli": "^2.7.0",
-    "morgan": "^1.8.2"
+    "mocha": "^3.4.2",
+    "morgan": "^1.8.2",
+    "sequelize-cli": "^2.7.0"
   },
   "dependencies": {
     "body-parser": "^1.17.2",

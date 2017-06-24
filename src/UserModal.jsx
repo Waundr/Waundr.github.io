@@ -8,18 +8,20 @@ class UserModal extends Component{
       	header='LOGIN'
     	trigger={
     		<Button waves='light' className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074", width: '171px'}}>Login</Button>
-    	}>
+    	}
+      style={{
+      backgroundColor: '#546e7a'}}>
       <Row>
         <Input ref='email_id' s={6} label="Email ID"/>
         <Input ref='password' label="Password"/>
       </Row>
       <Row>
-        <a href='http://localhost:3001/users/auth/google'><Button waves ='light'> Login with google </Button></a>
+        <a href='http://localhost:3001/users/auth/google'><Button waves ='light' className="blue-grey darken-3" style = {{color: "#FFD074"}}> Login with google </Button></a>
       </Row>
       <Row>
-        <a href='http://localhost:3001/users/auth/facebook'><Button waves ='light'> Login with facebook </Button></a>
+        <a href='http://localhost:3001/users/auth/facebook'><Button waves ='light' className="blue-grey darken-3" style = {{color: "#FFD074"}}> Login with facebook </Button></a>
       </Row>
-        <Button className="modal-action modal-close btn waves-effect waves-light" type="submit" onClick={this._onLogin.bind(this)}>Login
+        <Button className="modal-action modal-close btn waves-effect waves-light blue-grey darken-3" type="submit" onClick={this._onLogin.bind(this)}>Login
           <Icon className="material-icons right">send</Icon>
         </Button>
       </Modal>

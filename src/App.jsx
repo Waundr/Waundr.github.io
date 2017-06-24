@@ -38,7 +38,8 @@ class App extends Component {
       firstName: "",
       lastName: "",
       points: "",
-      image: ""
+      image: "",
+      id: ""
 
     }
 
@@ -57,7 +58,8 @@ class App extends Component {
         this.setState({firstName:user.firstName,
                         lastName:user.lastName,
                         points:user.points,
-                        image:user.image})
+                        image:user.image,
+                        id: user.id})
       })
     })
 
@@ -182,6 +184,9 @@ class App extends Component {
       			name: this.state.firstName + " " + this.state.lastName,
       			email: "Points: " + this.state.points
       		}}
+          style={{backgroundColor: "#37474f",
+                  color: "#FFD074",
+                  position: "center"}}
       	/>
       	<SideNavItem href='#!icon' style = {{color: "#FFD074"}} icon='person'><UserModal /></SideNavItem>
       	<SideNavItem href='#!second' style = {{color: "#FFD074"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074", width: '171px'}}> Logout </Button></SideNavItem>

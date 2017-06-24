@@ -6,12 +6,14 @@ class ModalForm extends Component{
   render(){
       return(
           <Modal
-            header='Create a new Map Point'
+            header= 'Create a new Map Point'
             bottomSheet
             trigger={
               <Button style={{position: 'absolute', bottom: '2em', right: '2em'}} className="btn-floating btn-large waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>add_location</i></Button>
             }
-            style= {{overflow: 'visible', zIndex: '1003'}}>
+            style= {{overflow: 'visible',
+                    zIndex: '1003',
+                    backgroundColor: '#546e7a'}}>
             <Row>
               <Input ref='title' s={6} label="Title"  onChange={this._onTitleChange}/>
               <Input ref='desc' label="Description" onChange={this._onDescChange}/>
@@ -27,7 +29,7 @@ class ModalForm extends Component{
                 <Input ref="switch" type="switch" onLabel="Private" offLabel="Public"/>
             </Row>
 
-              <Button className="modal-action modal-close btn waves-effect waves-light" type="submit" onClick={this._onSubmit.bind(this)}>SUBMIT
+              <Button className="modal-action modal-close btn waves-effect waves-light blue-grey darken-3" type="submit" onClick={this._onSubmit.bind(this)} style = {{color: "#FFD074"}}>SUBMIT
                 <Icon className="material-icons right">send</Icon>
               </Button>
           </Modal>

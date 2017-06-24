@@ -10,11 +10,11 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // Friends.belongsTo(models.Users)
-        Friends.belongsTo(models.Users, {foreignKey: 'frienderId'})
-        Friends.belongsTo(models.Users, {foreignKey: 'befriendedId'})
+        Friends.belongsTo(Users, {as: 'Friender', constraints: false})
+        Friends.belongsTo(Users, {as: 'Befriended', constraints: false})
         // associations can be defined here
       }
     }
   });
   return Friends;
-};
+}

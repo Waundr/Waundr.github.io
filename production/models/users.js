@@ -12,7 +12,8 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Users.hasMany(models.Friends)
+        Users.hasMany(Friends, {as: 'Frienders'})
+        Users.hasMany(Friends, {as: 'Befrienders'})
         // associations can be defined here
         //Users.hasMany(Friends)
         //User.hasOne(project) in sequelize user is source and project is the target

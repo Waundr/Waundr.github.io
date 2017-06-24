@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {SideNav, SideNavItem, Button, Row, Input} from 'react-materialize';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -10,25 +12,18 @@ import {
 import App from './App.jsx';
 
 
-window.state = { authenticated: false }
-
-const ProtectedRoute = ({ component: Component, ...rest}) => (
-  <Route {...rest} render={ props => (
-                          window.state.authenticated
-                          ? (<Component {...props}/>)
-                          : (<Redirect to={{pathname: '/', state: { from: props.location}}}/>)
-    )}
-  />
-)
-
 
 const AppRoot = () => (
   <Router>
     <div>
-     <ProtectedRoute path="/protected" component={App}/>
+     <Route path="/app" component={App}/>
       <div>
         <ul>
+          <a href='http://localhost:3001/users/auth/google'><Button waves ='light' className="blue-grey darken-3" style = {{color: "#FFD074"}}> Login with google </Button></a>
+          <a href='http://localhost:3001/users/auth/facebook'><Button waves ='light' className="blue-grey darken-3" style = {{color: "#FFD074"}}> Login with facebook </Button></a>
+
           <li><Link to="/protected">About Us</Link></li>
+          <li><Link to="/signin">About Us</Link></li>
         </ul>
       </div>
     </div>
@@ -36,3 +31,6 @@ const AppRoot = () => (
 )
 
 export default AppRoot;
+
+
+

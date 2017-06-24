@@ -64,10 +64,11 @@ passport.use(new FacebookStrategy({
     console.log("image url: ", profile.photos[0].value)
     console.log("Done: ", done)
 
-     usersController.findOrCreate({firstName:profile.name.givenName, lastName:profile.name.familyName, image:profile.photos[0].value, passportId:profile.id}, function (err, user) {
-       return done(err, user);
-     });
-  }
+     usersController.findOrCreate({firstName:profile.name.givenName, lastName:profile.name.familyName, image:profile.photos[0].value, passportId:profile.id}).then((user) => {
+      console.log('THIS LINE USER: =====> ', user)
+      return done(null, user[0]);
+     })
+   }
 ));
 
 
@@ -145,8 +146,16 @@ module.exports = () => {
   // access was granted, the user will be logged in.  Otherwise,
   // authentication has failed.
   router.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { successRedirect: '/',
-                                        failureRedirect: '/login' }));
+    passport.authenticate('facebook', { successRedirect: "http://localhost:3000",
+                                        failureRedirect: '/login' }),
+          function(req, res) {
+            console.log("THIS IS THE SUCCESS CODE")
+            req.session.save(function() {
+              res.redirect('http://localhost:3000');
+            })
+            // res.redirect('http://localhost:3000');
+          }
+            );
 
 
 

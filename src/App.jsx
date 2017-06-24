@@ -8,6 +8,7 @@ import RegisterModal from './RegisterModal.jsx'
 import UserModal from './UserModal.jsx'
 import AddFriendsModal from './AddFriendsModal.jsx'
 
+
 //options for google maps api
 // const infowindow = new google.maps.InfoWindow();
 

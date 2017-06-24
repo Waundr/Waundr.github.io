@@ -42,7 +42,7 @@ module.exports = {
           id: 1
         },
         include: [{
-          model: Friends,
+          model: Friends
         }]
       })
   }

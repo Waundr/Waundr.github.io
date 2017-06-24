@@ -9,9 +9,10 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
+        Friends.belongsTo(models.Users)
         // Friends.belongsTo(models.Users)
-        Friends.belongsTo(Users, {as: 'Friender', constraints: false})
-        Friends.belongsTo(Users, {as: 'Befriended', constraints: false})
+        // Friends.belongsTo(models.Users, {as: 'Friender', constraints: false})
+        // Friends.belongsTo(models.Users, {as: 'Befriended', constraints: false})
         // associations can be defined here
       }
     }

@@ -90,3 +90,82 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
   }
 
 }
+
+h4 {
+  color: white;
+}
+
+/* label non focus color */
+.input-field {
+  color: white !important;
+  input[type=text] {
+    color: $goodyellow
+  }
+  input[type=text] + label {
+    color: white !important
+  }
+  input[type=text]:focus + label {
+    color: $goodyellow !important;
+  }
+  input[type=select-dropdown] + label {
+    color: $goodyellow !important;
+  }
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid $goodyellow !important;
+    box-shadow: 0 1px 0 0 $goodyellow !important;
+  }
+
+.input-field input[type=text] {
+    border-bottom: 1px solid white !important;
+    box-shadow: 0 1px 0 0 white !important;
+  }
+
+.switch {
+  label{
+    // Chaging the label color
+    color: white !important;
+
+    input[type=checkbox]:checked+.lever:after {
+        background-color: $goodyellow !important;
+    }
+    input[type=checkbox]:checked+.lever {
+        background-color: white !important;
+    }
+    input[type=checkbox]+.lever {
+        background-color: white !important;
+    }
+    input[type=checkbox]+.lever:after {
+        background-color: $goodyellow !important;
+    }
+  }
+}
+
+.material-icons {
+  color: #FD8F04;
+}
+
+.modal {
+  // this actually forces all labels to white. Should have done this earlier. Will pay off debt later on.
+  label {
+    color: white !important;
+  }
+      ul.dropdown-content.select-dropdown {
+        label {
+          color: white !important;
+        }
+        li span {
+        color: $goodyellow !important; /* no need for !important :) */
+        background-color: $goodgrey
+        }
+      }
+    .modal-footer {
+    background-color: $darkgoodgrey !important;
+    color: $goodyellow !important;
+    .btn {
+      color: white !important;
+      background-color: black !important;
+    }
+  }
+}

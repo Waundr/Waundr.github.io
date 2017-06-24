@@ -166,6 +166,11 @@ module.exports = () => {
     res.send(req.user);
   });
 
+  router.get('/logout', function(req, res){
+    req.logout();
+    res.redirect("http://localhost:3000");
+});
+
     //Use quick/dirty estimate that 1m in y is ~0.00001 degre (of latitude) and 1m in x is 0.00001 in x
     //find friends within 100m
   router.get('/nearby/:lat/:lng/:id', (req, res) => {

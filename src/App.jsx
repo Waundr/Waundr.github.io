@@ -189,7 +189,7 @@ class App extends Component {
                   position: "center"}}
       	/>
       	<SideNavItem href='#!icon' style = {{color: "#FFD074"}} icon='person'><UserModal /></SideNavItem>
-      	<SideNavItem href='#!second' style = {{color: "#FFD074"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074", width: '171px'}}> Logout </Button></SideNavItem>
+      	<SideNavItem href='http://localhost:3001/users/logout' style = {{color: "#FFD074"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074", width: '171px'}}> Logout </Button></SideNavItem>
       	<SideNavItem waves href='#!third' style = {{color: "#FFD074"}} icon='person_add'><RegisterModal /></SideNavItem>
         <SideNavItem divider />
       	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)} style = {{color: "#FFD074"}}><AddFriendsModal nearbyPeeps={this.state.nearbyPeeps} closeNearbyPeeps={this.closeNearbyPeeps}/></SideNavItem>

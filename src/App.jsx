@@ -162,20 +162,20 @@ class App extends Component {
       </GoogleMapReact>
       <div className="fixed-action-btn horizontal click-to-toggle" style={{position: 'absolute', bottom: '8em', right: '2em'}}  >
         <a className="btn-floating btn-large waves-effect waves-light blue-grey darken-3" >
-          <i className="material-icons" style = {{color: "#FFD074"}}>filter_list</i>
+          <i className="material-icons" style = {{color: "#FD8F04"}}>filter_list</i>
         </a>
         <ul>
-          <li><a onClick={() => {if(this.infowindow){this.infowindow.close()};filter = []; this.forceUpdate();}} className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>clear</i></a></li>
-          <li><a onClick={() => this.toggleFilter('Food Stand')} className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>restaurant</i></a></li>
-          <li><a onClick={() => this.toggleFilter('Entertainment')} className="btn-floating waves-effect waves-light blue blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>casino</i></a></li>
-          <li><a onClick={() => this.toggleFilter('Obstacle')} className="btn-floating waves-effect waves-light green blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>nature_people</i></a></li>
-          <li><a onClick={() => this.toggleFilter('Street Market')} className="btn-floating waves-effect waves-light yellow blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>store</i></a></li>
-          <li><a onClick={() => this.toggleFilter('Meet up')} className="btn-floating waves-effect waves-light purple blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>group_add</i></a></li>
-          <li><a onClick={() => this.toggleFilter('Your friends')} className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>people</i></a></li>
+          <li><a onClick={() => {if(this.infowindow){this.infowindow.close()};filter = []; this.forceUpdate();}} className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>clear</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Food Stand')} className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>restaurant</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Entertainment')} className="btn-floating waves-effect waves-light blue blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>casino</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Obstacle')} className="btn-floating waves-effect waves-light green blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>nature_people</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Street Market')} className="btn-floating waves-effect waves-light yellow blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>store</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Meet up')} className="btn-floating waves-effect waves-light purple blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>group_add</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Your friends')} className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>people</i></a></li>
         </ul>
       </div>
       <SideNav
-	     trigger={<Button style={{position: 'absolute', top: '2em', left: '2em'}} className="btn-floating btn-large waves-effect waves-light blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>menu</i></Button>}
+	     trigger={<Button style={{position: 'absolute', top: '2em', left: '2em'}} className="btn-floating btn-large waves-effect waves-light blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>menu</i></Button>}
       	options={{ closeOnClick: true }}
         style={{backgroundColor: "#546e7a"}}>
       	<SideNavItem userView
@@ -186,14 +186,14 @@ class App extends Component {
       			email: "Points: " + this.state.points
       		}}
           style={{backgroundColor: "#37474f",
-                  color: "#FFD074",
+                  color: "#FD8F04",
                   position: "center"}}
       	/>
-      	<SideNavItem href='#!icon' style = {{color: "#FFD074"}} icon='person'><UserModal /></SideNavItem>
-      	<SideNavItem href='http://localhost:3001/users/logout' style = {{color: "#FFD074"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074", width: '171px'}}> Logout </Button></SideNavItem>
-      	<SideNavItem waves href='#!third' style = {{color: "#FFD074"}} icon='person_add'><RegisterModal /></SideNavItem>
+      	<SideNavItem href='#!icon' style = {{color: "#FD8F04"}} icon='person'><UserModal /></SideNavItem>
+      	<SideNavItem href='http://localhost:3001/users/logout' style = {{color: "#FD8F04"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FD8F04", width: '171px'}}> Logout </Button></SideNavItem>
+      	<SideNavItem waves href='#!third' style = {{color: "#FD8F04"}} icon='person_add'><RegisterModal /></SideNavItem>
         <SideNavItem divider />
-      	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)} style = {{color: "#FFD074"}}><AddFriendsModal nearbyPeeps={this.state.nearbyPeeps} closeNearbyPeeps={this.closeNearbyPeeps}/></SideNavItem>
+      	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)} style = {{color: "#FD8F04"}}><AddFriendsModal nearbyPeeps={this.state.nearbyPeeps} closeNearbyPeeps={this.closeNearbyPeeps}/></SideNavItem>
 
       </SideNav>
 
@@ -290,7 +290,7 @@ class App extends Component {
 
       content: "<div id='iw-container'>" + "<div class='iw-title'>"+ marker.title +"</div>" + "<br /><div class='iw-content'>" + marker.description +  "</div><div class='confirmbtns'>" +
       "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ this.state.id + "`, confirm:`confirm`}, success: (data)=>{if (data === `plus`){let num = parseInt($(`.markercount`).text(), 10);num++;$(`.markercount`).text(num)}else if(data === `minus`){let num = parseInt($(`.markercount`).text(), 10);num--;$(`.markercount`).text(num)}},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue-grey darken-3'><p class='markercount'>" + marker.confirms.length + "</p></a>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ this.state.id + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`reject failed`)}})' class='btn-floating blue-grey darken-3'><i class='material-icons' style='color:#FFD074'>clear</i></a>" + "<br/>" + "</div></div>",
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ this.state.id + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`reject failed`)}})' class='btn-floating blue-grey darken-3'><i class='material-icons' style='color:#FD8F04'>clear</i></a>" + "<br/>" + "</div></div>",
       position: marker.loc
 
     });

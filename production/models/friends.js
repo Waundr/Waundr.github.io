@@ -1,5 +1,5 @@
 'use strict';
-const Users = require('./users');
+// const Users = require('./users');
 
 module.exports = function(sequelize, DataTypes) {
   var Friends = sequelize.define('Friends', {
@@ -9,8 +9,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Users.hasOne(Friends, {foreignKey: 'frienderId'})
-        Users.hasOne(Friends, {foreignKey: 'befrienderId'})
+        // Friends.belongsTo(models.Users)
+        Friends.belongsTo(models.Users, {foreignKey: 'frienderId'})
+        Friends.belongsTo(models.Users, {foreignKey: 'befriendedId'})
         // associations can be defined here
       }
     }

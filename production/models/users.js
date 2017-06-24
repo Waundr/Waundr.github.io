@@ -1,5 +1,5 @@
 'use strict';
-const Friends = require('./friends');
+// const Friends = require('./friends');
 module.exports = function(sequelize, DataTypes) {
   var Users = sequelize.define('Users', {
     firstName: DataTypes.STRING,
@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Users.hasMany(Friends)
+        Users.hasMany(models.Friends)
         // associations can be defined here
         //Users.hasMany(Friends)
         //User.hasOne(project) in sequelize user is source and project is the target

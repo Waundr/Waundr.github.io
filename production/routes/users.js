@@ -111,7 +111,13 @@ module.exports = () => {
       console.log(users);
       res.send(users)
     })
-  })
+  });
+
+  router.get('/friends/:id', (req, res) => {
+    usersController.findFriends().then((users) => {
+      console.log(users);
+    })
+  });
 
   return router;
 }

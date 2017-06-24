@@ -1,4 +1,5 @@
 const Users = require('../models').Users;
+const Friends = require('../models').Friends;
 
 module.exports = {
   findOrCreate(req, res) {
@@ -30,6 +31,19 @@ module.exports = {
             }
           }
         }
+      })
+  },
+  findFriends(req, res) {
+    // Users.sync()
+    // Friends.sync()
+    return Users
+      .findAll({
+        where: {
+          id: 1
+        },
+        include: [{
+          model: Friends,
+        }]
       })
   }
 };

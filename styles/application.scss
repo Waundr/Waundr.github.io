@@ -1,3 +1,8 @@
 // This is the top-level scss file. Import all other files in here.
+$goodyellow: #FFD074;
+$goodgrey: #546e7a;
+$darkgoodgrey: #37474f;
+$nothergoodgrey: #90a4ae;
+
 @import 'home';
 @import 'currentLocation'

@@ -42,6 +42,7 @@ class App extends Component {
   //default center and zoom properties
   static defaultProps = {
     center: {lat: (Math.random() * (43.641541 - 43.670727) + 43.670727).toFixed(6) * 1, lng: (Math.random() * (-79.367466 - -79.404287) + -79.404287).toFixed(6) * 1},
+    // center: {lat: 25.761680, lng:-80.19179}, //in miami
     zoom: 15
   };
 
@@ -262,9 +263,9 @@ class App extends Component {
     }
     this.infowindow = new google.maps.InfoWindow({
 
-      content: "<div id='iw-container'>" + "<div class='iw-title'>"+ marker.title +"</div>" + "<br /><div class='iw-content'>" + marker.description +  "</div><br/><p class='markercount'>" + marker.confirms.length + "</p><br/>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{if (data === `plus`){let num = parseInt($(`.markercount`).text(), 10);num++;$(`.markercount`).text(num)}else if(data === `minus`){let num = parseInt($(`.markercount`).text(), 10);num--;$(`.markercount`).text(num)}},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue'><i class='material-icons'>check</i></a>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`reject failed`)}})' class='btn-floating red'><i class='material-icons'>clear</i></a>" + "<br/>" + "</div>",
+      content: "<div id='iw-container'>" + "<div class='iw-title'>"+ marker.title +"</div>" + "<br /><div class='iw-content'>" + marker.description +  "</div><div class='confirmbtns'>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`confirm`}, success: (data)=>{if (data === `plus`){let num = parseInt($(`.markercount`).text(), 10);num++;$(`.markercount`).text(num)}else if(data === `minus`){let num = parseInt($(`.markercount`).text(), 10);num--;$(`.markercount`).text(num)}},failure: ()=>{console.log(`confirm failed`)}})' class='btn-floating blue-grey darken-3'><p class='markercount'>" + marker.confirms.length + "</p></a>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ currentUser + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`)},failure: ()=>{console.log(`reject failed`)}})' class='btn-floating blue-grey darken-3'><i class='material-icons' style='color:#FFD074'>clear</i></a>" + "<br/>" + "</div></div>",
       position: marker.loc
 
     });

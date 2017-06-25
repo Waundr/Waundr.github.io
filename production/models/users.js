@@ -1,7 +1,7 @@
 'use strict';
 // const db = require('./index');
 module.exports = function(sequelize, DataTypes) {
-  var Users = sequelize.define('users', {
+  var users = sequelize.define('users', {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     points: DataTypes.INTEGER,
@@ -24,5 +24,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  return Users;
+  return users;
 };

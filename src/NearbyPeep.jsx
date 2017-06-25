@@ -15,7 +15,7 @@ class NearbyPeep extends Component{
             <h2>{this.props.firstName} {this.props.lastName}</h2>
             </Col>
           <Col s={2}>
-            <Button>ADD FRIEND</Button>
+            <Button onClick={() => this.props.addFriend(this.props.id)}>ADD FRIEND</Button>
           </Col>
         </Row>
           </div>

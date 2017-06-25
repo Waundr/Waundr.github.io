@@ -3,7 +3,7 @@ const router  = express.Router();
 const usersController = require('../controllers').users;
 require("dotenv").config()
 
-const Users = require('../models').Users;
+const Users = require('../models').users;
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -189,11 +189,40 @@ module.exports = () => {
     })
   });
 
-  router.get('/friends/:id', (req, res) => {
-    usersController.findFriends().spread((results, metadata) => {
+  //finding all users pending friend requests
+  router.get('/friends/requests/:id', (req, res) => {
+    usersController.findFriendRequests({id:req.params.id}).spread((results, metadata) => {
       res.send(results)
     })
   });
 
+  //sending friend request
+  router.post('/friends/send' ,(req, res) => {
+    let fid = Number(req.body.frienderid)
+    let bid = Number(req.body.befriendedid)
+    usersController.sendFriendRequest({frienderid: fid, befriendedid: bid}).then((results) => {
+      console.log(results)
+    })
+  })
+
+  //deny friend request
+  router.put('/friends/deny', (req, res) => {
+    let fid = Number(req.body.frienderid)
+    let bid = Number(req.body.befriendedid)
+    console.log("fidbid:",fid, bid)
+    usersController.denyFriendRequest({frienderid: fid, befriendedid: bid}).then((results) => {
+      console.log(results)
+    })
+  })
+
+  //accept friend request
+  router.put('/friends/accept', (req, res) => {
+    let fid = Number(req.body.frienderid)
+    let bid = Number(req.body.befriendedid)
+    console.log("fidbid:",fid, bid)
+    usersController.acceptFriendRequest({frienderid: fid, befriendedid: bid}).then((results) => {
+      console.log(results)
+    })
+  })
   return router;
 }

@@ -3,17 +3,13 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('friends', [{
-          frienderid: 0,
+          frienderid: 2,
           befriendedid: 1,
-          status: 0,
-          createdAt: new Date(),
-         updatedAt: new Date()
+          status: 0
         },{
           frienderid: 1,
           befriendedid: 3,
-          status: 1,
-          createdAt: new Date(),
-          updatedAt: new Date()
+          status: 1
         }])
 
     /*
@@ -29,6 +25,8 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize) {
+    return queryInterface.bulkDelete('Friends', null, {});
+
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.

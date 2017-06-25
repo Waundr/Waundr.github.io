@@ -3,7 +3,7 @@
 // const db = require('./index');
 
 module.exports = function(sequelize, DataTypes) {
-  var Friends = sequelize.define('friends', {
+  var friends = sequelize.define('friends', {
     frienderId: DataTypes.INTEGER,
     befriendedId: DataTypes.INTEGER,
     status: DataTypes.INTEGER
@@ -19,5 +19,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  return Friends;
+  return friends;
 }

@@ -57,6 +57,7 @@ class App extends Component {
     fetch("http://localhost:3001/users", {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
     .then((promise) => {
       promise.json().then((user) => {
+        console.log('USER ID', user.id)
         this.setState({firstName:user.firstName,
                         lastName:user.lastName,
                         points:user.points,
@@ -194,7 +195,7 @@ class App extends Component {
       	<SideNavItem href='http://localhost:3001/users/logout' style = {{color: "#FD8F04"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FD8F04", width: '171px'}}> Logout </Button></SideNavItem>
       	<SideNavItem waves href='#!third' style = {{color: "#FD8F04"}} icon='person_add'><RegisterModal /></SideNavItem>
         <SideNavItem divider />
-      	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)} style = {{color: "#FD8F04"}}><AddFriendsModal nearbyPeeps={this.state.nearbyPeeps} closeNearbyPeeps={this.closeNearbyPeeps}/></SideNavItem>
+      	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)} style = {{color: "#FD8F04"}}><AddFriendsModal addFriend={this.addFriend} nearbyPeeps={this.state.nearbyPeeps} closeNearbyPeeps={this.closeNearbyPeeps}/></SideNavItem>
 
       </SideNav>
 
@@ -355,6 +356,7 @@ class App extends Component {
     fetch("http://localhost:3001/users/nearby/" + lat + "/" + lng + "/" + id)
     .then((promise) => {
       promise.json().then((users) => {
+        console.log(users)
         this.setState({nearbyPeeps:users})
       })
     })
@@ -363,6 +365,17 @@ class App extends Component {
 
   closeNearbyPeeps = () => {
     this.setState({nearbyPeeps:null})
+  }
+
+  addFriend = (bid) => {
+    let frienderid = this.state.id
+    let befriendedid = bid
+    fetch("http://localhost:3001/users/friends/send", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({frienderid, befriendedid})
+    })
+    //send to ws and then send to befriended client
   }
 
 }

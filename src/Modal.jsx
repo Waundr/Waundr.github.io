@@ -47,6 +47,10 @@ class ModalForm extends Component{
     let desc = this.refs.desc.state.value
     let type = this.refs.type.state.value
     let priv = this.refs.switch.state.value
+    title = title.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    desc = desc.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    console.log("TITLE:  ", title);
+    console.log("Desc:   ", desc);
     this.props.add(title, desc, type, priv, this.props.loc, true, this.props.id, [], [])
   }
 };

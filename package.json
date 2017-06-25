@@ -47,6 +47,7 @@
   "dependencies": {
     "express": "^4.15.3",
     "google-map-react": "^0.24.0",
+    "jquery": "^3.2.1",
     "material-ui": "^0.18.3",
     "materialize-css": "^0.98.2",
     "passport-facebook": "^2.1.1",

@@ -181,10 +181,10 @@ class App extends Component {
           <i className="material-icons" style = {{color: "#FD8F04"}}>filter_list</i>
         </a>
         <ul>
-          <li><a onClick={() => {if(this.infowindow){this.infowindow.close()};filter = []; this.forceUpdate();}} className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>clear</i></a></li>
+          <li><a onClick={() => this.clearFilter()} className="btn-floating waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>clear</i></a></li>
           <li><a onClick={() => this.toggleFilter('Food Stand')} data-cat='Food Stand' className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>restaurant</i></a></li>
           <li><a onClick={() => this.toggleFilter('Entertainment')} data-cat='Entertainment' className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>casino</i></a></li>
-          <li><a onClick={() => this.toggleFilter('Obstacle')} data-cat='Obstacle' className="btn-floating waves-effect waves-light green blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>nature_people</i></a></li>
+          <li><a onClick={() => this.toggleFilter('Obstacle')} data-cat='Obstacle' className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>nature_people</i></a></li>
           <li><a onClick={() => this.toggleFilter('Street Market')} data-cat='Street Market' className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>store</i></a></li>
           <li><a onClick={() => this.toggleFilter('Meet up')} data-cat='Meet up' className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>group_add</i></a></li>
           <li><a onClick={() => this.toggleFilter('Your friends')} data-cat='Your friends' className="btn-floating waves-effect waves-light red blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>people</i></a></li>
@@ -331,7 +331,6 @@ class App extends Component {
   toggleFilter(filterType) {
 
     var filt = $('#filter').find('[data-cat='+'"'+filterType+'"' +']')
-    console.log("filt", filt)
 
     if (this.infowindow) {
       this.infowindow.close()
@@ -434,6 +433,20 @@ class App extends Component {
 
     // this.socket.send(JSON.stringify({type: 'denyRequest', frienderid, befriendedid}))
 
+  }
+
+  clearFilter = () => {
+    if(this.infowindow){
+      this.infowindow.close()
+    };
+    var listOfCat = ['Food Stand', 'Street Market', 'Entertainment', 'Obstacle', 'Meet up', 'Your friends']
+    listOfCat.forEach(function(fi) {
+      var filt = $('#filter').find('[data-cat='+'"'+fi+'"' +']')
+      filt.removeClass('blue-grey darken-3')
+
+    })
+    filter = [];
+    this.forceUpdate();
   }
 
 }

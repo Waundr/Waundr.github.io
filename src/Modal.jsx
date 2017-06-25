@@ -23,7 +23,6 @@ class ModalForm extends Component{
                   <option value='Entertainment'>Entertainment </option>
                   <option value='Meet up'>Meet up</option>
                   <option value='Obstacle'>Obstacle</option>
-                  <option value='Your friends'>Your friends</option>
                 </Input>
 
                 <Input ref="switch" type="switch" onLabel="Private" offLabel="Public"/>

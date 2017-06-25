@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import styles from './Mapstyle';
 import ModalForm from './Modal.jsx';
 import ReactDOM from 'react-dom';
-import {SideNav, SideNavItem, Button, Row, Input} from 'react-materialize';
+import {SideNav, SideNavItem, Button, Row, Input, Badge} from 'react-materialize';
 import FriendRequests from './FriendRequests.jsx'
 import UserModal from './UserModal.jsx'
 import AddFriendsModal from './AddFriendsModal.jsx'
@@ -65,7 +65,6 @@ class App extends Component {
         fetch(`http://localhost:3001/users/friends/requests/` + user.id, {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
           .then((promise) => {
             promise.json().then((requests) => {
-              console.log('length of friend requests',requests.length)
               this.setState({pendingRequests: requests})
             })
           })
@@ -206,7 +205,7 @@ class App extends Component {
       	/>
       	<SideNavItem href='#!icon' style = {{color: "#FD8F04"}} icon='person'><UserModal /></SideNavItem>
       	<SideNavItem href='http://localhost:3001/users/logout' style = {{color: "#FD8F04"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FD8F04", width: '171px'}}> Logout </Button></SideNavItem>
-      	<SideNavItem waves href='#!third' style = {{color: "#FD8F04"}} icon='person_add'><FriendRequests pendingRequests={this.state.pendingRequests} acceptFriend={this.acceptFriend} denyFriend={this.denyFriend} /></SideNavItem>
+      	<SideNavItem style = {{color: "#FD8F04"}} icon='person_add'><FriendRequests pendingRequests={this.state.pendingRequests} acceptFriend={this.acceptFriend} denyFriend={this.denyFriend}/></SideNavItem>
         <SideNavItem divider />
       	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)} style = {{color: "#FD8F04"}}><AddFriendsModal addFriend={this.addFriend} nearbyPeeps={this.state.nearbyPeeps} closeNearbyPeeps={this.closeNearbyPeeps}/></SideNavItem>
 

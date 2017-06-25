@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import { Modal, Button, Row, Input, Icon, Col, Preloader} from 'react-materialize';
-import NearbyPeep from './NearbyPeep.jsx'
-class AddFriendsModal extends Component{
+import Request from './Request.jsx'
 
+
+class FriendRequests extends Component{
   render(){
-    if(this.props.nearbyPeeps ) {
+    {this.props.pendingRequests}
+    if(this.props.pendingRequests) {
       return(  <Modal
-      	header='Friends Nearby'
-      actions={<Button onClick={this.props.closeNearbyPeeps} className="modal-close waves-effect btn-flat">CLOSE</Button>}
+        header='Friend Requests'
+      actions={<Button className="modal-close waves-effect btn-flat">CLOSE</Button>}
       trigger={
         <Button waves='light' className=" btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074"}}>Add Friends</Button>
       }
       style ={{
       backgroundColor: '#546e7a'}}>
-        {this.props.nearbyPeeps.map(this._eachNearby)}
+        {this.props.pendingRequests.map(this._eachRequest)}
       </Modal>)
     } else {
       return (
@@ -29,9 +31,8 @@ class AddFriendsModal extends Component{
       )
     }
   }
-  _eachNearby = (peep) => {
-      return (<NearbyPeep id={peep.id} firstName={peep.firstName} lastName={peep.lastName} image={peep.image} points={peep.points} addFriend={this.props.addFriend}/>)
+  _eachRequest = (peep) => {
+      return (<Request id={peep.id} firstName={peep.firstName} lastName={peep.lastName} image={peep.image} points={peep.points} acceptFriend={this.props.acceptFriend} denyFriend={this.props.denyFriend}/>)
   }
-}
-
-export default AddFriendsModal
+};
+export default FriendRequests

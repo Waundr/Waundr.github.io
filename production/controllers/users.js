@@ -1,5 +1,6 @@
 const Users = require('../models').Users;
 const Friends = require('../models').Friends;
+const db = require('../models/index');
 
 module.exports = {
   findOrCreate(req, res) {
@@ -36,14 +37,21 @@ module.exports = {
   findFriends(req, res) {
     // Users.sync()
     // Friends.sync()
-    return Users
-      .findAll({
-        where: {
-          id: 1
-        },
-        include: [{
-          model: Friends
-        }]
-      })
+    // return Users
+    //   .findAll({
+    //     where: {
+    //       id: 1
+    //     },
+    //     include: [{
+    //       model: Friends,
+    //     }]
+    //   })
+
+    //ASSOOCIATIONS IN SEQUELIZE NOT WORKING :(
+    //GO MANUAL
+
+    //FIRST FIND
+    return db.sequelize.query('SELECT * FROM users INNER JOIN friends ON users.id=friends.befriendedid WHERE friends.status=0')
+
   }
 };

@@ -114,8 +114,8 @@ module.exports = () => {
   });
 
   router.get('/friends/:id', (req, res) => {
-    usersController.findFriends().then((users) => {
-      console.log(users);
+    usersController.findFriends().spread((results, metadata) => {
+      res.send(results)
     })
   });
 

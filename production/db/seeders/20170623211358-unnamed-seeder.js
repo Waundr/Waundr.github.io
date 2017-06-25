@@ -2,15 +2,15 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Friends', [{
-          frienderId: 0,
-          befriendedId: 1,
-          status: 1,
+    return queryInterface.bulkInsert('friends', [{
+          frienderid: 0,
+          befriendedid: 1,
+          status: 0,
           createdAt: new Date(),
          updatedAt: new Date()
         },{
-          frienderId: 1,
-          befriendedId: 3,
+          frienderid: 1,
+          befriendedid: 3,
           status: 1,
           createdAt: new Date(),
           updatedAt: new Date()

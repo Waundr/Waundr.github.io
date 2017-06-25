@@ -3,21 +3,21 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     return queryInterface.changeColumn(
-      'Users',
+      'users',
       'currentLat',
       {
         type: Sequelize.FLOAT
       }
     ).then(function() {
         return queryInterface.changeColumn(
-        'Users',
+        'users',
         'currentLng',
         {
           type: Sequelize.FLOAT
         }
       ).then(function() {
           return queryInterface.changeColumn(
-          'Users',
+          'users',
           'points',
           {
             type: Sequelize.INTEGER,
@@ -29,6 +29,6 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize) {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('users');
   }
 };

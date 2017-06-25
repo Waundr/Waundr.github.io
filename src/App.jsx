@@ -3,8 +3,8 @@ import GoogleMapReact from 'google-map-react';
 import styles from './Mapstyle';
 import ModalForm from './Modal.jsx';
 import ReactDOM from 'react-dom';
-import {SideNav, SideNavItem, Button, Row, Input} from 'react-materialize';
-import RegisterModal from './RegisterModal.jsx'
+import {SideNav, SideNavItem, Button, Row, Input, Badge} from 'react-materialize';
+import FriendRequests from './FriendRequests.jsx'
 import UserModal from './UserModal.jsx'
 import AddFriendsModal from './AddFriendsModal.jsx'
 
@@ -42,8 +42,8 @@ class App extends Component {
       lastName: "",
       points: "",
       image: "",
-      id: ""
-
+      id: "",
+      pendingRequests: []
     }
 
   }
@@ -64,8 +64,17 @@ class App extends Component {
                         points:user.points,
                         image:user.image,
                         id: user.id})
+        fetch(`http://localhost:3001/users/friends/requests/` + user.id, {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
+          .then((promise) => {
+            promise.json().then((requests) => {
+              this.setState({pendingRequests: requests})
+            })
+          })
+
+        })
       })
-    })
+
+
 
 
 
@@ -84,6 +93,10 @@ class App extends Component {
           }).catch((err) => {
             console.log(err);
           })
+      setTimeout(() => {
+        //lol will do async await next time
+        ws.send(JSON.stringify({type: 'userid', userid: this.state.id}))
+      }, 7000)
     }
 
     ws.onerror = (e) => {
@@ -194,9 +207,9 @@ class App extends Component {
       	/>
       	<SideNavItem href='#!icon' style = {{color: "#FD8F04"}} icon='person'><UserModal /></SideNavItem>
       	<SideNavItem href='http://localhost:3001/users/logout' style = {{color: "#FD8F04"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FD8F04", width: '171px'}}> Logout </Button></SideNavItem>
-      	<SideNavItem waves href='#!third' style = {{color: "#FD8F04"}} icon='person_add'><RegisterModal /></SideNavItem>
+      	<SideNavItem style = {{color: "#FD8F04"}} icon='person_add'><FriendRequests pendingRequests={this.state.pendingRequests} acceptFriend={this.acceptFriend} denyFriend={this.denyFriend}/></SideNavItem>
         <SideNavItem divider />
-      	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)} style = {{color: "#FD8F04"}}><AddFriendsModal nearbyPeeps={this.state.nearbyPeeps} closeNearbyPeeps={this.closeNearbyPeeps}/></SideNavItem>
+      	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)} style = {{color: "#FD8F04"}}><AddFriendsModal addFriend={this.addFriend} nearbyPeeps={this.state.nearbyPeeps} closeNearbyPeeps={this.closeNearbyPeeps}/></SideNavItem>
 
       </SideNav>
 
@@ -366,6 +379,7 @@ class App extends Component {
     fetch("http://localhost:3001/users/nearby/" + lat + "/" + lng + "/" + id)
     .then((promise) => {
       promise.json().then((users) => {
+        console.log(users)
         this.setState({nearbyPeeps:users})
       })
     })
@@ -374,6 +388,52 @@ class App extends Component {
 
   closeNearbyPeeps = () => {
     this.setState({nearbyPeeps:null})
+  }
+
+  addFriend = (bid) => {
+    let frienderid = this.state.id
+    let befriendedid = bid
+    //store request in db
+    fetch("http://localhost:3001/users/friends/send", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({frienderid, befriendedid})
+    })
+    console.log("SHOULD BE SENDING REQUEST..")
+
+    //send to ws and then send to befriended client
+    this.socket.send(JSON.stringify({type: 'sendRequest', frienderid, befriendedid}))
+  }
+
+  acceptFriend = (fid) => {
+    let frienderid = fid
+    let befriendedid = this.state.id
+    console.log('accepted', fid)
+    //store request in db
+    // fetch("http://localhost:3001/users/friends/accept", {
+    //   method: 'PUT',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: JSON.stringify({frienderid, befriendedid})
+    // })
+    // console.log("SHOULD BE ACCEPTIGN REQUEST..")
+
+    // this.socket.send(JSON.stringify({type: 'acceptRequest', frienderid, befriendedid}))
+  }
+
+  denyFriend = (fid) => {
+    console.log('denyed', fid)
+    // let frienderid = fid
+    // let befriendedid = this.state.id
+    // //store request in db
+    // fetch("http://localhost:3001/users/friends/deny", {
+    //   method: 'PUT',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: JSON.stringify({frienderid, befriendedid})
+    // })
+    // console.log("SHOULD BE DENYING REQUEST..")
+
+    // this.socket.send(JSON.stringify({type: 'denyRequest', frienderid, befriendedid}))
+
   }
 
 }

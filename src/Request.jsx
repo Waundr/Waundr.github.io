@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Row, Input, Icon, Col} from 'react-materialize';
 
-class NearbyPeep extends Component{
+class Request extends Component{
 
   render(){
       return(
@@ -15,7 +15,8 @@ class NearbyPeep extends Component{
             <h2>{this.props.firstName} {this.props.lastName}</h2>
             </Col>
           <Col s={2}>
-            <Button onClick={() => this.props.addFriend(this.props.id)}>ADD FRIEND</Button>
+            <Button onClick={() => {this.props.acceptFriend(this.props.id); this.props.acceptOrDeny(this.props.counter)}}>ACCEPT</Button>
+            <Button onClick={() => {this.props.denyFriend(this.props.id); ; this.props.acceptOrDeny(this.props.counter)}}>DENY</Button>
           </Col>
         </Row>
           </div>
@@ -24,4 +25,4 @@ class NearbyPeep extends Component{
     }
   }
 
-export default NearbyPeep
+export default Request

@@ -4,7 +4,6 @@ import NearbyPeep from './NearbyPeep.jsx'
 class AddFriendsModal extends Component{
 
   render(){
-    {this.props.closeNearbyPeeps}
     if(this.props.nearbyPeeps ) {
       return(  <Modal
       	header='Friends Nearby'
@@ -31,7 +30,7 @@ class AddFriendsModal extends Component{
     }
   }
   _eachNearby = (peep) => {
-      return (<NearbyPeep firstName={peep.firstName} lastName={peep.lastName} image={peep.image} points={peep.points}/>)
+      return (<NearbyPeep id={peep.id} firstName={peep.firstName} lastName={peep.lastName} image={peep.image} points={peep.points} addFriend={this.props.addFriend}/>)
   }
 }
 

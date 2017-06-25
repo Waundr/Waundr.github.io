@@ -18,6 +18,9 @@ const ExpTime = 7200000;
 
 let events = [];
 
+//keeps track of ws clients id to user id
+let clientToUserId = {};
+
 app.use(morgan('dev'));
 
 client.on('connect', function() {
@@ -127,6 +130,7 @@ app.post('/events', (req, res) => {
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
+
   const broadcastElse = (message) => {
     console.log("broadcasting to all users except client")
     wss.clients.forEach((c) => {
@@ -137,26 +141,39 @@ wss.on('connection', (ws) => {
   }
 
   ws.on('message', function incoming(message) {
-    let newMarker = JSON.parse(message);
-    newMarker.lat = newMarker.loc.lat;
-    newMarker.lng = newMarker.loc.lng;
-    delete newMarker.loc;
-    newMarker.id = uuidv4();
-    newMarker.time = Date.now();
-    events.push(newMarker);
+    let parsedMsg = JSON.parse(message)
+    //make switch statement to find userid
+    //make default to marker stuff if type not userid
+    switch (parsedMsg.type) {
+      case 'userid':
+        clientToUserId[parsedMsg.userid] = ws
+        break;
+      case 'sendRequest':
+        //if the befriended user is currently logged in, relay friend request information
+        if(clientToUserId[parsedMsg.befriendedid])
+          clientToUserId[parsedMsg.befriendedid].send(message)
+        break;
+      default:
+        let newMarker = JSON.parse(message);
+        newMarker.lat = newMarker.loc.lat;
+        newMarker.lng = newMarker.loc.lng;
+        delete newMarker.loc;
+        newMarker.id = uuidv4();
+        newMarker.time = Date.now();
+        events.push(newMarker);
 
-    client.hmset(newMarker.id, newMarker)
+        client.hmset(newMarker.id, newMarker)
 
-    let info = {};
-    info.type = 'update markers';
-    wss.broadcast(info)
-    info.type = 'notification';
-    info.data = newMarker.type;
-    broadcastElse(info);
-    client.hgetall(newMarker.id, (err, obj) => {
-      console.log(obj)
-    })
-
+        let info = {};
+        info.type = 'update markers';
+        wss.broadcast(info)
+        info.type = 'notification';
+        info.data = newMarker.type;
+        broadcastElse(info);
+        client.hgetall(newMarker.id, (err, obj) => {
+          console.log(obj)
+        })
+    }
   })
 
  // Set up a callback for when a client closes the socket. This usually means they closed their browser.

@@ -3,7 +3,7 @@ const router  = express.Router();
 const usersController = require('../controllers').users;
 require("dotenv").config()
 
-const Users = require('../models').Users;
+const Users = require('../models').users;
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -39,7 +39,6 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
        usersController.findOrCreate({firstName:profile._json.name.givenName, lastName:profile._json.name.familyName, image:profile._json.image.url, passportId:profile.id}).then((user) => {
-        console.log('THIS LINE USER: =====> ', user)
         return done(null, user[0]);
        })
 
@@ -58,14 +57,8 @@ passport.use(new FacebookStrategy({
     profileFields: ['id', 'displayName', 'picture.type(large)', "name", "email"]
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log(profile);
-    console.log("Facebook Name: ", profile.displayName)
-    console.log("Facebook ID: ", profile.id)
-    console.log("image url: ", profile.photos[0].value)
-    console.log("Done: ", done)
 
      usersController.findOrCreate({firstName:profile.name.givenName, lastName:profile.name.familyName, image:profile.photos[0].value, passportId:profile.id}).then((user) => {
-      console.log('THIS LINE USER: =====> ', user)
       return done(null, user[0]);
      })
    }
@@ -80,14 +73,11 @@ passport.use(new FacebookStrategy({
 //   storing the user ID when serializing, and finding the user by ID when
 //   deserializing.
 passport.serializeUser(function(user, done) {
-  console.log("USER===>", user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log("deserialize user id ==>", id);
   Users.findById(id).then( function(user) {
-    console.log("Users.findby ===> ", user);
     done(null, user);
   })
 });
@@ -95,8 +85,7 @@ passport.deserializeUser(function(id, done) {
 module.exports = () => {
   // Attempting to show the user information in the localhost 3000
   router.get('http://localhost:3000', (req, res) => {
-    console.log("Get Root Request is succeeded!!!!!")
-    console.log("Session Id ===> ", connect.sid)
+
     // res.send(user[0])
   })
 
@@ -127,7 +116,6 @@ module.exports = () => {
     passport.authenticate('google', { successRedirect: "http://localhost:3000",
                                       failureRedirect: '/login' }),
     function(req, res) {
-      console.log("THIS IS THE SUCCESS CODE")
       req.session.save(function() {
         res.redirect('http://localhost:3000');
       })
@@ -149,7 +137,6 @@ module.exports = () => {
     passport.authenticate('facebook', { successRedirect: "http://localhost:3000",
                                         failureRedirect: '/login' }),
           function(req, res) {
-            console.log("THIS IS THE SUCCESS CODE")
             req.session.save(function() {
               res.redirect('http://localhost:3000');
             })
@@ -162,7 +149,6 @@ module.exports = () => {
   router.get("/", (req, res) => {
     // get info from redis client
     // fetch("http://localhost:3001/users", {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true }).then((req) => console.log(req))
-    console.log('req.user==>', req.user)
     res.send(req.user);
   });
 
@@ -174,20 +160,44 @@ module.exports = () => {
     //Use quick/dirty estimate that 1m in y is ~0.00001 degre (of latitude) and 1m in x is 0.00001 in x
     //find friends within 100m
   router.get('/nearby/:lat/:lng/:id', (req, res) => {
-    console.log(req.params)
     let latMin = Number(req.params.lat) -0.0001;
     let latMax = Number(req.params.lat) +0.0001;
     let lngMin = Number(req.params.lng) -0.0001;
     let lngMax = Number(req.params.lng) +0.0001;
-    console.log('latmin', latMin)
-    console.log('latmax', latMax)
-    console.log('lngMin', lngMin)
-    console.log('lngMax', lngMax)
     usersController.findUsersNearby({latMin, latMax, lngMin, lngMax, id:req.params.id}).then((users) => {
-      console.log(users);
       res.send(users)
+    })
+  });
+
+  //finding all users pending friend requests
+  router.get('/friends/requests/:id', (req, res) => {
+    usersController.findFriendRequests({id:req.params.id}).spread((results, metadata) => {
+      res.send(results)
+    })
+  });
+
+  //sending friend request
+  router.post('/friends/send' ,(req, res) => {
+    let fid = Number(req.body.frienderid)
+    let bid = Number(req.body.befriendedid)
+    usersController.sendFriendRequest({frienderid: fid, befriendedid: bid}).then((results) => {
     })
   })
 
+  //deny friend request
+  router.put('/friends/deny', (req, res) => {
+    let fid = Number(req.body.frienderid)
+    let bid = Number(req.body.befriendedid)
+    usersController.denyFriendRequest({frienderid: fid, befriendedid: bid}).then((results) => {
+    })
+  })
+
+  //accept friend request
+  router.put('/friends/accept', (req, res) => {
+    let fid = Number(req.body.frienderid)
+    let bid = Number(req.body.befriendedid)
+    usersController.acceptFriendRequest({frienderid: fid, befriendedid: bid}).then((results) => {
+    })
+  })
   return router;
 }

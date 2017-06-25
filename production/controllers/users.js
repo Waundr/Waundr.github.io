@@ -4,7 +4,6 @@ const db = require('../models/index');
 
 module.exports = {
   findOrCreate(req, res) {
-    console.log("REQ", req)
     return Users
       .findOrCreate({
         where: {passportId: req.passportId},

@@ -5,7 +5,7 @@ class NearbyPeep extends Component{
 
   render(){
       return(
-        <div>
+        <div style={{backgroundColor: '#546e7a'}}>
           <div className="card-panel grey lighten-5 z-depth-1">
         <Row>
           <Col s={2}>

@@ -28,3 +28,144 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 #sidenav_0 {
   background-color: #546e7a;
 }
+
+.confirmbtns {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+
+  a {
+    margin: 2px;
+  }
+}
+
+.markercount {
+  color: $goodyellow;
+  margin: 0px;
+  font-size: 30px;
+}
+
+.gm-style div div div {
+  border-radius: 10px;
+}
+
+.gm-style div div {
+  border-radius: 10px;
+}
+
+.gm-style-iw {
+  background-color: $nothergoodgrey;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+#iw-container {
+  margin-bottom: 10px;
+  width: 150px;
+  height: 230px;
+  text-align: center;
+  overflow-wrap: break-word;
+
+  .iw-title {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    padding: 10px;
+    max-height: 70px;
+    background-color: $darkgoodgrey;
+    color: $goodyellow;
+    border-radius: 20px;
+    overflow-x: hidden;
+  }
+
+  .iw-content {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 400;
+    margin-right: 1px;
+    padding: 15px 5px 20px 15px;
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+}
+
+h4 {
+  color: white;
+}
+
+/* label non focus color */
+.input-field {
+  color: white !important;
+  input[type=text] {
+    color: $goodyellow
+  }
+  input[type=text] + label {
+    color: white !important
+  }
+  input[type=text]:focus + label {
+    color: $goodyellow !important;
+  }
+  input[type=select-dropdown] + label {
+    color: $goodyellow !important;
+  }
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid $goodyellow !important;
+    box-shadow: 0 1px 0 0 $goodyellow !important;
+  }
+
+.input-field input[type=text] {
+    border-bottom: 1px solid white !important;
+    box-shadow: 0 1px 0 0 white !important;
+  }
+
+.switch {
+  label{
+    // Chaging the label color
+    color: white !important;
+
+    input[type=checkbox]:checked+.lever:after {
+        background-color: $goodyellow !important;
+    }
+    input[type=checkbox]:checked+.lever {
+        background-color: white !important;
+    }
+    input[type=checkbox]+.lever {
+        background-color: white !important;
+    }
+    input[type=checkbox]+.lever:after {
+        background-color: $goodyellow !important;
+    }
+  }
+}
+
+.material-icons {
+  color: #FD8F04;
+}
+
+.modal {
+  // this actually forces all labels to white. Should have done this earlier. Will pay off debt later on.
+  label {
+    color: white !important;
+  }
+      ul.dropdown-content.select-dropdown {
+        label {
+          color: white !important;
+        }
+        li span {
+        color: $goodyellow !important; /* no need for !important :) */
+        background-color: $goodgrey
+        }
+      }
+    .modal-footer {
+    background-color: $darkgoodgrey !important;
+    color: $goodyellow !important;
+    .btn {
+      color: white !important;
+      background-color: black !important;
+    }
+  }
+}

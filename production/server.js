@@ -85,29 +85,39 @@ app.post('/events', (req, res) => {
   let id = req.body.id;
   let user = req.body.user;
   let confirm = req.body.confirm;
+  let response = '';
 
-  for (event of events) {
-    if (event.id === id) {
+  for (let i = 0; i < events.length; i++) {
+    if (events[i].id === id) {
       if (confirm === 'confirm') {
-        if (event.confirms.includes(user)) {
-          event.confirms.splice(event.confirms.indexOf(user), 1)
+        if (events[i].confirms.includes(user)) {
+          events[i].confirms.splice(events[i].confirms.indexOf(user), 1)
+          response = 'minus';
         } else {
-          event.confirms.push(user)
+          events[i].time = Date.now();
+          events[i].confirms.push(user)
+          response = 'plus'
         }
       } else {
-        if (event.rejects.includes(user)) {
-          event.rejects.splice(event.rejects.indexOf(user), 1)
+        if (events[i].rejects.includes(user)) {
+          events[i].rejects.splice(events[i].rejects.indexOf(user), 1)
         } else {
-          event.rejects.push(user)
+          events[i].rejects.push(user)
         }
       }
-      client.hmset(id, event)
+      if (events[i].rejects.length > 1 || events[i].rejects.includes(events[i].creator.toString())) {
+        wss.broadcast({type: 'expire', data: events[i].id})
+        client.del(events[i].id)
+        events.splice(i, 1);
+      } else {
+        client.hmset(id, events[i])
+      }
       wss.broadcast({type: 'update specific', data: id})
     }
   }
 
-
-  res.send()
+  console.log(response)
+  res.send(response);
 })
 
 

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('users').then(function() {
+    return queryInterface.dropTable('Users').then(function() {
 
     queryInterface.createTable('users', {
       id: {

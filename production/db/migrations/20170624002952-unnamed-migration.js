@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('friends')
+    return queryInterface.dropTable('Friends')
     .then(() => {queryInterface.createTable('friends', {
       id: {
         allowNull: false,

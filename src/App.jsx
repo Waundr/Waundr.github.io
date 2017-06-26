@@ -176,7 +176,7 @@ class App extends Component {
 
           {Markers}
       </GoogleMapReact>
-      <div id ='filter' className="fixed-action-btn horizontal click-to-toggle" style={{position: 'absolute', bottom: '8em', right: '2em'}}  >
+      <div id ='filter' className="fixed-action-btn horizontal click-to-toggle" style={{position: 'absolute', bottom: '8em', right: '2.65em'}}  >
         <a className="btn-floating btn-large waves-effect waves-light blue-grey darken-3" >
           <i className="material-icons" style = {{color: "#FD8F04"}}>filter_list</i>
         </a>

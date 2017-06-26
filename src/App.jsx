@@ -205,7 +205,7 @@ class App extends Component {
                   color: "#FD8F04",
                   position: "center"}}
       	/>
-      	<SideNavItem href='#!icon' style = {{color: "#FD8F04"}} icon='person'><UserModal /></SideNavItem>
+      	<SideNavItem style = {{color: "#FD8F04"}} icon='person'><UserModal /></SideNavItem>
       	<SideNavItem href='http://localhost:3001/users/logout' style = {{color: "#FD8F04"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FD8F04", width: '171px'}}> Logout </Button></SideNavItem>
       	<SideNavItem style = {{color: "#FD8F04"}} icon='person_add'><FriendRequests pendingRequests={this.state.pendingRequests} acceptFriend={this.acceptFriend} denyFriend={this.denyFriend}/></SideNavItem>
         <SideNavItem divider />

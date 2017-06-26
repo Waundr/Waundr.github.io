@@ -12,6 +12,8 @@ const markerRoutes = require("./routes/markers")
 const bodyParser = require('body-parser')
 
 const SocketServer = require('ws').Server;
+// const craigslist = require('node-craigslist');
+const Meetups = require('./meetups')
 
 const PORT = 3001;
 const ExpTime = 7200000;
@@ -23,9 +25,54 @@ let clientToUserId = {};
 
 app.use(morgan('dev'));
 
+// //MVP hardcode city
+// let craigClient = new craigslist.Client({
+//   baseHost: 'craigslist.ca',
+//   city: 'Toronto'
+// }),
+//   options = {
+//     category: 'gms'
+//   };
+
+// craigClient
+//   .list(options)
+//   .then((listings) => {
+//     console.log(listings)
+//   })
+// //gms category
+
+
+
+
+
 client.on('connect', function() {
     console.log('redis connected');
 });
+
+//scrape meetups event 30mins
+
+ scrapeMeetup = () => {
+  Meetups((mu) => {
+    // client.flushdb( function (err, succeeded) {
+    //   console.log("flushing redis.."+ succeeded); // will be true if successfull
+    mu['confirms'] = []
+    mu['rejects'] = []
+    mu['creator'] = 'meetup'
+    client.hmset(mu.id, mu)
+    events.push(mu)
+    client.hgetall(mu.id, (err, obj) => {
+      console.log('obj', obj)
+    })
+
+    let info = {};
+    info.type = 'update markers';
+    wss.broadcast(info)
+    // });
+  })
+}
+
+scrapeMeetup();
+setInterval(scrapeMeetup, 1800000)
 
 client.keys('*', (err, keys) => {
   if (err) return console.log(err);
@@ -57,6 +104,8 @@ server = app.use(express.static('public'))
    .use("/markers", markerRoutes(client)) //markers needs redis client
    .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
 
+server.get
+
 const wss = new SocketServer({ server });
 
 wss.broadcast = (message) => {
@@ -78,6 +127,7 @@ setInterval( () => {
   }
   // wss.broadcast({type: 'notification', data: 'timer test'})
 }, 30000)
+
 
 
 app.get('/events.json', (req, res) => {

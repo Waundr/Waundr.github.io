@@ -134,6 +134,13 @@ app.get('/events.json', (req, res) => {
   res.json(events)
 })
 
+app.get('/mobile/events.json', (req, res) => {
+  let mobileRes = {
+    events: events
+  }
+  res.json(mobileRes)
+})
+
 app.post('/events', (req, res) => {
   let id = req.body.id;
   let user = req.body.user;

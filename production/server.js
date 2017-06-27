@@ -241,8 +241,12 @@ wss.on('connection', (ws) => {
  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
     //remove client from connected clients list
-    let index = clientToUserId.indexOf(ws);
-    clientToUserId.splice(index, 1);
+    // const getKey = (obj,val) => Object.keys(obj).find(key => obj[key] === val);
+    // console.log('key', getKey(clientToUserId, ws))
+    // console.log(key)
+    // delete clientToUserId[key];
+    // let index = clientToUserId.indexOf(ws);
+    // clientToUserId.splice(index, 1);
     console.log('Client disconnected')
   });
 });

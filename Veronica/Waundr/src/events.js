@@ -55,6 +55,27 @@ onRegionChange(region) {
 };
 
 componentDidMount = () => {
+
+  // const ws = new WebSocket("ws://localhost:3001");
+
+  // ws.onmessage = (e) => {
+  //     let stuff = JSON.parse(e.data);
+  //     if (stuff.type === 'update markers') {
+  //       fetch('http://localhost:3001/mobile/events.json')
+  //         .then((res) => {
+  //           return res.json()
+  //         }).then((data) => {
+  //           console.log('fetch result', data)
+  //           this.setState({events: data})
+  //         })
+  //     }
+
+
+  // }
+
+  // this.socket = ws;
+
+
   navigator.geolocation.getCurrentPosition(
     (position) => {
       var lat = parseFloat(position.coords.latitude)

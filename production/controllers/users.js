@@ -15,6 +15,7 @@ module.exports = {
       });
   },
   findAlreadyAddedNearby (req, res) {
+    console.log(req.id)
     return friends
       .findAll({
         attributes: ['befriendedid'],
@@ -37,8 +38,8 @@ module.exports = {
             currentLng: {
               $between: [req.lngMin, req.lngMax]
             },
-            passportId: {
-              $ne: req.id
+            id: {
+              $notIn: [req.id, req.befriendedid.dataValues.befriendedid]
             }
           }
         }

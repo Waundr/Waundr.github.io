@@ -64,12 +64,7 @@ class App extends Component {
                         points:user.points,
                         image:user.image,
                         id: user.id})
-        fetch(`http://localhost:3001/users/friends/requests/` + user.id, {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
-          .then((promise) => {
-            promise.json().then((requests) => {
-              this.setState({pendingRequests: requests})
-            })
-          })
+        this.fetchRequests();
 
         })
       })
@@ -134,6 +129,11 @@ class App extends Component {
           }).catch((err) => {
             console.log(err);
           })
+      } else if (stuff.type === 'sendRequest') {
+        Materialize.toast(`Friend Request from ${stuff.frienderName}`, 4000)
+        this.fetchRequests();
+      } else if (stuff.type === 'acceptRequest') {
+        Materialize.toast(`${stuff.befriendedName} accepted request`, 4000)
       }
 
 
@@ -378,7 +378,6 @@ class App extends Component {
     fetch("http://localhost:3001/users/nearby/" + lat + "/" + lng + "/" + id)
     .then((promise) => {
       promise.json().then((users) => {
-        console.log(users)
         this.setState({nearbyPeeps:users})
       })
     })
@@ -392,7 +391,10 @@ class App extends Component {
   addFriend = (bid) => {
     let frienderid = this.state.id
     let befriendedid = bid
+    console.log('bid', frienderid)
+    console.log('fid', befriendedid)
     //store request in db
+    befriendedid = 5
     fetch("http://localhost:3001/users/friends/send", {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -401,37 +403,44 @@ class App extends Component {
     console.log("SHOULD BE SENDING REQUEST..")
 
     //send to ws and then send to befriended client
-    this.socket.send(JSON.stringify({type: 'sendRequest', frienderid, befriendedid}))
+    this.socket.send(JSON.stringify({type: 'sendRequest', frienderid, befriendedid, frienderName: this.state.firstName}))
+  }
+
+  fetchRequests = () => {
+    fetch(`http://localhost:3001/users/friends/requests/` + this.state.id, {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
+      .then((promise) => {
+        promise.json().then((requests) => {
+          this.setState({pendingRequests: requests})
+        })
+      })
   }
 
   acceptFriend = (fid) => {
     let frienderid = fid
     let befriendedid = this.state.id
-    console.log('accepted', fid)
-    //store request in db
-    // fetch("http://localhost:3001/users/friends/accept", {
-    //   method: 'PUT',
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: JSON.stringify({frienderid, befriendedid})
-    // })
-    // console.log("SHOULD BE ACCEPTIGN REQUEST..")
 
-    // this.socket.send(JSON.stringify({type: 'acceptRequest', frienderid, befriendedid}))
+    // store request in db
+    fetch("http://localhost:3001/users/friends/accept", {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({frienderid, befriendedid})
+    })
+    this.fetchRequests();
+    this.socket.send(JSON.stringify({type: 'acceptRequest', frienderid, befriendedid, befriendedName: this.state.firstName}))
   }
 
   denyFriend = (fid) => {
     console.log('denyed', fid)
-    // let frienderid = fid
-    // let befriendedid = this.state.id
-    // //store request in db
-    // fetch("http://localhost:3001/users/friends/deny", {
-    //   method: 'PUT',
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: JSON.stringify({frienderid, befriendedid})
-    // })
-    // console.log("SHOULD BE DENYING REQUEST..")
+    let frienderid = fid
+    let befriendedid = this.state.id
+    //store request in db
+    fetch("http://localhost:3001/users/friends/deny", {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({frienderid, befriendedid})
+    })
 
-    // this.socket.send(JSON.stringify({type: 'denyRequest', frienderid, befriendedid}))
+    this.fetchRequests();
 
   }
 

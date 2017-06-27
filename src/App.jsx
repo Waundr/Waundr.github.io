@@ -377,6 +377,10 @@ class App extends Component {
         this.setState({nearbyPeeps:users})
       })
     })
+    .catch((err) => {
+      //if no users nearby
+      this.setState({nearbyPeeps: []})
+    })
 
   }
 

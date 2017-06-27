@@ -164,9 +164,14 @@ module.exports = () => {
     let latMax = Number(req.params.lat) +0.0001;
     let lngMin = Number(req.params.lng) -0.0001;
     let lngMax = Number(req.params.lng) +0.0001;
-    usersController.findUsersNearby({latMin, latMax, lngMin, lngMax, id:req.params.id}).then((users) => {
-      res.send(users)
+    //dont include friends that have already been added
+    usersController.findAlreadyAddedNearby({id:req.params.id}).spread((results, metadata) => {
+      console.log(results)
+      usersController.findUsersNearby({latMin, latMax, lngMin, lngMax, id:req.params.id, befriendedid: results}).then((users) => {
+        res.send(users)
+      })
     })
+
   });
 
   //finding all users pending friend requests

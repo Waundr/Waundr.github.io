@@ -14,6 +14,17 @@ module.exports = {
         image: req.image}
       });
   },
+  findAlreadyAddedNearby (req, res) {
+    return friends
+      .findAll({
+        attributes: ['befriendedid'],
+        where: {
+          frienderid: {
+            $eq: req.id
+          }
+        }
+      })
+  },
   findUsersNearby(req, res) {
     return users
       .findAll({

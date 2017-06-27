@@ -16,7 +16,7 @@ class Request extends Component{
             </Col>
           <Col s={2}>
             <Button onClick={() => {this.props.acceptFriend(this.props.id); this.props.acceptOrDeny(this.props.counter)}}>ACCEPT</Button>
-            <Button onClick={() => {this.props.denyFriend(this.props.id); ; this.props.acceptOrDeny(this.props.counter)}}>DENY</Button>
+            <Button onClick={() => {this.props.denyFriend(this.props.id); this.props.acceptOrDeny(this.props.counter)}}>DENY</Button>
           </Col>
         </Row>
           </div>

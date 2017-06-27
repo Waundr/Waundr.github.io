@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
 import { Modal, Button, Row, Input, Icon, Col, Preloader} from 'react-materialize';
 import NearbyPeep from './NearbyPeep.jsx'
+
+
+let stat = true;
 class AddFriendsModal extends Component{
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      nearby: []
+    }
+  }
 
   render(){
     if(this.props.nearbyPeeps ) {
@@ -13,7 +23,7 @@ class AddFriendsModal extends Component{
       }
       style ={{
       backgroundColor: '#546e7a'}}>
-        {this.props.nearbyPeeps.map(this._eachNearby)}
+        {stat ? this.props.nearbyPeeps.map(this._eachNearby) : this.state.nearby.map(this._eachNearby)}
       </Modal>)
     } else {
       return (
@@ -30,7 +40,17 @@ class AddFriendsModal extends Component{
     }
   }
   _eachNearby = (peep) => {
-      return (<NearbyPeep id={peep.id} firstName={peep.firstName} lastName={peep.lastName} image={peep.image} points={peep.points} addFriend={this.props.addFriend}/>)
+    let counter = counter ? counter++ : 0;
+      return (<NearbyPeep counter={counter} id={peep.id} firstName={peep.firstName} lastName={peep.lastName} image={peep.image} points={peep.points} addFriend={this.props.addFriend} removeRow={this._removeModalRow}/>)
+  }
+
+  _removeModalRow = (counter) => {
+    this.setState({pendingRequests: stat ? this.props.nearbyPeeps : this.state.nearby}, () => {
+      let requestsLeft = stat ? this.props.nearbyPeeps : this.state.nearby
+      requestsLeft.splice(counter, 1)
+      this.setState({nearby: requestsLeft})
+      stat = false
+    })
   }
 }
 

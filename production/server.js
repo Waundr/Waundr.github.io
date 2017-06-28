@@ -202,16 +202,15 @@ wss.on('connection', (ws) => {
     //make default to marker stuff if type not userid
     switch (parsedMsg.type) {
       case 'userid':
-        console.log('user id', parsedMsg.userid)
         clientToUserId[parsedMsg.userid] = ws
         break;
       case 'sendRequest':
         //if the befriended user is currently logged in, relay friend request information
-        if(clientToUserId[parsedMsg.befriendedid])
+        if(clientToUserId[parsedMsg.befriendedid] && clientToUserId[parsedMsg.befriendedid].readyState === WebSocket.OPEN)
           clientToUserId[parsedMsg.befriendedid].send(message)
         break;
       case 'acceptRequest':
-        if(clientToUserId[parsedMsg.frienderid])
+        if(clientToUserId[parsedMsg.frienderid] && clientToUserId[parsedMsg.befriendedid].readyState === WebSocket.OPEN)
           clientToUserId[parsedMsg.frienderid].send(message)
         break;
       default:

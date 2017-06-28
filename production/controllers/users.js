@@ -39,7 +39,7 @@ module.exports = {
               $between: [req.lngMin, req.lngMax]
             },
             id: {
-              $notIn: [req.id, req.befriendedid.dataValues.befriendedid]
+              $notIn: [req.id, req.befriendedid ? req.befriendedid.befriendedid : -1]
             }
           }
         }

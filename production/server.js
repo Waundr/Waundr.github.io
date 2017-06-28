@@ -16,7 +16,7 @@ const SocketServer = require('ws').Server;
 // const craigslist = require('node-craigslist');
 const Meetups = require('./meetups')
 
-const PORT = 3001;
+
 const ExpTime = 7200000;
 
 let events = [];
@@ -25,7 +25,7 @@ let events = [];
 let clientToUserId = {};
 
 app.use(morgan('dev'));
-
+const PORT = process.env.PORT|| 3001;
 // //MVP hardcode city
 // let craigClient = new craigslist.Client({
 //   baseHost: 'craigslist.ca',

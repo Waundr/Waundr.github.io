@@ -44,7 +44,7 @@ const markerIcons = {
 }
 
 const ColoredFab = MKButton.plainFab()
-  .withStyle({top: 280, left: 150})
+  .withStyle({top: (height-400), left: (width-250)})
   .withBackgroundColor(MKColor.BlueGrey)
   .build();
 

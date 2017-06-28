@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-const API = 'http://localhost:3001/mobile/events.json';
+const API = 'https://cryptic-plains-45907.herokuapp.com/mobile/events.json';
 
 export const apiMiddleware = store => next => action => {
   // Pass all actions through by default

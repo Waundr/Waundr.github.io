@@ -59,9 +59,9 @@ client.on('connect', function() {
     mu['confirms'] = []
     mu['rejects'] = []
     mu['creator'] = 'meetup'
-    client.hmset(mu.id, mu)
     //dont want duplicate meetups
     if (events.indexOf(mu) === -1) {
+      client.hmset(mu.id, mu)
       events.push(mu)
       let info = {};
       info.type = 'update markers';

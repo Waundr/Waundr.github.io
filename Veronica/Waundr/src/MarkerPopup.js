@@ -9,13 +9,48 @@ import {
   View,
 } from 'react-native';
 
-import { MKButton, MKColor } from 'react-native-material-kit';
+import {
+  MKTextField,
+  MKButton,
+  MKColor,
+  MKSwitch,
+} from 'react-native-material-kit';
 
 const RaisedButton = MKButton.button()
   .withStyle({width: 100, left: 260})
   .withBackgroundColor(MKColor.BlueGrey)
   .withText('Submit')
   .build();
+
+const TitleTextField = MKTextField.textfieldWithFloatingLabel()
+  .withPlaceholder('Title...')
+  .withStyle({'height': 48, 'margin': 10})
+  .withTextInputStyle({flex: 1})
+  .withFloatingLabelFont({
+    fontSize: 20,
+    fontStyle: 'italic',
+    fontWeight: '200',
+  })
+  .build();
+
+const DescTextField = MKTextField.textfieldWithFloatingLabel()
+  .withPlaceholder('Description...')
+  .withStyle({'height': 48, 'margin': 10})
+  .withTextInputStyle({flex: 1})
+  .withFloatingLabelFont({
+    fontSize: 20,
+    fontStyle: 'italic',
+    fontWeight: '200',
+  })
+  .build();
+
+// const TitleTextField = MKTextField.textfieldWithFloatingLabel()
+//   .withPlaceholder('Title..')
+//   .build()
+
+// const DescTextField = MKTextField.textfieldWithFloatingLabel()
+//   .withPlaceholder('Description..')
+//   .build()
 
 const { width, height } = Dimensions.get('window');
 
@@ -77,18 +112,18 @@ export default class MoviePopup extends Component {
           }]}
         >
           <View>
-            <Text>Title:</Text>
-            <TextInput
-              style={{margin: 10, height: 40, borderColor: 'gray', borderWidth: 1}}
+            <TitleTextField
               onChangeText={(text) => setTitle(text)}
               value={this.state.titleText}
             />
-            <Text>Description:</Text>
-            <TextInput
-              style={{margin: 10, height: 40, borderColor: 'gray', borderWidth: 1}}
+            <DescTextField
               onChangeText={(text) => setDesc(text)}
               value={this.state.descText}
             />
+              <Text style={styles.legendLabel}>Private</Text>
+               <MKSwitch checked={false}
+                          // style={styles.switch}
+              />
             <RaisedButton
               onPress={() => { onCreate()
               }}
@@ -119,4 +154,21 @@ const styles = StyleSheet.create({
     height: height / 2,                 // take half of screen height
     backgroundColor: 'white',
   },
+
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    // alignItems: 'center',
+    // marginLeft: 7, marginRight: 7,
+  },
+
+  legendLabel: {
+    // textAlign: 'center',
+    color: '#666666',
+    marginLeft: 10,
+    marginBottom: 0,
+    fontSize: 15,
+    fontWeight: '300',
+  },
+
 });

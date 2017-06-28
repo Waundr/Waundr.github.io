@@ -23,7 +23,7 @@ export default class App extends Component {
 
   componentDidMount = () => {
 
-    const ws = new WebSocket("ws://localhost:3001");
+    const ws = new WebSocket("ws://cryptic-plains-45907.herokuapp.com");
 
     ws.onmessage = (e) => {
         let stuff = JSON.parse(e.data);

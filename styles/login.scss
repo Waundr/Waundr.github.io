@@ -54,7 +54,7 @@ h2 {
   white-space: nowrap;
   border-radius: 0.2em;
   font-size: 16px;
-  color: #FFF;
+  color: white;
 }
 .loginBtn:before {
   content: "";
@@ -64,6 +64,7 @@ h2 {
   left: 0;
   width: 34px;
   height: 100%;
+  color: white;
 }
 .loginBtn:focus {
   outline: none;
@@ -79,6 +80,9 @@ h2 {
   background-image: linear-gradient(#4C69BA, #3B55A0);
   /*font-family: "Helvetica neue", Helvetica Neue, Helvetica, Arial, sans-serif;*/
   text-shadow: 0 -1px 0 #354C8C;
+  a {
+    color: white;
+  }
 }
 .loginBtn--facebook:before {
   border-right: #364e92 1px solid;
@@ -95,6 +99,9 @@ h2 {
 .loginBtn--google {
   /*font-family: "Roboto", Roboto, arial, sans-serif;*/
   background: #DD4B39;
+  a {
+    color: white
+  }
 }
 .loginBtn--google:before {
   border-right: #BB3F30 1px solid;
@@ -104,4 +111,3 @@ h2 {
 .loginBtn--google:focus {
   background: #E74B37;
 }
-

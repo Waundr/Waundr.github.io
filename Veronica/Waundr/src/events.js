@@ -92,29 +92,26 @@ export default class Events extends Component {
     })
   }
 
-  // chooseDay = (day) => {
-  //   this.setState({
-  //     chosenDay: day,
-  //   })
-  // }
+  setNewTitle = (title) => {
+    this.setState({
+      newMarkerTitle: title
+    })
+  }
 
-  // chooseTime = (time) => {
-  //   this.setState({
-  //     chosenTime: time,
-  //   })
-  // }
+  setNewDescription = (desc) => {
+    this.setState({
+      newMarkerDescription: desc
+    })
+  }
 
-  // bookTicket = () => {
-  //   if (!this.state.chosenTime) {
-  //     alert('Please select show time');
-  //   } else {
-  //     this.closeMovie();
-  //     this.props.navigator.push({
-  //       name: 'confirmation',
-  //       code: Math.random().toString(36).substring(6).toUpperCase(),
-  //     });
-  //   }
-  // }
+  createNewMarker = () => {
+    if (!this.state.newMarkerTitle || !this.state.newMarkerDescription) {
+      alert('Empty Field!');
+    } else {
+      this.closeNewMarker();
+      this.props.saveMarker(this.state.newMarkerTitle, this.state.newMarkerDescription, this.state.markerPosition.longitude, this.state.markerPosition.latitude)
+    }
+  }
 
 
   onRegionChange(region) {
@@ -215,9 +212,9 @@ export default class Events extends Component {
             onClose={this.closeNewMarker}
             markerTitle={this.state.newMarkerTitle}
             markerDescription={this.state.newMarkerDescription}
-            // onChooseTitle={this.chooseTitle}
-            // onChooseDesc={this.chooseDescription}
-            // onCreate={this.createNewMarker}
+            setTitle={this.setNewTitle}
+            setDesc={this.setNewDescription}
+            onCreate={this.createNewMarker}
           />
 
       </View>

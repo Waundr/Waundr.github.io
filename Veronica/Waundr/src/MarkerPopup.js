@@ -4,9 +4,18 @@ import {
   Dimensions,
   StyleSheet,
   Text,
+  TextInput,
   TouchableWithoutFeedback,
-  View
+  View,
 } from 'react-native';
+
+import { MKButton, MKColor } from 'react-native-material-kit';
+
+const RaisedButton = MKButton.button()
+  .withStyle({width: 100, left: 260})
+  .withBackgroundColor(MKColor.BlueGrey)
+  .withText('Submit')
+  .build();
 
 const { width, height } = Dimensions.get('window');
 
@@ -50,6 +59,7 @@ export default class MoviePopup extends Component {
   }
 
   render() {
+    const { onCreate, setDesc, setTitle} = this.props;
     // Render nothing if not visible
     if (!this.state.visible) {
       return null;
@@ -66,7 +76,24 @@ export default class MoviePopup extends Component {
             transform: [{ translateY: this.state.position }, { translateX: 0 }]
           }]}
         >
-          <Text>Popup</Text>
+          <View>
+            <Text>Title:</Text>
+            <TextInput
+              style={{margin: 10, height: 40, borderColor: 'gray', borderWidth: 1}}
+              onChangeText={(text) => setTitle(text)}
+              value={this.state.titleText}
+            />
+            <Text>Description:</Text>
+            <TextInput
+              style={{margin: 10, height: 40, borderColor: 'gray', borderWidth: 1}}
+              onChangeText={(text) => setDesc(text)}
+              value={this.state.descText}
+            />
+            <RaisedButton
+              onPress={() => { onCreate()
+              }}
+            />
+          </View>
         </Animated.View>
       </View>
     );

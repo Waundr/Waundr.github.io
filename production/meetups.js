@@ -12,7 +12,6 @@ module.exports = (cb) => {
     JSON.parse(data).forEach((mu) => {
       if(mu.time && mu.venue && mu.venue.lat) {
         let timeToEvent = mu.time - Date.now()
-        console.log(timeToEvent)
         //currently no event meeting criteria.. extend time threshold for testing...
         //if within 30mins of event
         if (timeToEvent < 1800000) {

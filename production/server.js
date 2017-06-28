@@ -59,15 +59,14 @@ client.on('connect', function() {
     mu['rejects'] = []
     mu['creator'] = 'meetup'
     client.hmset(mu.id, mu)
-    events.push(mu)
-    client.hgetall(mu.id, (err, obj) => {
-      console.log('obj', obj)
-    })
+    //dont want duplicate meetups
+    if (events.indexOf(mu) === -1) {
+      events.push(mu)
+      let info = {};
+      info.type = 'update markers';
+      wss.broadcast(info)
+    }
 
-    let info = {};
-    info.type = 'update markers';
-    wss.broadcast(info)
-    // });
   })
 }
 

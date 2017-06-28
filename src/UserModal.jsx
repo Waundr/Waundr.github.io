@@ -11,16 +11,16 @@ class UserModal extends Component{
     	}
       style={{
       backgroundColor: '#546e7a'}}>
-      <Row>
-        <Input ref='email_id' s={6} label="Email ID"/>
-        <Input ref='password' label="Password"/>
-      </Row>
-      <Row>
-        <a href='http://localhost:3001/users/auth/google'><Button waves ='light' className="blue-grey darken-3" style = {{color: "#FFD074"}}> Login with google </Button></a>
-      </Row>
-      <Row>
-        <a href='http://localhost:3001/users/auth/facebook'><Button waves ='light' className="blue-grey darken-3" style = {{color: "#FFD074"}}> Login with facebook </Button></a>
-      </Row>
+        <Row>
+          <Input ref='email_id' s={6} label="Email ID"/>
+          <Input ref='password' label="Password"/>
+        </Row>
+        <Row>
+          <a href='http://localhost:3001/users/auth/google'><Button waves ='light' className="blue-grey darken-3" style = {{color: "#FFD074"}}> Login with google </Button></a>
+        </Row>
+        <Row>
+          <a href='http://localhost:3001/users/auth/facebook'><Button waves ='light' className="blue-grey darken-3" style = {{color: "#FFD074"}}> Login with facebook </Button></a>
+        </Row>
         <Button className="modal-action modal-close btn waves-effect waves-light blue-grey darken-3" type="submit" onClick={this._onLogin.bind(this)}>Login
           <Icon className="material-icons right">send</Icon>
         </Button>
@@ -33,7 +33,5 @@ class UserModal extends Component{
       let pass = this.refs.password.state.value
       console.log("Login", email, pass)
   }
-
 }
-
         export default UserModal

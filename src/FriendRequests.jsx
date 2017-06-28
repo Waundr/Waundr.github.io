@@ -24,9 +24,9 @@ class FriendRequests extends Component{
         {stat ? this.props.pendingRequests.map(this._eachRequest) : this.state.pendingRequests.map(this._eachRequest) }
       </Modal>)
   }
+
   _eachRequest = (peep) => {
     let counter = counter ? counter++ : 0;
-
     return (<Request counter={counter} id={peep.id} firstName={peep.firstName} lastName={peep.lastName} image={peep.image} points={peep.points} acceptFriend={this.props.acceptFriend} denyFriend={this.props.denyFriend} acceptOrDeny={this._acceptOrDeny}/>)
   }
 
@@ -37,7 +37,6 @@ class FriendRequests extends Component{
       this.setState({pendingRequests: requestsLeft})
       stat = false
     })
-
   }
 };
 export default FriendRequests

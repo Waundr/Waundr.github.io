@@ -4,9 +4,10 @@ const app = express();
 const uuidv4 = require('uuid/v4');
 
 const morgan = require('morgan')
+require("dotenv").config()
 
 const redis = require('redis');
-const client = redis.createClient();
+const client = redis.createClient(process.env.REDISCLOUD_URL, {no_ready_check: true});
 const usersRoutes = require("./routes/users")
 const markerRoutes = require("./routes/markers")
 const bodyParser = require('body-parser')
@@ -15,7 +16,7 @@ const SocketServer = require('ws').Server;
 // const craigslist = require('node-craigslist');
 const Meetups = require('./meetups')
 
-const PORT = 3001;
+
 const ExpTime = 7200000;
 
 let events = [];
@@ -24,7 +25,7 @@ let events = [];
 let clientToUserId = {};
 
 app.use(morgan('dev'));
-
+const PORT = process.env.PORT|| 3001;
 // //MVP hardcode city
 // let craigClient = new craigslist.Client({
 //   baseHost: 'craigslist.ca',

@@ -14,6 +14,23 @@ class Login extends Component{
   }
 
   componentDidMount(prevProps, prevState) {
+
+    // setInterval(() => {
+    //   for (let i = 1; i > 0; i -= 0.1) {
+    //     setTimeout(() => {
+    //       opac = i;
+    //       this.forceUpdate()
+    //     }, 200)
+    //   }
+    //   for (let i = 0; i < 1; i += 0.1) {
+    //     setTimeout(() => {
+    //       opac = i;
+    //       this.forceUpdate()
+    //     }, 200)
+    //   }
+
+    // }, 1500)
+
     let counter = counter ? counter : 0
     setInterval(() => {
       switch (counter) {
@@ -52,12 +69,7 @@ class Login extends Component{
               <img src="../styles/Waundr-logo (wht).png"/>
                 <div style={{'marginTop': '-4em'}}>
                   <h4>The real time social walking experience</h4>
-                  <ReactCSSTransitionGroup
-                    transitionName="example"
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={300}>
-                    <h5 style={{'color':'white'}} >Discover {this.state.discover}</h5>
-                  </ReactCSSTransitionGroup>
+                  <h5 style={{'color':'white', 'opacity': opac}} >Discover {this.state.discover}</h5>
                 </div>
                 <div style={{'margin-top':'2em'}}>
                   <button className="loginBtn loginBtn--google">

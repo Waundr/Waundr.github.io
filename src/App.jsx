@@ -173,7 +173,7 @@ class App extends Component {
           {Markers}
       </GoogleMapReact>
       <div id ='filter' className="fixed-action-btn horizontal click-to-toggle" style={{position: 'absolute', bottom: '8em', right: '2em'}}  >
-        <a className="btn-floating btn-large waves-effect waves-light blue-grey darken-3" >
+        <a className="btn-floating btn-large waves-effect waves-light blue-grey darken-4" >
           <i className="material-icons" style = {{color: "#FD8F04"}}>filter_list</i>
         </a>
         <ul>
@@ -187,7 +187,7 @@ class App extends Component {
         </ul>
       </div>
       <SideNav
-	     trigger={<Button style={{position: 'absolute', top: '2em', left: '2em'}} className="btn-floating btn-large waves-effect waves-light blue-grey darken-3"><i className="material-icons" style = {{color: "#FD8F04"}}>menu</i></Button>}
+	     trigger={<Button style={{position: 'absolute', top: '2em', left: '2em'}} className="btn-floating btn-large waves-effect waves-light blue-grey darken-4"><i className="material-icons" style = {{color: "#FD8F04"}}>menu</i></Button>}
       	options={{ closeOnClick: true }}
         style={{backgroundColor: "#546e7a"}}>
       	<SideNavItem userView
@@ -302,8 +302,8 @@ class App extends Component {
     this.infowindow = new google.maps.InfoWindow({
 
       content: "<div id='iw-container'>" + "<div class='iw-title'>"+ marker.title +"</div>" + "<br /><div class='iw-content'>" + marker.description +  "</div><div class='confirmbtns'>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ this.state.id + "`, confirm:`confirm`}, success: (data)=>{if (data === `plus`){let num = parseInt($(`.markercount`).text(), 10);num++;$(`.markercount`).text(num);$(`#" + marker.id +"count`).removeClass(`blue-grey darken-3`)}else if(data === `minus`){let num = parseInt($(`.markercount`).text(), 10);num--;$(`.markercount`).text(num);$(`#" + marker.id +"count`).addClass(`blue-grey darken-3`)}},failure: ()=>{console.log(`confirm failed`)}})' id='"+marker.id+"count' class='btn-floating red blue-grey darken-3'><p class='markercount'>" + marker.confirms.length + "</p></a>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ this.state.id + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`); $(`#" + marker.id +"clear`).removeClass(`blue-grey darken-3`)},failure: ()=>{console.log(`reject failed`)}})' id='"+marker.id+"clear'class='btn-floating blue-grey darken-3'><i class='material-icons' style='color:#FD8F04'>clear</i></a>" + "<br/>" + "</div></div>",
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ this.state.id + "`, confirm:`confirm`}, success: (data)=>{if (data === `plus`){let num = parseInt($(`.markercount`).text(), 10);num++;$(`.markercount`).text(num);$(`#" + marker.id +"count`).removeClass(`blue-grey darken-4`)}else if(data === `minus`){let num = parseInt($(`.markercount`).text(), 10);num--;$(`.markercount`).text(num);$(`#" + marker.id +"count`).addClass(`blue-grey darken-4`)}},failure: ()=>{console.log(`confirm failed`)}})' id='"+marker.id+"count' class='btn-floating red blue-grey darken-4'><p class='markercount'>" + marker.confirms.length + "</p></a>" +
+      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ this.state.id + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`); $(`#" + marker.id +"clear`).removeClass(`blue-grey darken-4`)},failure: ()=>{console.log(`reject failed`)}})' id='"+marker.id+"clear'class='btn-floating blue-grey darken-4'><i class='material-icons' style='color:#FD8F04'>clear</i></a>" + "<br/>" + "</div></div>",
       position: marker.loc
 
     });

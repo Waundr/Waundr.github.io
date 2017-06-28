@@ -9,7 +9,7 @@ class ModalForm extends Component{
             header= 'Create a new Map Point'
             bottomSheet
             trigger={
-              <Button style={{position: 'absolute', bottom: '2em', right: '2em'}} className="btn-floating btn-large waves-effect waves-light orange blue-grey darken-3"><i className="material-icons" style = {{color: "#FFD074"}}>add_location</i></Button>
+              <Button style={{position: 'absolute', bottom: '2em', right: '2em'}} className="btn-floating btn-large waves-effect waves-light orange blue-grey darken-4"><i className="material-icons" style = {{color: "#FFD074"}}>add_location</i></Button>
             }
             style= {{overflow: 'visible',
                     zIndex: '1003',

@@ -5,8 +5,8 @@ class NearbyPeep extends Component{
 
   render(){
       return(
-        <div style={{backgroundColor: '#546e7a'}}>
-          <div className="card-panel grey lighten-5 z-depth-1">
+        <div>
+          <div className="card-panel blue-grey darken-3">
             <Row>
               <Col s={2}>
                 <img className="circle responsive-img" src={this.props.image}/>
@@ -15,7 +15,7 @@ class NearbyPeep extends Component{
                 <h2>{this.props.firstName} {this.props.lastName}</h2>
                 </Col>
               <Col s={2}>
-                <Button onClick={() => {this.props.addFriend(this.props.id); this.props.removeRow(this.props.counter)}}>ADD FRIEND</Button>
+                <Button className = 'btn-large waves-effect waves-light blue-grey darken-4' style = {{color: "#FFD074"}} onClick={() => {this.props.addFriend(this.props.id); this.props.removeRow(this.props.counter)}}>ADD FRIEND</Button>
               </Col>
             </Row>
           </div>

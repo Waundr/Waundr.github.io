@@ -19,17 +19,19 @@ class AddFriendsModal extends Component{
       	header='Friends Nearby'
       actions={<Button onClick={this.props.closeNearbyPeeps} className="modal-close waves-effect btn-flat">CLOSE</Button>}
       trigger={
-        <Button waves='light' className=" btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074"}}>Add Friends</Button>
+        <Button waves='light' className=" btn waves-effect waves-light blue-grey darken-4" style = {{color: "#FFD074"}}>Add Friends</Button>
       }
       style ={{
       backgroundColor: '#546e7a'}}>
-        {stat ? this.props.nearbyPeeps.map(this._eachNearby) : this.state.nearby.map(this._eachNearby)}
+        <div style = {{color: "#FFD074", backgroundColor: '#90a4ae' }} >
+          {stat ? this.props.nearbyPeeps.map(this._eachNearby) : this.state.nearby.map(this._eachNearby)}
+        </div>
       </Modal>)
     } else {
       return (
         <Modal header='LOADING'
         trigger={
-        <Button style = {{color: "#FFD074"}} waves='light' className=" btn waves-effect waves-light blue-grey darken-3">Add Friends</Button>
+        <Button style = {{color: "#FFD074"}} waves='light' className=" btn waves-effect waves-light blue-grey darken-4">Add Friends</Button>
          }
         >
           <Col s={4}>

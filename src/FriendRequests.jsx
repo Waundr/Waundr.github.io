@@ -17,7 +17,7 @@ class FriendRequests extends Component{
         header='Friend Requests'
       actions={<Button onClick={()=> stat=true} className="modal-close waves-effect btn-flat">CLOSE</Button>}
       trigger={
-        <Button waves='light' className=" btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FFD074"}}>Requests {this.props.pendingRequests.length}</Button>
+        <Button className=" btn waves-effect waves-light blue-grey darken-4" style = {{color: "#FFD074"}}>Requests {this.props.pendingRequests.length}</Button>
       }
       style ={{
       backgroundColor: '#546e7a'}}>

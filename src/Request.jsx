@@ -6,7 +6,7 @@ class Request extends Component{
   render(){
       return(
         <div style={{backgroundColor: '#546e7a'}}>
-          <div className="card-panel grey lighten-5 z-depth-1">
+          <div className="card-panel blue-grey darken-3">
             <Row>
               <Col s={2}>
                 <img className="circle responsive-img" src={this.props.image}/>

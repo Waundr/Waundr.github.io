@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Modal, Button, Row, Input, Icon, Col} from 'react-materialize';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 let opac = 1;
 

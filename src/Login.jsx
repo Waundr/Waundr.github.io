@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Modal, Button, Row, Input, Icon, Col} from 'react-materialize';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
+let opac = 1;
 
 class Login extends Component{
 
@@ -45,11 +48,16 @@ class Login extends Component{
         <div>
           <main id='main' className='main_area'>
             <div className='center'>
-              <div style={{'backgroundColor':'black'}}>
+              <div style={{'backgroundColor': 'rgba(0,0,0,0.6)', 'padding': 50}}>
               <img src="../styles/Waundr-logo (wht).png"/>
                 <div style={{'marginTop': '-4em'}}>
                   <h4>The real time social walking experience</h4>
-                  <h5 style={{'color':'white'}} >Discover {this.state.discover}</h5>
+                  <ReactCSSTransitionGroup
+                    transitionName="example"
+                    transitionEnterTimeout={500}
+                    transitionLeaveTimeout={300}>
+                    <h5 style={{'color':'white'}} >Discover {this.state.discover}</h5>
+                  </ReactCSSTransitionGroup>
                 </div>
                 <div style={{'margin-top':'2em'}}>
                   <button className="loginBtn loginBtn--google">

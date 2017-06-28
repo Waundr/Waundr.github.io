@@ -71,7 +71,7 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 16px;
     font-weight: 400;
-    padding: 10px;
+    padding: 5px;
     max-height: 70px;
     background-color: white;
     color: black;
@@ -84,11 +84,12 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     line-height: 18px;
     font-weight: 400;
     margin-right: 1px;
-    padding: 5px 5px 5px 5px;
+    padding: 2px 2px 2px 2px;
     max-height: 100px;
     overflow-y: auto;
     overflow-x: hidden;
     background-color: white;
+    width: 240px;
     img {
       height: 100px;
       width: 100px;

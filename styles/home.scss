@@ -82,14 +82,12 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
   .iw-content {
     font-size: 13px;
     line-height: 18px;
-    font-weight: 400;
-    margin-right: 1px;
-    padding: 2px 2px 2px 2px;
+    font-weight: 400;;
     max-height: 100px;
     overflow-y: auto;
     overflow-x: hidden;
     background-color: white;
-    width: 240px;
+    width: 200px;
     img {
       height: 100px;
       width: 100px;

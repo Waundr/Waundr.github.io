@@ -54,26 +54,27 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 
 .gm-style-iw {
-  background-color: $nothergoodgrey;
+  background-color: white;
   padding: 5px;
   border-radius: 10px;
 }
 
 #iw-container {
   margin-bottom: 10px;
-  width: 150px;
+  width: 200px;
   height: 230px;
   text-align: center;
   overflow-wrap: break-word;
+  background-color: white;
 
   .iw-title {
     font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 400;
-    padding: 10px;
+    padding: 5px;
     max-height: 70px;
-    background-color: $darkgoodgrey;
-    color: $goodyellow;
+    background-color: white;
+    color: black;
     border-radius: 20px;
     overflow-x: hidden;
   }
@@ -83,10 +84,16 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     line-height: 18px;
     font-weight: 400;
     margin-right: 1px;
-    padding: 15px 5px 20px 15px;
+    padding: 2px 2px 2px 2px;
     max-height: 100px;
     overflow-y: auto;
     overflow-x: hidden;
+    background-color: white;
+    width: 240px;
+    img {
+      height: 100px;
+      width: 100px;
+    }
   }
 
 }

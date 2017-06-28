@@ -31,19 +31,32 @@ export default class App extends Component {
           store.dispatch({type: 'GET_EVENT_DATA'});
           this.forceUpdate();
         }
-
-
     }
+    this.socket = ws;
+  }
+
+  broadcastMarker = (title, description, lng, lat) => {
+    const marker = {
+      loc: {lat: lat, lng: lng},
+      title: title,
+      description: description,
+      type: "Obstacle",
+      creator: "mobile",
+      confirms: [],
+      rejects: [],
+      priv: false
+    }
+    this.socket.send(JSON.stringify(marker))
+  }
+
+  renderScene(route, navigator) {
   }
 
   render() {
     return (
       <Provider store={store}>
-        <Navigator
-          initialRoute={{ name: 'events' }}
-          configureScene={(route, routeStack) => Navigator.SceneConfigs.FloatFromBottom}
-          renderScene={RouteMapper}
-        />
+
+     <Events saveMarker={this.broadcastMarker} />
       </Provider>
     );
   }

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Modal, Button, Row, Input, Icon, Col} from 'react-materialize';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
+let opac = 1;
 
 class Login extends Component{
 
@@ -11,6 +14,23 @@ class Login extends Component{
   }
 
   componentDidMount(prevProps, prevState) {
+
+    // setInterval(() => {
+    //   for (let i = 1; i > 0; i -= 0.1) {
+    //     setTimeout(() => {
+    //       opac = i;
+    //       this.forceUpdate()
+    //     }, 200)
+    //   }
+    //   for (let i = 0; i < 1; i += 0.1) {
+    //     setTimeout(() => {
+    //       opac = i;
+    //       this.forceUpdate()
+    //     }, 200)
+    //   }
+
+    // }, 1500)
+
     let counter = counter ? counter : 0
     setInterval(() => {
       switch (counter) {
@@ -45,11 +65,11 @@ class Login extends Component{
         <div>
           <main id='main' className='main_area'>
             <div className='center'>
-              <div style={{'backgroundColor':'black'}}>
+              <div style={{'backgroundColor': 'rgba(0,0,0,0.6)', 'padding': 50}}>
               <img src="../styles/Waundr-logo (wht).png"/>
                 <div style={{'marginTop': '-4em'}}>
                   <h4>The real time social walking experience</h4>
-                  <h5 style={{'color':'white'}} >Discover {this.state.discover}</h5>
+                  <h5 style={{'color':'white', 'opacity': opac}} >Discover {this.state.discover}</h5>
                 </div>
                 <div style={{'margin-top':'2em'}}>
                   <button className="loginBtn loginBtn--google">

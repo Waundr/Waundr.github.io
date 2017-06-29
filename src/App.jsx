@@ -36,7 +36,7 @@ class App extends Component {
     this.state = {
       nearbyPeeps: null,
       center: {},
-      currentLocation: {lat: this.props.center.lat, lng: this.props.center.lng},
+      currentLocation: "",
       markers: [],
       firstName: "",
       lastName: "",
@@ -53,6 +53,24 @@ class App extends Component {
     // center: {lat: 25.761680, lng:-80.19179}, //in miami
     zoom: 15
   };
+
+  componentWillMount() {
+    let options = {
+      enableHighAccuracy: true
+    }
+    function setLocation(pos) {
+      let crd = pos.coords;
+      let lat = crd.latitude
+      let lng = crd.longitude
+      let currentLocation = {lat, lng}
+      console.log(currentLocation)
+      this.setState({currentLocation}, setLocation2)
+    }
+    function error(err) {
+      console.log(`ERROR - ${err.message}`)
+    }
+    navigator.geolocation.getCurrentPostion(setLocation, error, options)
+  }
 
   componentDidMount() {
     // FETCH CALL for thel ogin
@@ -162,13 +180,13 @@ class App extends Component {
             key: 'AIzaSyCTeIkYP5dBw8UV-qjisD8dMhbZMeM81QI',
             language: 'en',
           }}
-          defaultCenter={this.props.center}
+          defaultCenter={this.state.currentLocation}
           defaultZoom={this.props.zoom}
           options={createMapOptions}
           onChange={this.onChange}
           onGoogleApiLoaded={this.setMapInstance}>
 
-          <div className="marker" lat={this.props.center.lat} lng={this.props.center.lng}>
+          <div className="marker" lat={this.state.currentLocation.lat} lng={this.state.currentLocation.lng}>
             <div className="dot"></div>
             <div className="pulse"></div>
           </div>
@@ -398,7 +416,6 @@ class App extends Component {
     console.log('bid', frienderid)
     console.log('fid', befriendedid)
     //store request in db
-    befriendedid = 5
     fetch("https://cryptic-plains-45907.herokuapp.com/users/friends/send", {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -460,6 +477,14 @@ class App extends Component {
     })
     filter = [];
     this.forceUpdate();
+  }
+
+  setLocation2 = () => {
+    fetch("https://cryptic-plains-45907.herokuapp.com/users/updateLoc", {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: {lat: this.state.currentLocation.lat, lng: this.state.currentLocation.lng, id: this.state.id}
+    })
   }
 
 }

@@ -390,9 +390,9 @@ class App extends Component {
   nearbyPeeps = (loc) => {
     console.log(loc)
     //hard code nearby values for testing
-    let lat = 43.644625
-    let lng = -79.395197
-    let id = 3
+    let lat = this.state.currentLocation.lat
+    let lng = this.state.currentLocation.lng
+    let id = this.state.id
     fetch("https://cryptic-plains-45907.herokuapp.com/users/nearby/" + lat + "/" + lng + "/" + id)
     .then((promise) => {
       promise.json().then((users) => {

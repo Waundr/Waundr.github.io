@@ -50,9 +50,8 @@ class Login extends Component{
           break;
         case 5:
           this.setState({discover: 'Concerts'})
-          break;
-        case 6:
           counter = -1;
+          break;
       }
       counter++;
     }, 1500)

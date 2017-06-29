@@ -69,7 +69,7 @@ class App extends Component {
     function error(err) {
       console.log(`ERROR - ${err.message}`)
     }
-    navigator.geolocation.getCurrentPosition(setLocation, error, options)
+    navigator.geolocation.getCurrentPosition(setLocation.bind(this), error, options)
   }
 
   componentDidMount() {

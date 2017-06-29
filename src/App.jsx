@@ -64,7 +64,7 @@ class App extends Component {
       let lng = crd.longitude
       let currentLocation = {lat, lng}
       console.log(currentLocation)
-      this.setState({currentLocation}, setLocation2)
+      this.setState({currentLocation}, this.setLocation2)
     }
     function error(err) {
       console.log(`ERROR - ${err.message}`)

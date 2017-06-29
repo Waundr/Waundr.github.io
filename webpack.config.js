@@ -4,7 +4,6 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'eval',
   entry: [
-    'webpack-dev-server/client?http://localhost:443',
     './src/index.jsx'
   ],
   output: {

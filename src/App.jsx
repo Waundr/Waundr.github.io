@@ -153,6 +153,9 @@ class App extends Component {
 
     }
     this.socket = ws; //make globally accessible
+    setInterval(() => {
+      this.socket.send(JSON.stringify({type: 'dummy'}))
+    }, 10000)
   }
 
   render() {

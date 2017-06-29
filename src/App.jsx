@@ -49,7 +49,7 @@ class App extends Component {
   }
   //default center and zoom properties
   static defaultProps = {
-    center: {lat: (Math.random() * (43.641541 - 43.670727) + 43.670727).toFixed(6) * 1, lng: (Math.random() * (-79.367466 - -79.404287) + -79.404287).toFixed(6) * 1},
+    center: {lat: 43.644625, lng: -79.395197},
     // center: {lat: 25.761680, lng:-80.19179}, //in miami
     zoom: 15
   };
@@ -183,7 +183,7 @@ class App extends Component {
             key: 'AIzaSyCTeIkYP5dBw8UV-qjisD8dMhbZMeM81QI',
             language: 'en',
           }}
-          defaultCenter={this.state.currentLocation}
+          defaultCenter={this.props.currentLocation}
           defaultZoom={this.props.zoom}
           options={createMapOptions}
           onChange={this.onChange}

@@ -58,6 +58,7 @@ class App extends Component {
     let options = {
       enableHighAccuracy: true
     }
+    console.log('new version')
     function setLocation(pos) {
       let crd = pos.coords;
       let lat = crd.latitude
@@ -183,7 +184,7 @@ class App extends Component {
             key: 'AIzaSyCTeIkYP5dBw8UV-qjisD8dMhbZMeM81QI',
             language: 'en',
           }}
-          defaultCenter={this.props.currentLocation}
+          defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
           options={createMapOptions}
           onChange={this.onChange}

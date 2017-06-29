@@ -56,7 +56,7 @@ class App extends Component {
 
   componentDidMount() {
     // FETCH CALL for thel ogin
-    fetch("http://localhost:3001/users", {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
+    fetch("https://cryptic-plains-45907.herokuapp.com/users", {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
     .then((promise) => {
       promise.json().then((user) => {
         this.setState({firstName:user.firstName,
@@ -70,10 +70,10 @@ class App extends Component {
       })
 
     //initiate connection to WS server
-    const ws = new WebSocket("ws://localhost:3001");
+    const ws = new WebSocket("ws://cryptic-plains-45907.herokuapp.com/");
     ws.onopen = (e) => {
       console.log("Connected to server");
-      fetch('http://localhost:3001/events.json')
+      fetch('https://cryptic-plains-45907.herokuapp.com/events.json')
           .then((res) => {
             return res.json()
           }).then((data) => {
@@ -97,7 +97,7 @@ class App extends Component {
     ws.onmessage = (e) => {
       let stuff = JSON.parse(e.data);
       if (stuff.type === 'update markers') {
-        fetch('http://localhost:3001/events.json')
+        fetch('https://cryptic-plains-45907.herokuapp.com/events.json')
           .then((res) => {
             return res.json()
           }).then((data) => {
@@ -112,7 +112,7 @@ class App extends Component {
       } else if (stuff.type === 'expire') {
         this.removeMarker(stuff.data)
       } else if (stuff.type === 'update specific') {
-        fetch('http://localhost:3001/events.json')
+        fetch('https://cryptic-plains-45907.herokuapp.com/events.json')
           .then((res) => {
             return res.json()
           }).then((data) => {
@@ -202,7 +202,7 @@ class App extends Component {
                   position: "center"}}
       	/>
       	<SideNavItem style = {{color: "#FD8F04"}} icon='person'><UserModal /></SideNavItem>
-      	<SideNavItem href='http://localhost:3001/users/logout' style = {{color: "#FD8F04"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FD8F04", width: '171px'}}> Logout </Button></SideNavItem>
+      	<SideNavItem href='https://cryptic-plains-45907.herokuapp.com/users/logout' style = {{color: "#FD8F04"}} icon ='person_outline'><Button className="btn waves-effect waves-light blue-grey darken-3" style = {{color: "#FD8F04", width: '171px'}}> Logout </Button></SideNavItem>
       	<SideNavItem style = {{color: "#FD8F04"}} icon='person_add'><FriendRequests pendingRequests={this.state.pendingRequests} acceptFriend={this.acceptFriend} denyFriend={this.denyFriend}/></SideNavItem>
         <SideNavItem divider />
       	<SideNavItem icon ='plus_one' onClick={() => this.nearbyPeeps(this.state.currentLocation)} style = {{color: "#FD8F04"}}><AddFriendsModal addFriend={this.addFriend} nearbyPeeps={this.state.nearbyPeeps} closeNearbyPeeps={this.closeNearbyPeeps}/></SideNavItem>
@@ -246,7 +246,7 @@ class App extends Component {
     }
 
     //post request to redis
-    // fetch("http://localhost:3001/markers/info/3", {
+    // fetch("https://cryptic-plains-45907.herokuapp.com/markers/info/3", {
     //   method: "get"
     //   // headers: {
     //   //   "Content-Type": "application/json"
@@ -301,8 +301,8 @@ class App extends Component {
     this.infowindow = new google.maps.InfoWindow({
 
       content: "<div id='iw-container'>" + "<div class='iw-title'>"+ marker.title +"</div>" + "<br /><div class='iw-content'>" + marker.description +  "</div><div class='confirmbtns'>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ this.state.id + "`, confirm:`confirm`}, success: (data)=>{if (data === `plus`){let num = parseInt($(`.markercount`).text(), 10);num++;$(`.markercount`).text(num);$(`#" + marker.id +"count`).removeClass(`blue-grey darken-3`)}else if(data === `minus`){let num = parseInt($(`.markercount`).text(), 10);num--;$(`.markercount`).text(num);$(`#" + marker.id +"count`).addClass(`blue-grey darken-3`)}},failure: ()=>{console.log(`confirm failed`)}})' id='"+marker.id+"count' class='btn-floating red blue-grey darken-3'><p class='markercount'>" + marker.confirms.length + "</p></a>" +
-      "<a onclick='$.ajax({url: `http://localhost:3001/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ this.state.id + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`); $(`#" + marker.id +"clear`).removeClass(`blue-grey darken-3`)},failure: ()=>{console.log(`reject failed`)}})' id='"+marker.id+"clear'class='btn-floating blue-grey darken-3'><i class='material-icons' style='color:#FD8F04'>clear</i></a>" + "<br/>" + "</div></div>",
+      "<a onclick='$.ajax({url: `https://cryptic-plains-45907.herokuapp.com/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ this.state.id + "`, confirm:`confirm`}, success: (data)=>{if (data === `plus`){let num = parseInt($(`.markercount`).text(), 10);num++;$(`.markercount`).text(num);$(`#" + marker.id +"count`).removeClass(`blue-grey darken-3`)}else if(data === `minus`){let num = parseInt($(`.markercount`).text(), 10);num--;$(`.markercount`).text(num);$(`#" + marker.id +"count`).addClass(`blue-grey darken-3`)}},failure: ()=>{console.log(`confirm failed`)}})' id='"+marker.id+"count' class='btn-floating red blue-grey darken-3'><p class='markercount'>" + marker.confirms.length + "</p></a>" +
+      "<a onclick='$.ajax({url: `https://cryptic-plains-45907.herokuapp.com/events`, method: `POST`, data: {id:`"+ marker.id + "`, user:`"+ this.state.id + "`, confirm:`reject`}, success: (data)=>{console.log(`worked!`); $(`#" + marker.id +"clear`).removeClass(`blue-grey darken-3`)},failure: ()=>{console.log(`reject failed`)}})' id='"+marker.id+"clear'class='btn-floating blue-grey darken-3'><i class='material-icons' style='color:#FD8F04'>clear</i></a>" + "<br/>" + "</div></div>",
       position: marker.loc
 
     });
@@ -371,7 +371,7 @@ class App extends Component {
     let lat = 43.644625
     let lng = -79.395197
     let id = 3
-    fetch("http://localhost:3001/users/nearby/" + lat + "/" + lng + "/" + id)
+    fetch("https://cryptic-plains-45907.herokuapp.com/users/nearby/" + lat + "/" + lng + "/" + id)
     .then((promise) => {
       promise.json().then((users) => {
         this.setState({nearbyPeeps:users})
@@ -395,7 +395,7 @@ class App extends Component {
     console.log('fid', befriendedid)
     //store request in db
     befriendedid = 5
-    fetch("http://localhost:3001/users/friends/send", {
+    fetch("https://cryptic-plains-45907.herokuapp.com/users/friends/send", {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({frienderid, befriendedid})
@@ -407,7 +407,7 @@ class App extends Component {
   }
 
   fetchRequests = () => {
-    fetch(`http://localhost:3001/users/friends/requests/` + this.state.id, {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
+    fetch(`https://cryptic-plains-45907.herokuapp.com/users/friends/requests/` + this.state.id, {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
       .then((promise) => {
         promise.json().then((requests) => {
           this.setState({pendingRequests: requests})
@@ -420,7 +420,7 @@ class App extends Component {
     let befriendedid = this.state.id
 
     // store request in db
-    fetch("http://localhost:3001/users/friends/accept", {
+    fetch("https://cryptic-plains-45907.herokuapp.com/users/friends/accept", {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({frienderid, befriendedid})
@@ -434,7 +434,7 @@ class App extends Component {
     let frienderid = fid
     let befriendedid = this.state.id
     //store request in db
-    fetch("http://localhost:3001/users/friends/deny", {
+    fetch("https://cryptic-plains-45907.herokuapp.com/users/friends/deny", {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({frienderid, befriendedid})

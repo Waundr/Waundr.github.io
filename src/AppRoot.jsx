@@ -27,7 +27,7 @@ class AppRoot extends Component {
 
   componentDidMount() {
     // FETCH CALL
-    fetch("http://localhost:3001/users", {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
+    fetch("https://cryptic-plains-45907.herokuapp.com/users", {credentials: 'include', mode: 'cors', 'Access-Control-Allow-Credentials': true })
     .then((promise) => {
       promise.json().then((user) => {
         this.setState({user : {firstName:user.firstName,

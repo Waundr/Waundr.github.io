@@ -72,10 +72,10 @@ class Login extends Component{
                 </div>
                 <div style={{'margin-top':'2em'}}>
                   <button className="loginBtn loginBtn--google">
-                    <a href='http://localhost:3001/users/auth/google'>Login with Google</a>
+                    <a href='https://cryptic-plains-45907.herokuapp.com/users/auth/google'>Login with Google</a>
                   </button>
                   <button className="loginBtn loginBtn--facebook">
-                    <a href='http://localhost:3001/users/auth/facebook'>Login with Facebook</a>
+                    <a href='https://cryptic-plains-45907.herokuapp.com/users/auth/facebook'>Login with Facebook</a>
                   </button>
                 </div>
               </div>

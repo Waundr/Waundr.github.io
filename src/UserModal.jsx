@@ -16,10 +16,10 @@ class UserModal extends Component{
           <Input ref='password' label="Password"/>
         </Row>
         <Row>
-          <a href='http://localhost:3001/users/auth/google'><Button waves ='light' className="blue-grey darken-4" style = {{color: "#FFD074"}}> Login with google </Button></a>
+          <a href='https://cryptic-plains-45907.herokuapp.com/users/auth/google'><Button waves ='light' className="blue-grey darken-4" style = {{color: "#FFD074"}}> Login with google </Button></a>
         </Row>
         <Row>
-          <a href='http://localhost:3001/users/auth/facebook'><Button waves ='light' className="blue-grey darken-4" style = {{color: "#FFD074"}}> Login with facebook </Button></a>
+          <a href='https://cryptic-plains-45907.herokuapp.com/users/auth/facebook'><Button waves ='light' className="blue-grey darken-4" style = {{color: "#FFD074"}}> Login with facebook </Button></a>
         </Row>
         <Button className="modal-action modal-close btn waves-effect waves-light blue-grey darken-3" type="submit" onClick={this._onLogin.bind(this)}>Login
           <Icon className="material-icons right">send</Icon>

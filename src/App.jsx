@@ -70,7 +70,7 @@ class App extends Component {
       })
 
     //initiate connection to WS server
-    const ws = new SockJS("https://cryptic-plains-45907.herokuapp.com/");
+    const ws = new WebSocket("wss://cryptic-plains-45907.herokuapp.com/");
     ws.onopen = (e) => {
       console.log("Connected to server");
       fetch('https://cryptic-plains-45907.herokuapp.com/events.json')

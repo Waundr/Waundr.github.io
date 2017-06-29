@@ -158,6 +158,10 @@ class App extends Component {
 
       <div style ={{width:'100%', height: '100vh', position: 'relative'}}>
         <GoogleMapReact
+          bootstrapURLKeys={{
+            key: 'AIzaSyCTeIkYP5dBw8UV-qjisD8dMhbZMeM81QI',
+            language: 'en',
+          }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
           options={createMapOptions}
